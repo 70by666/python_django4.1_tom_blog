@@ -65,10 +65,14 @@ class BlogPosts(models.Model):
         verbose_name='Обновил',
         related_name='updated_posts',
     )
+    fixed = models.BooleanField(
+        verbose_name='Закреплено',
+        default=False
+    )
     
     class Meta:
-        ordering = ('-fixed', '-time_create')
-        indexes = (models.Index(fields=('-fixed', '-time_crate', 'status')),)
+        ordering = ('-fixed', '-created')
+        indexes = (models.Index(fields=('-fixed', '-created', 'status')),)
         verbose_name = 'Статья'
         verbose_name_plural = 'Статьи'
     
