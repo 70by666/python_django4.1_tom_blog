@@ -35,7 +35,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .card-title {
-    font-size: 3em;
+    font-size: 2.5em;
     text-shadow: black 1px 2px;
 }
 
@@ -76,4 +76,24 @@ footer {
 
 .bg-dark-1 {
     background-color: rgba(0, 0, 0, 0);
+}
+
+.category-url {
+    color: black;
+}
+
+.post_url {
+    color: white;
+    text-shadow: black 1px 2px;
+}
+
+.post_url:hover {
+    color: blue;
+}
+.list-group-item{
+    text-decoration: underline;
+}
+
+.list-group-item:hover {
+    background-color: #5756565b;
 }

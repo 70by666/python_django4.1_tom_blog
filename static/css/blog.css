@@ -64,6 +64,19 @@ img {
     color: black;
 }
 
+.card_text:hover {
+    text-decoration: underline;
+}
+
+.title_text {
+    color: black;
+}
+
+.title_text:hover {
+    color: blue;
+    text-decoration: underline;
+}
+
 .tag {
     align-self: flex-start;
     padding: 0.25em 0.75em;
@@ -117,8 +130,18 @@ img {
     color: #666;
 }
 
-.list-group-item {
+.category-url {
     color: black;
+}
+
+.post_url:hover {
+    color: blue;
+}
+.list-group-item{
     background-color: rgba(0, 0, 0, 0);
-    font-size: 1.2em;
+    text-decoration: underline;
+}
+
+.list-group-item:hover {
+    background-color: #5756565b;
 }

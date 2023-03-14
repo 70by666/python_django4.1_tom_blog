@@ -5,7 +5,7 @@
 {% load humanize %}
 
 {% block css %}
-    <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+    <link rel="stylesheet" href="{% static 'css/blog.css' %}?123">
 {% endblock css %}
 
 {% block section %}
@@ -20,22 +20,24 @@
                     <div class="container">
                         {% for i in object_list %}
                             <div class="card">
-                                <a  class="card_text" href="{% url 'blog:post' i.slug %}">
                                     <div class="card__header">
                                         {% if i.image %}
-                                            <img src="{{ i.image.url }}"
-                                                alt="card__image" class="card__image" width="600">
+                                            <a href="{% url 'blog:post' i.slug %}">
+                                                <img src="{{ i.image.url }}"
+                                                    alt="card__image" class="card__image" width="600">
+                                            </a>
                                         {% endif %}
                                     </div>
                                     <div class="card__body">
-                                        <span class="tag tag-blue">{{ i.category }}</span>
-                                        <h4>{{ i.title }}</h4>
+                                        <a class="card_text" href="{% url 'blog:category' i.category.slug %}"><span class="tag tag-blue">{{ i.category }}</span></a>
+                                        <a class="title_text fs-4" href="{% url 'blog:post' i.slug %}">
+                                            {{ i.title }}
+                                        </a>
                                         <p>{{ i.short_description }}</p>
                                         <small>Опубликовано {{ i.created|naturaltime }}</small>
                                         0 &#128172;
                                         0 &#128077;
                                     </div>
-                                </a>
                                 <div class="card__footer">
                                     <div class="user">
                                         <img width="100"
