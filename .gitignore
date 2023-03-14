@@ -8,3 +8,4 @@ static/img
 apps/users/__pycache__
 apps/users/migrations/__pycache__
 common/__pycache__
+.env
