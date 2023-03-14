@@ -25,15 +25,6 @@ body::-webkit-scrollbar-thumb {
     background-color: #575656;
 }
 
-.container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    max-width: 1200px;
-    margin-block: 2rem;
-    gap: 2rem;
-}
-
 img {
     max-width: 100%;
     display: block;
@@ -48,8 +39,6 @@ img {
     overflow: hidden;
     box-shadow: 0 0.1rem 1rem rgba(0, 0, 0, 0.1);
     border-radius: 1em;
-    /* background: #ece9e6; */
-    /* background: linear-gradient(to right, #ffffff, #ece9e6); */
 }
 
 .card__body {
@@ -144,4 +133,25 @@ img {
 
 .list-group-item:hover {
     background-color: #5756565b;
+}
+
+.container_grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 1200px;
+    gap: 2rem;
+    padding-top: 2em;
+    padding-bottom: 2em;
+}
+
+.container_cont_blog {
+    margin: 2em;
+    padding: 1em;
+    background-color: rgba(0, 0, 0, 0.151);
+    box-shadow: 0 0.1rem 1rem rgba(0, 0, 0, 0.1);
+    border:
+        1px
+        solid
+        rgba(128, 128, 128, 0.7);
 }

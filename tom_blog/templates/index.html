@@ -5,123 +5,116 @@
 {% load humanize %}
 
 {% block css %}
-    <link rel="stylesheet" href="{% static 'css/index.css' %}?123">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
 {% endblock css %}
 
 {% block section %} 
     <section>
-        <div class="row mt-3">
+        <div class="row">
             <div class="col-lg-1">
             </div>
-            <div class="col-lg-6">
-                <h2 class="fw-bold">САМЫЕ ПОПУЛЯРНЫЕ</h2>
-                <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-inner">
-                        {% for i in filter %}
-                            <div class="carousel-item active">
-                                <div class="card-carousel text-bg-dark">
-                                    {% if i.image %}
-                                        <img src="{{ i.image.url }}"
-                                            class="card-img" alt="...">
-                                    {% endif %}
-                                    <div class="card-img-overlay p-2">
-                                        <a class="post_url" href="{% url 'blog:post' i.slug %}">
-                                            <p class="card-title">{{ i.title }}</p>
-                                        </a>
-                                        <p class="card-text-car">
-                                            {{ i.short_description }}
-                                        </p>
-                                        <p class="card-text-info">
-                                            <small>
-                                                Last updated {{ i.created|naturaltime }} | 
-                                                by {{ i.author.username }} | 
-                                                10&#128172; | 666&#128077;
-                                            </small>
-                                        </p>
+            <div class="col-lg-7">
+                <div class="container_cont">
+                    <h2 class="fw-bold">САМЫЕ ПОПУЛЯРНЫЕ</h2>
+                    <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            {% for i in filter %}
+                                <div class="carousel-item active">
+                                    <div class="card-carousel text-bg-dark">
+                                        {% if i.image %}
+                                            <img src="{{ i.image.url }}"
+                                                class="card-img" alt="...">
+                                        {% endif %}
+                                        <div class="card-img-overlay p-2">
+                                            <a class="post_url" href="{% url 'blog:post' i.slug %}">
+                                                <p class="card-title">{{ i.title }}</p>
+                                            </a>
+                                            <p class="card-text-car">
+                                                {{ i.short_description }}
+                                            </p>
+                                            <p class="card-text-info">
+                                                <small>
+                                                    Опубликовано {{ i.created|naturaltime }} |
+                                                    by {{ i.author.username }} |
+                                                    10&#128172; | 666&#128077;
+                                                </small>
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        {% endfor %}
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying"
-                        data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying"
-                        data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
-                </div>
-            </div>
-            <div class="col-lg-1">
-            </div>
-            <div class="col-lg-3 sub">
-                <h2 class="fw-bold">Подписка</h2>
-                <p class="fs-5">
-                    Не хочешь пропускать наши последние обновления? Подпишись на рассылку, уведомления будут приходить
-                    на почту!
-                </p>
-                <div class="position-relative">
-                    <div class="position-absolute button-sub">
-                        <a href="#"><button class="btn btn-primary" type="button">Подписаться</button></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-1">
-            </div>
-        </div>
-        <div class="row my-3">
-            <div class="col-lg-1">
-            </div>
-            <div class="col-lg-6">
-                <h2 class="fw-bold">НЕДАВНИЕ ПОСТЫ</h2>
-                <div class="row mb-5">
-                    <div class="col-4">
-                        <div id="list-example" class="list-group">
-                            {% for i in object_list %}
-                                <a class="list-group-item bg-dark-1" href="#list-item-{{ i.created }}">
-                                    {{ i.title }}
-                                </a>
                             {% endfor %}
                         </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
                     </div>
-                    <div class="col-6">
-                        <div data-bs-spy="scroll" data-bs-target="#list-example" data-bs-smooth-scroll="true"
-                            class="scrollspy-example" tabindex="0">
-                            {% for i in object_list %}
-                            <hr id="list-item-{{ i.created }}">
-                            {% if i.image %}
-                                <a href="{% url 'blog:post' i.slug %}">
-                                    <img class="img-recent"
-                                        src="{{ i.image.url }}"
-                                        class="card-img-top" alt="...">
-                                </a>
-                            {% endif %}
-                            <p class="card-text">{{ i.short_description }}</p>
-                            {% endfor %}
-                        </div>
-                    </div>
+                </div>
+                <div class="container_cont">
+                    <h2 class="fw-bold">НЕДАВНИЕ ПОСТЫ</h2>
                     <div class="row">
-                        <div class="col-lg-6"></div>
-                        <div class="col-lg-2"></div>
-                        <div class="col-lg-3 mt-3">
-                            <a href="{% url 'blog:index' %}"><button class="btn btn-primary" type="button">Посмотреть все!</button></a>
+                        <div class="col-4">
+                            <div id="list-example" class="list-group">
+                                {% for i in object_list %}
+                                    <a class="list-group-item bg-dark-1" href="#list-item-{{ i.created }}">
+                                        {{ i.title }}
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="col-8">
+                            <div data-bs-spy="scroll" data-bs-target="#list-example" data-bs-smooth-scroll="true"
+                                class="scrollspy-example" tabindex="0">
+                                {% for i in object_list %}
+                                <hr id="list-item-{{ i.created }}">
+                                {% if i.image %}
+                                    <a href="{% url 'blog:post' i.slug %}">
+                                        <img class="img-recent"
+                                            src="{{ i.image.url }}"
+                                            class="card-img-top" alt="...">
+                                    </a>
+                                {% endif %}
+                                <p class="card-text">{{ i.short_description }}</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-9"></div>
+                            <div class="col-lg-3">
+                                <a href="{% url 'blog:index' %}">
+                                    <div class="but-all">
+                                        <button class="btn btn-primary" type="button">
+                                            Посмотреть все!
+                                        </button>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-1">
             </div>
-            <div class="col-lg-3">
-                <div class="row">
-                    <div class="col-lg-6 bg-dark-1">
-                        {% include 'blog/sidebar.html' %}
+            <div class="col-lg-2">
+                <div class="container_cont">
+                    <h2 class="fw-bold">Подписка</h2>
+                    <p class="fs-5">
+                        Не хочешь пропускать наши последние обновления? Подпишись на рассылку, уведомления будут приходить
+                        на почту!
+                    </p>
+                    <div>
+                        <div class=" button-sub">
+                            <a href="#"><button class="btn btn-primary" type="button">Подписаться</button></a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-1">
+                {% include 'blog/sidebar.html' %}
             </div>
         </div>
     </section>

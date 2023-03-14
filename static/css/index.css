@@ -3,7 +3,10 @@
 body {
     background-color: azure;
     font-family: 'Roboto', sans-serif;
-    background-image: url(/static/img/kot_main.jpg);
+    background: 
+        linear-gradient(to right, #91eae4, #86a8e7, #7f7fd5);
+    color: white;
+    text-shadow: black 1px 1px;
 }
 
 body::-webkit-scrollbar {
@@ -31,21 +34,26 @@ body::-webkit-scrollbar-thumb {
 
 .info-carousel {
     background-color: azure;
-    color: black;
+    /* color: black; */
 }
 
 .card-title {
     font-size: 2.5em;
-    text-shadow: black 1px 2px;
+    text-shadow: black 1px 1px;
 }
 
 .card-text-car {
     font-size: 2em;
-    text-shadow: black 1px 2px;
 }
 
-.card-text-info {
-    text-shadow: black 1px 2px;
+@media (max-width: 600px) {
+    .card-title {
+        font-size: 1.5em; 
+    }
+
+    .card-text-car {
+        font-size: 1em;
+    }
 }
 
 .img-recent {
@@ -60,26 +68,18 @@ body::-webkit-scrollbar-thumb {
     width: 100%;
 }
 
-.sub {
-    padding-top: 10em;
-}
-
 /* Sticky Footer Classes */
 
 footer {
-  height: 100%;
+    height: 100%;
 }
 
 #page-content {
-  flex: 1 0 auto;
+    flex: 1 0 auto;
 }
 
 .bg-dark-1 {
     background-color: rgba(0, 0, 0, 0);
-}
-
-.category-url {
-    color: black;
 }
 
 .post_url {
@@ -90,10 +90,34 @@ footer {
 .post_url:hover {
     color: blue;
 }
-.list-group-item{
+
+.list-group-item {
     text-decoration: underline;
 }
 
 .list-group-item:hover {
     background-color: #5756565b;
+}
+
+.list-group-item {
+    color: white;
+}
+
+.container_cont {
+    background-color: rgba(0, 0, 0, 0.151);
+    padding: 1em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    box-shadow: 0 0.1rem 1rem rgba(0, 0, 0, 0.1);
+    border:
+        1px
+        /* width */
+        solid
+        /* style */
+        rgba(128, 128, 128, 0.7);
+        /* color */
+}
+
+.but-all {
+    float: right;
 }

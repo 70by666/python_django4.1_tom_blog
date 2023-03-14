@@ -1,17 +1,19 @@
 {% load mptt_tags %}
 
-<h2 class="fw-bold">Категории</h2>
-{% full_tree_for_model blog.Categories as categories %}
-<ul class="list-group">
-    <a class="category-url" href="{% url 'blog:index' %}">
-        <li class="list-group-item bg-dark-1">Все</li>
-    </a>
-    {% recursetree categories %}
-        <a class="category-url" href="{% url 'blog:category' node.slug %}">
-            <li class="list-group-item bg-dark-1">{{ node.title }}</li>
+<div class="container_cont">
+    <h2 class="fw-bold">Категории</h2>
+    {% full_tree_for_model blog.Categories as categories %}
+    <ul class="list-group">
+        <a class="category-url" href="{% url 'blog:index' %}">
+            <li class="list-group-item bg-dark-1">Все</li>
         </a>
-        {% if not node.is_leaf_node %}<ul>{% endif %}
-            {{children}}
-        {% if not node.is_leaf_node %}</ul>{% endif %}
-    {% endrecursetree %}
-</ul>
+        {% recursetree categories %}
+            <a class="category-url" href="{% url 'blog:category' node.slug %}">
+                <li class="list-group-item bg-dark-1">{{ node.title }}</li>
+            </a>
+            {% if not node.is_leaf_node %}<ul>{% endif %}
+                {{children}}
+            {% if not node.is_leaf_node %}</ul>{% endif %}
+        {% endrecursetree %}
+    </ul>
+</div>
