@@ -1,7 +1,7 @@
-from django.views.generic import TemplateView, ListView
+from django.views.generic import ListView, TemplateView
 
-from common.views import TitleMixin
 from apps.blog.models import Posts
+from common.views import TitleMixin
 
 
 class IndexView(TitleMixin, ListView):

@@ -1,8 +1,7 @@
 from django.contrib import admin
-
 from mptt.admin import DraggableMPTTAdmin
 
-from apps.blog.models import Posts, Categories
+from apps.blog.models import Categories, Posts
 
 
 @admin.register(Posts)

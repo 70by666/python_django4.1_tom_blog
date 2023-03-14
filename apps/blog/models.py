@@ -1,11 +1,10 @@
 from uuid import uuid4
 
-from django.db import models
-from django.core.validators import FileExtensionValidator
 from django.contrib.auth import get_user_model
+from django.core.validators import FileExtensionValidator
+from django.db import models
 from django.urls import reverse
-
-from mptt.models import TreeForeignKey, MPTTModel
+from mptt.models import MPTTModel, TreeForeignKey
 from pytils.translit import slugify
 
 User = get_user_model()

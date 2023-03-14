@@ -1,5 +1,7 @@
 Django==4.1.7
 django-environ==0.10.0
+django-extensions==3.2.1
 django-mptt==0.14.0
+django_debug_toolbar==3.8.1
 Pillow==9.4.0
 pytils==0.4.1

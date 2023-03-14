@@ -1,7 +1,8 @@
-from django.views.generic import ListView, DeleteView
+from django.views.generic import DeleteView, ListView
 
-from apps.blog.models import Posts, Categories
+from apps.blog.models import Categories, Posts
 from common.views import TitleMixin
+
 
 class BlogView(TitleMixin, ListView):
     model = Posts
