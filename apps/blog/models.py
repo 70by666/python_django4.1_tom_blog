@@ -1,8 +1,12 @@
+from uuid import uuid4
+
 from django.db import models
 from django.core.validators import FileExtensionValidator
 from django.contrib.auth import get_user_model
+from django.urls import reverse
 
 from mptt.models import TreeForeignKey, MPTTModel
+from pytils.translit import slugify
 
 User = get_user_model()
 
@@ -19,16 +23,16 @@ class Posts(models.Model):
         (DRAFT, 'Черновик'),
     ) 
     
-    title = models.CharField(verbose_name='Заголовок', max_length=128)
+    title = models.CharField(verbose_name='Заголовок', max_length=32)
     slug = models.SlugField(
         verbose_name='URL', 
-        max_length=128, 
-        blank=True, 
-        unique=True,
+        max_length=32, 
+        blank=True,
+        unique=True
     )
-    short_descrtiprion = models.CharField(
+    short_description = models.CharField(
         verbose_name='Короткое описание', 
-        max_length=512,
+        max_length=64,
         blank=True,
     )
     full_description = models.TextField(verbose_name='Полное описание')
@@ -87,24 +91,40 @@ class Posts(models.Model):
     def __str__(self):
         return self.title
 
-
+    def get_absolute_url(self):
+        return reverse('blog:post', kwargs={'slug': self.slug}) 
+    
+    def save(self, *args, **kwargs):
+        """
+        Генерация случайноuj slug, если уже есть статья с нужным названием
+        """
+        
+        if not self.slug:
+            self.slug = slugify(self.title)
+            while Posts.objects.filter(slug=self.slug).exists():
+                self.slug = f'{self.slug}-{uuid4().hex[:8]}'
+                
+        return super().save(*args, **kwargs)
+    
+    
 class Categories(MPTTModel):
     """
     Модель для категорий с вложенностью
     """
     
     title = models.CharField(
-        max_length=128, 
+        max_length=32, 
         verbose_name='Название',
+        unique=True
     )
     slug = models.SlugField(
         verbose_name='URL', 
-        max_length=128, 
+        max_length=32, 
         blank=True, 
         unique=True,
     )
     description = models.CharField(
-        max_length=512,
+        max_length=64,
         verbose_name='Описание',
         blank=True,
     )

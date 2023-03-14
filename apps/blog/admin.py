@@ -15,9 +15,8 @@ class BlogPostsAdmin(admin.ModelAdmin):
     fields = (
         ('id', 'title', 'slug', 'category'), 
         ('author', 'created'), ('updater', 'updated'),
-        ('status', 'image', 'short_descrtiprion'), 'full_description', 
+        ('status', 'image', 'short_description'), 'full_description', 
     )
-    prepopulated_fields = {'slug': ('title',)}
     readonly_fields = ('id', 'created', 'updated')
 
 
