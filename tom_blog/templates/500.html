@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/500.css' %}">
+{% endblock css %}
+
+{% block section %}
+    <div id="error">Error</div>
+    <div class="error-num">500
+        <div class="error-num__clip">500</div>
+    </div>
+    <p id="desc">Uh oh, there seems to be a problem.</p>
+    <a class="fs-3" href="{% url 'index' %}">HOME</a>
+{% endblock section %}
