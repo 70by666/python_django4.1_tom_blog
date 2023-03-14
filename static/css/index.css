@@ -1,8 +1,9 @@
-@import url(https://fonts.googleapis.com/css?family=Dancing+Script:400,700);
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 
 body {
     background-color: azure;
-    background-image: url(https://top-fon.com/uploads/posts/2023-02/1675327117_top-fon-com-p-koti-fon-dlya-prezentatsii-6.jpg);
+    font-family: 'Roboto', sans-serif;
+    background-image: url(/static/img/kot_main.jpg);
 }
 
 body::-webkit-scrollbar {

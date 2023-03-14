@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 
+
 *,
 *::before,
 *::after {
@@ -16,15 +17,6 @@ body {
     background: linear-gradient(to right, #91eae4, #86a8e7, #7f7fd5);
 }
 
-body::-webkit-scrollbar {
-    width: 10px;
-    background-color: rgb(167, 167, 167);
-}
-
-body::-webkit-scrollbar-thumb {
-    background-color: #575656;
-}
-
 .container {
     display: flex;
     flex-wrap: wrap;
@@ -34,17 +26,11 @@ body::-webkit-scrollbar-thumb {
     gap: 2rem;
 }
 
-img {
-    max-width: 100%;
-    display: block;
-    object-fit: cover;
-}
-
 .card {
     background-color: rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    width: clamp(20rem, calc(20rem + 2vw), 22rem);
+    /* width: clamp(20rem, calc(20rem + 2vw), 22rem); */
     overflow: hidden;
     box-shadow: 0 0.1rem 1rem rgba(0, 0, 0, 0.1);
     border-radius: 1em;
@@ -57,11 +43,6 @@ img {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-}
-
-.card_text {
-    text-decoration: none;
-    color: black;
 }
 
 .tag {
@@ -99,7 +80,6 @@ img {
 }
 
 .card__footer {
-    display: flex;
     padding: 1rem;
     margin-top: auto;
 }
@@ -117,8 +97,40 @@ img {
     color: #666;
 }
 
-.list-group-item {
-    color: black;
-    background-color: rgba(0, 0, 0, 0);
-    font-size: 1.2em;
+
+
+
+body::-webkit-scrollbar {
+    width: 10px;
+    background-color: rgb(167, 167, 167);
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: #575656;
+}
+
+.comments {
+    height: 750px;
+    overflow-y: scroll;
+}
+
+.comments::-webkit-scrollbar {
+    width: 5px;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.comments::-webkit-scrollbar-thumb {
+    background-color: #807e7e;
+}
+
+.last-messages {
+    height: 0px;
+}
+
+.bg-form {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.bg-form:focus {
+    background: rgba(0, 0, 0, 0.1);
 }
