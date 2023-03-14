@@ -24,6 +24,8 @@ env = environ.Env(
     DATABASE_PASSWORD=(str),
     DATABASE_HOST=(str),
     DATABASE_PORT=(str),
+    
+    LOGGING_LEVEL=(str),
 )
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -183,25 +185,19 @@ AUTH_USER_MODEL = 'users.User'
 
 # log
 
+LOGGING_LEVEL = env('LOGGING_LEVEL')
 if not DEBUG:
     LOGGING = {
         'version': 1,
         'disable_existing_loggers': False,
         'formatters': {
-            'console': {
-                'format': '%(name)-12s %(levelname)-8s %(message)s'
-            },
             'file': {
                 'format': '%(asctime)s %(name)-12s %(levelname)-8s %(message)s'
             }
         },
         'handlers': {
-            'console': {
-                'class': 'logging.StreamHandler',
-                'formatter': 'console'
-            },
             'file': {
-                'level': 'WARNING',
+                'level': LOGGING_LEVEL,
                 'class': 'logging.FileHandler',
                 'formatter': 'file',
                 'filename': 'log.log'
@@ -209,7 +205,7 @@ if not DEBUG:
         },
         'loggers': {
             '': {
-                'level': 'WARNING',
+                'level': LOGGING_LEVEL,
                 'handlers': ['console', 'file']
             }
         }
