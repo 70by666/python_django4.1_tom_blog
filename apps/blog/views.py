@@ -12,10 +12,8 @@ class BlogView(TitleMixin, ListView):
     def get_queryset(self):
         queryset = super().get_queryset()
         category_slug = self.kwargs.get('slug')
-        print(category_slug)
         if category_slug:
             self.category = Categories.objects.get(slug=self.kwargs['slug'])
-            print(self.category.id)
             return queryset.filter(category_id=self.category.id)
         
         return queryset
