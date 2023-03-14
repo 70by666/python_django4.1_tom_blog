@@ -2,6 +2,8 @@
 
 {% load static %}
 
+{% load humanize %}
+
 {% block css %}
     <link rel="stylesheet" href="{% static 'css/index.css' %}">
 {% endblock css %}
@@ -15,48 +17,29 @@
                 <h2 class="fw-bold">САМЫЕ ПОПУЛЯРНЫЕ</h2>
                 <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <div class="card-carousel text-bg-dark">
-                                <img src="{% static 'img/kot_tomov.jpg' %}"
-                                    class="card-img" alt="...">
-                                <div class="card-img-overlay p-3">
-                                    <p class="card-title">Card title</p>
-                                    <p class="card-text-car">This is a wider card with supporting text below as a
-                                        natural lead-in to additional content. This content is a little bit longer.
-                                    </p>
-                                    <p class="card-text-info"><small>Last updated 3 mins ago | by Admin | 10 comment |
-                                            666&#128077; </small></p>
+                        {% for i in filter %}
+                            <div class="carousel-item active">
+                                <div class="card-carousel text-bg-dark">
+                                    {% if i.image %}
+                                        <img src="{{ i.image.url }}"
+                                            class="card-img" alt="...">
+                                    {% endif %}
+                                    <div class="card-img-overlay">
+                                        <p class="card-title">{{ i.title }}</p>
+                                        <p class="card-text-car">
+                                            {{ i.short_description }}
+                                        </p>
+                                        <p class="card-text-info">
+                                            <small>
+                                                Last updated {{ i.created|naturaltime }} | 
+                                                by {{ i.author.username }} | 
+                                                10&#128172; | 666&#128077;
+                                            </small>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="card-carousel text-bg-dark">
-                                <img src="{% static 'img/kot_tomov.jpg' %}"
-                                    class="card-img" alt="...">
-                                <div class="card-img-overlay">
-                                    <p class="card-title">Card title</p>
-                                    <p class="card-text-car">This is a wider card with supporting text below as a
-                                        natural lead-in to additional content. This content is a little bit longer.
-                                    </p>
-                                    <p class="card-text-info"><small>Last updated 3 mins ago | by Admin | 10 comment |
-                                            666&#128077; </small></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="card-carousel text-bg-dark">
-                                <img src="{% static 'img/kot_tomov.jpg' %}"
-                                    class="card-img" alt="...">
-                                <div class="card-img-overlay">
-                                    <p class="card-title">Card title</p>
-                                    <p class="card-text-car">This is a wider card with supporting text below as a
-                                        natural lead-in to additional content. This content is a little bit longer.
-                                    </p>
-                                    <p class="card-text-info"><small>Last updated 3 mins ago | by Admin | 10 comment |
-                                            666&#128077; </small></p>
-                                </div>
-                            </div>
-                        </div>
+                        {% endfor %}
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying"
                         data-bs-slide="prev">
@@ -95,41 +78,27 @@
                 <div class="row mb-5">
                     <div class="col-4">
                         <div id="list-example" class="list-group">
-                            <a class="list-group-item list-group-item bg-dark-1" href="#list-item-1">Item 1</a>
-                            <a class="list-group-item list-group-item bg-dark-1" href="#list-item-2">Item 2</a>
-                            <a class="list-group-item list-group-item bg-dark-1" href="#list-item-3">Item 3</a>
-                            <a class="list-group-item list-group-item bg-dark-1" href="#list-item-4">Item 4</a>
-                            <a class="list-group-item list-group-item bg-dark-1" href="#list-item-5">Item 5</a>
+                            {% for i in object_list %}
+                                <a class="list-group-item list-group-item bg-dark-1" href="#list-item-{{ i.created }}">
+                                    {{ i.title }}
+                                </a>
+                            {% endfor %}
                         </div>
                     </div>
-                    <div class="col-8">
+                    <div class="col-6">
                         <div data-bs-spy="scroll" data-bs-target="#list-example" data-bs-smooth-scroll="true"
                             class="scrollspy-example" tabindex="0">
-                            <img id="list-item-1" class="img-recent"
-                                src="{% static 'img/kot_tomov.jpg' %}"
-                                class="card-img-top" alt="...">
-                            <p class="card-text">Some quick example text to build on the card
-                                title and make up the bulk of the card's content.</p>
-                            <img id="list-item-2" class="img-recent"
-                                src="{% static 'img/kot_tomov.jpg' %}"
-                                class="card-img-top" alt="...">
-                            <p class="card-text">Some quick example text to build on the card
-                                title and make up the bulk of the card's content.</p>
-                            <img id="list-item-3" class="img-recent"
-                                src="{% static 'img/kot_tomov.jpg' %}"
-                                class="card-img-top" alt="...">
-                            <p class="card-text">Some quick example text to build on the card
-                                title and make up the bulk of the card's content.</p>
-                            <img id="list-item-4" class="img-recent"
-                                src="{% static 'img/kot_tomov.jpg' %}"
-                                class="card-img-top" alt="...">
-                            <p class="card-text">Some quick example text to build on the card
-                                title and make up the bulk of the card's content.</p>
-                            <img id="list-item-5" class="img-recent"
-                                src="{% static 'img/kot_tomov.jpg' %}"
-                                class="card-img-top" alt="...">
-                            <p class="card-text">Some quick example text to build on the card
-                                title and make up the bulk of the card's content.</p>
+                            {% for i in object_list %}
+                            <hr id="list-item-{{ i.created }}">
+                            {% if i.image %}
+                                <a href="{{ i.get_absolute_url }}">
+                                    <img class="img-recent"
+                                        src="{{ i.image.url }}"
+                                        class="card-img-top" alt="...">
+                                </a>
+                            {% endif %}
+                            <p class="card-text">{{ i.short_description }}</p>
+                            {% endfor %}
                         </div>
                     </div>
                     <div class="position-relative">
