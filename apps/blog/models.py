@@ -2,11 +2,12 @@ from django.db import models
 from django.core.validators import FileExtensionValidator
 from django.contrib.auth import get_user_model
 
+from mptt.models import TreeForeignKey, MPTTModel
 
 User = get_user_model()
 
 
-class BlogPosts(models.Model):
+class Posts(models.Model):
     """
     Модель постов для блога
     """    
@@ -14,8 +15,8 @@ class BlogPosts(models.Model):
     PUBLISHED = 0
     DRAFT = 1
     STATUSES = (
-        ('PUBLISHED', 'Черновик'),
-        ('DRAFT', 'Опубликовано'),
+        (PUBLISHED, 'Опубликовано'),
+        (DRAFT, 'Черновик'),
     ) 
     
     title = models.CharField(verbose_name='Заголовок', max_length=128)
@@ -28,12 +29,13 @@ class BlogPosts(models.Model):
     short_descrtiprion = models.CharField(
         verbose_name='Короткое описание', 
         max_length=512,
+        blank=True,
     )
     full_description = models.TextField(verbose_name='Полное описание')
     image = models.ImageField(
         verbose_name='Превью',
         blank=True,
-        upload_to='post_images',
+        upload_to='post_images/%y/%m/%d',
         validators=[FileExtensionValidator(allowed_extensions=(
             'png', 'jpg', 'jpeg', 'gif', 'webp'
         ))]
@@ -69,6 +71,12 @@ class BlogPosts(models.Model):
         verbose_name='Закреплено',
         default=False
     )
+    category = TreeForeignKey(
+        'Categories', 
+        on_delete=models.PROTECT,
+        related_name='posts',
+        verbose_name='Категория'
+    )
     
     class Meta:
         ordering = ('-fixed', '-created')
@@ -76,5 +84,49 @@ class BlogPosts(models.Model):
         verbose_name = 'Статья'
         verbose_name_plural = 'Статьи'
     
+    def __str__(self):
+        return self.title
+
+
+class Categories(MPTTModel):
+    """
+    Модель для категорий с вложенностью
+    """
+    
+    title = models.CharField(
+        max_length=128, 
+        verbose_name='Название',
+    )
+    slug = models.SlugField(
+        verbose_name='URL', 
+        max_length=128, 
+        blank=True, 
+        unique=True,
+    )
+    description = models.CharField(
+        max_length=512,
+        verbose_name='Описание',
+        blank=True,
+    )
+    parent = TreeForeignKey(
+        'self',
+        on_delete=models.CASCADE, 
+        null=True, 
+        blank=True, 
+        related_name='children',
+        verbose_name='Родительская категория'
+    )
+    
+    class MPTTMeta:
+        """
+        Сортировка по вложенности
+        """
+
+        order_insertion_by = ('title',)
+   
+    class Meta:
+        verbose_name = 'Категория'
+        verbose_name_plural = 'Категории'
+        
     def __str__(self):
         return self.title
