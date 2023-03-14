@@ -1,0 +1,82 @@
+@import url(https://fonts.googleapis.com/css?family=Dancing+Script:400,700);
+
+body {
+    background-color: azure;
+    background-image: url(https://top-fon.com/uploads/posts/2023-02/1675327117_top-fon-com-p-koti-fon-dlya-prezentatsii-6.jpg);
+}
+
+body::-webkit-scrollbar {
+    width: 10px;
+    background-color: rgb(167, 167, 167);
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: #575656;
+}
+
+.scrollspy-example {
+    overflow-y: scroll;
+    height: 300px;
+}
+
+.scrollspy-example::-webkit-scrollbar {
+    width: 5px;
+    background-color: rgb(167, 167, 167);
+}
+
+.scrollspy-example::-webkit-scrollbar-thumb {
+    background-color: #575656;
+}
+
+.info-carousel {
+    background-color: azure;
+    color: black;
+}
+
+.card-title {
+    font-size: 3em;
+    text-shadow: black 1px 2px;
+}
+
+.card-text-car {
+    font-size: 2em;
+    text-shadow: black 1px 2px;
+}
+
+.card-text-info {
+    text-shadow: black 1px 2px;
+}
+
+.img-recent {
+    width: 50%;
+}
+
+.carousel {
+    width: 100%;
+}
+
+.img-card-wnb {
+    width: 100%;
+}
+
+.sub {
+    padding-top: 10em;
+}
+
+.button-all {
+    right: 0;
+}
+
+/* Sticky Footer Classes */
+
+footer {
+  height: 100%;
+}
+
+#page-content {
+  flex: 1 0 auto;
+}
+
+.bg-dark-1 {
+    background-color: rgba(0, 0, 0, 0);
+}
