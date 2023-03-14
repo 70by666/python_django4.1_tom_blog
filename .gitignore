@@ -12,3 +12,4 @@ common/__pycache__
 static/admin/
 static/django_extensions/
 static/mptt/
+log.log
