@@ -1,0 +1,92 @@
+[
+    {
+        "model": "blog.posts",
+        "pk": 1,
+        "fields": {
+            "title": "Where does it come from?",
+            "slug": "test",
+            "short_description": "Contrary to popular belief, Lorem Ipsum is not simply random...",
+            "full_description": "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.\r\n\r\nThe standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.",
+            "image": "post_images/23/03/14/kot_tomov.jpg",
+            "status": 0,
+            "created": "2023-03-14T06:17:16.244Z",
+            "updated": "2023-03-14T09:42:41.219Z",
+            "author": 1,
+            "updater": null,
+            "fixed": false,
+            "category": 4
+        }
+    },
+    {
+        "model": "blog.posts",
+        "pk": 2,
+        "fields": {
+            "title": "Why do we use it?",
+            "slug": "why-do-we-use-it",
+            "short_description": "It is a long established fact that a reader will be distrac...",
+            "full_description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
+            "image": "post_images/23/03/14/dddsdasd.jpg",
+            "status": 0,
+            "created": "2023-03-14T09:32:40.360Z",
+            "updated": "2023-03-14T09:35:40.452Z",
+            "author": 1,
+            "updater": null,
+            "fixed": false,
+            "category": 2
+        }
+    },
+    {
+        "model": "blog.posts",
+        "pk": 3,
+        "fields": {
+            "title": "What is Lorem Ipsum?",
+            "slug": "what-is-lorem-ipsum",
+            "short_description": "Lorem Ipsum is simply dummy text of the printing...",
+            "full_description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+            "image": "post_images/23/03/14/h5rett453.jpg",
+            "status": 0,
+            "created": "2023-03-14T09:33:50.508Z",
+            "updated": "2023-03-14T09:35:46.417Z",
+            "author": 1,
+            "updater": null,
+            "fixed": false,
+            "category": 5
+        }
+    },
+    {
+        "model": "blog.posts",
+        "pk": 4,
+        "fields": {
+            "title": "Where can I get some?",
+            "slug": "where-can-i-get-some",
+            "short_description": "There are many variations of passages of Lorem Ipsum...",
+            "full_description": "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.",
+            "image": "post_images/23/03/14/gdfgre.jpg",
+            "status": 0,
+            "created": "2023-03-14T09:34:24.371Z",
+            "updated": "2023-03-14T09:35:50.370Z",
+            "author": 1,
+            "updater": null,
+            "fixed": false,
+            "category": 6
+        }
+    },
+    {
+        "model": "blog.posts",
+        "pk": 5,
+        "fields": {
+            "title": "Why do we use it?",
+            "slug": "why-do-we-use-it-72055d20",
+            "short_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+            "full_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non mauris ultrices, accumsan dolor vel, gravida odio. Donec semper convallis iaculis. Aliquam vel mattis nisi. Cras tincidunt turpis sit amet dignissim convallis. Quisque non libero et mauris pharetra vehicula non quis nunc. Nam lacinia tincidunt ante, quis mattis mi elementum sit amet. Fusce sagittis leo a libero sodales pretium id quis metus. Cras vehicula fermentum dolor. Ut in aliquet arcu. Quisque eget egestas lacus. Duis elementum posuere consectetur. In facilisis felis et sodales luctus. Integer rhoncus dui at metus ullamcorper, in consequat tellus congue. In sed varius enim.\r\n\r\nAliquam sit amet varius diam. Proin in tincidunt velit, eget gravida elit. Duis dignissim nunc ut lectus imperdiet aliquet. Donec porta nisi eget turpis molestie, in finibus nunc sodales. Aliquam eu aliquam odio. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce ut sodales lacus. Nullam eu molestie nulla. Sed eu consectetur diam, sed iaculis lectus. Aenean suscipit rutrum tellus. Aenean pharetra orci id vulputate accumsan.\r\n\r\nDuis justo dolor, aliquam eu ornare in, luctus non nibh. Nam ornare odio porta ex malesuada bibendum. Fusce id arcu vel purus scelerisque fermentum. Proin hendrerit feugiat scelerisque. Fusce in tortor porttitor, laoreet nibh vitae, imperdiet augue. Praesent tincidunt faucibus ipsum, in mattis lorem mollis in. Praesent vulputate est ante, auctor iaculis dui porta eu. Curabitur fringilla rutrum arcu, rhoncus consequat quam eleifend et.\r\n\r\nVestibulum placerat metus est, eu egestas massa faucibus non. Mauris porttitor gravida quam id eleifend. Curabitur ac mauris vestibulum, convallis dolor a, imperdiet ex. Quisque fermentum varius condimentum. Maecenas tincidunt augue ac erat commodo, at egestas erat ornare. Duis sagittis tempor diam, eget tempor augue pellentesque non. Mauris et aliquet orci. Pellentesque nec consequat diam, et egestas eros. Phasellus elementum arcu ipsum, non dignissim lectus placerat sit amet. Sed ante ex, venenatis quis nunc volutpat, pharetra hendrerit eros. Aliquam erat volutpat.\r\n\r\nSed tempus scelerisque lorem ut iaculis. Suspendisse libero leo, maximus eget cursus in, congue eget felis. Vestibulum quis vehicula elit. Maecenas ultrices, lacus nec porttitor imperdiet, dolor arcu pharetra mauris, mollis posuere massa diam eu metus. Sed vel augue nibh. In id urna porta, laoreet enim vel, placerat nunc. Ut ut purus auctor, mattis libero quis, ullamcorper dui. Phasellus sit amet mattis nulla. Vivamus non ex ut purus blandit consequat. Proin volutpat lacinia dui. Proin vitae dolor a purus posuere bibendum. Donec dignissim neque non leo bibendum elementum. Sed ultrices vestibulum nibh sit amet fermentum. Integer mattis commodo est ultricies euismod.",
+            "image": "post_images/23/03/14/kiiiiiiiiiiiiiit.jpg",
+            "status": 0,
+            "created": "2023-03-14T10:26:49.818Z",
+            "updated": "2023-03-14T10:55:16.124Z",
+            "author": 1,
+            "updater": null,
+            "fixed": false,
+            "category": 2
+        }
+    }
+]
