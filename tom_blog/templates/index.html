@@ -58,11 +58,11 @@
             <div class="col-lg-3 sub">
                 <h2 class="fw-bold">Подписка</h2>
                 <p class="fs-5">
-                    Не хочешь пропускать наши последние обновления? Попишись на рассылку, уведомления будут приходить
+                    Не хочешь пропускать наши последние обновления? Подпишись на рассылку, уведомления будут приходить
                     на почту!
                 </p>
                 <div class="position-relative">
-                    <div class="position-absolute button-sub mt-3">
+                    <div class="position-absolute button-sub">
                         <a href="#"><button class="btn btn-primary" type="button">Подписаться</button></a>
                     </div>
                 </div>
@@ -91,7 +91,7 @@
                             {% for i in object_list %}
                             <hr id="list-item-{{ i.created }}">
                             {% if i.image %}
-                                <a href="{{ i.get_absolute_url }}">
+                                <a href="{% url 'blog:post' i.slug %}">
                                     <img class="img-recent"
                                         src="{{ i.image.url }}"
                                         class="card-img-top" alt="...">
@@ -101,9 +101,11 @@
                             {% endfor %}
                         </div>
                     </div>
-                    <div class="position-relative">
-                        <div class="position-absolute button-all mt-3">
-                            <a href="#"><button class="btn btn-primary" type="button">Посмотреть все!</button></a>
+                    <div class="row">
+                        <div class="col-lg-6"></div>
+                        <div class="col-lg-2"></div>
+                        <div class="col-lg-3 mt-3">
+                            <a href="{% url 'blog:index' %}"><button class="btn btn-primary" type="button">Посмотреть все!</button></a>
                         </div>
                     </div>
                 </div>

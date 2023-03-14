@@ -64,10 +64,6 @@ body::-webkit-scrollbar-thumb {
     padding-top: 10em;
 }
 
-.button-all {
-    right: 0;
-}
-
 /* Sticky Footer Classes */
 
 footer {
