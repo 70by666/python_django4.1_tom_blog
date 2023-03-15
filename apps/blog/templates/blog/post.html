@@ -5,7 +5,7 @@
 {% load humanize %}
 
 {% block css %}
-    <link rel="stylesheet" href="{% static 'css/post.css' %}?32">
+    <link rel="stylesheet" href="{% static 'css/post.css' %}?322">
 {% endblock css %}
 
 {% block section %}
@@ -58,20 +58,22 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <h4 class="text-right">Комментарии</h4>
                         </div>
-                        <div>
-                            <div class="d-flex flex-row align-items-start">
-                                <img class="img-thumbnail me-2" src="
-                                {% if user.image %}
-                                    {{ user.image.url }}
-                                {% else %}
-                                    {% static 'img/profile.png' %}
-                                {% endif %}"
-                                width="100">
-                                <textarea
-                                    class="form-control ml-1 shadow-none textarea bg-form"></textarea></div>
-                            <div class="my-2 mb-3 text-right"><button class="btn btn-primary btn-sm shadow-none"
-                                    type="button">Написать</button></div>
-                        </div>
+                        {% if user.is_authenticated %}
+                            <div>
+                                <div class="d-flex flex-row align-items-start">
+                                    <img class="img-thumbnail me-2" src="
+                                    {% if user.image %}
+                                        {{ user.image.url }}
+                                    {% else %}
+                                        {% static 'img/profile.png' %}
+                                    {% endif %}"
+                                    width="100">
+                                    <textarea
+                                        class="form-control ml-1 shadow-none textarea bg-form"></textarea></div>
+                                <div class="my-2 mb-3 text-right"><button class="btn btn-primary btn-sm shadow-none"
+                                        type="button">Написать</button></div>
+                            </div>
+                        {% endif %}
                         <div class="d-flex flex-column comment-section">
                             <div class="comments bg-commets">
                                 <div class=" p-2">
@@ -104,8 +106,7 @@
                                 </div>
                                 <hr>
                             </div>
-                    </div>
-                        
+                        </div>
                     </div>
                 </div>
             </div>
