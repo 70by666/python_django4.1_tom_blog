@@ -1,4 +1,6 @@
-from django.views.generic import DeleteView, ListView
+from django.shortcuts import redirect
+from django.views.generic import DeleteView, ListView, View
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from apps.blog.models import Categories, Posts
 from common.views import TitleMixin
@@ -35,6 +37,19 @@ class BlogDetailView(TitleMixin, DeleteView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["title"] = f'{self.object.title} - ID {self.object.id}'
+        context['title'] = f'{self.object.title} - ID {self.object.id}'
         
         return context
+
+
+class AddlikeView(LoginRequiredMixin, View):
+    def get(self, request, slug, *args, **kwargs):
+        post = Posts.objects.get(slug=slug)
+        for like in post.likes.all():
+            if like == request.user:
+                post.likes.remove(request.user)
+                return redirect(request.META['HTTP_REFERER'])
+            
+        post.likes.add(request.user)
+        
+        return redirect(request.META['HTTP_REFERER'])

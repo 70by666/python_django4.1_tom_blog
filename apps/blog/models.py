@@ -79,6 +79,12 @@ class Posts(models.Model):
         related_name='posts',
         verbose_name='Категория'
     )
+    likes = models.ManyToManyField(
+        to=User, 
+        blank=True, 
+        default=0, 
+        related_name='likes'
+    )
     
     class Meta:
         ordering = ('-fixed', '-created')

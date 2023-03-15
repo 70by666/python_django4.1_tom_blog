@@ -162,3 +162,7 @@ body::-webkit-scrollbar-thumb {
         rgba(128, 128, 128, 0.7);
     border-radius: 10%;
 }
+
+.like_coms_url {
+    text-decoration: none;
+}
