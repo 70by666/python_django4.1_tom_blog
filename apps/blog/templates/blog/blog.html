@@ -38,6 +38,8 @@
                                     0 &#128077;
                                 </div>
                             <div class="card__footer">
+				<div class="row">
+				<div class="col-lg-5">
                                 <img width="100"
                                 src="
                                 {% if i.author.image %} 
@@ -46,12 +48,16 @@
                                 {% static 'img/profile.png' %}
                                 {% endif %}"
                                 class="img_bord">
+				</div>
+				<div class="col-lg-7">
                                 <div class="user">
                                     <div class="user__info">
                                         <h5>{{ i.author.username }}</h5>
                                         <small>Заходил на сайт {{ i.author.last_login|naturaltime }}</small>
                                     </div>
                                 </div>
+				</div>
+				</div>
                             </div>
                         </div>
                     {% endfor %}
