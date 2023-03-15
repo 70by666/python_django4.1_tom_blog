@@ -9,7 +9,7 @@ class BlogView(TitleMixin, ListView):
     template_name = 'blog/blog.html'
     title = 'Блог'
     category = None
-    paginate_by = 3
+    paginate_by = 6
     
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -18,7 +18,7 @@ class BlogView(TitleMixin, ListView):
             self.category = Categories.objects.get(slug=self.kwargs['slug'])
             return queryset.filter(category_id=self.category.id)
         
-        return queryset
+        return queryset.filter(status=0)
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

@@ -22,7 +22,7 @@ class IndexView(TitleMixin, ListView):
     def get_queryset(self):
         queryset = super().get_queryset()
         
-        return queryset.all()[:3]
+        return queryset.filter(status=0)[:3]
     
     
 class ContactView(TitleMixin, TemplateView):
