@@ -1,7 +1,10 @@
+from http import HTTPStatus
+
+from django.shortcuts import render
 from django.views.generic import ListView, TemplateView
 
 from apps.blog.models import Posts
-from common.views import TitleMixin
+from common.views import TitleMixin, title_error
 
 
 class IndexView(TitleMixin, ListView):
@@ -25,3 +28,24 @@ class IndexView(TitleMixin, ListView):
 class ContactView(TitleMixin, TemplateView):
     template_name = 'contact.html'
     title = 'Обратная связь'
+
+
+def error403(request, exception):
+    context = title_error('Ошибка доступа: 403')
+    status = HTTPStatus.FORBIDDEN
+    
+    return render(request, '403.html', context, status=status)
+
+
+def error404(request, exception):
+    context = title_error('Страница не найдена: 404')
+    status = HTTPStatus.NOT_FOUND
+    
+    return render(request, '404.html', context, status=status)
+
+
+def error500(request):
+    context = title_error('Ошибка сервера: 500')
+    status = HTTPStatus.INTERNAL_SERVER_ERROR
+    
+    return render(request, '500.html', context, status=status)

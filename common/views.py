@@ -6,3 +6,7 @@ class TitleMixin:
         context['title'] = self.title
         
         return context
+
+
+def title_error(title=None):
+    return {'title': title}
