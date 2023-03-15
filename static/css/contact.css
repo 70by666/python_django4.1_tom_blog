@@ -5,7 +5,7 @@
 }
 
 body {
-  background-color: #8a9c94;
+  background: linear-gradient(to right, #91eae4, #86a8e7, #7f7fd5);
   font-family: 'Roboto', sans-serif;
 }
 

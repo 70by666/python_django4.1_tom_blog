@@ -16,6 +16,11 @@ class IndexView(TitleMixin, ListView):
         
         return context
     
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        
+        return queryset.all()[:3]
+    
     
 class ContactView(TitleMixin, TemplateView):
     template_name = 'contact.html'

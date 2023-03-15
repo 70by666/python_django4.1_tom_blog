@@ -155,3 +155,7 @@ img {
         solid
         rgba(128, 128, 128, 0.7);
 }
+
+.under_line {
+    text-decoration: underline;
+}

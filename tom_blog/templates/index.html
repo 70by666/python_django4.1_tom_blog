@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'main/base.html' %}
 
 {% load static %}
 
@@ -114,12 +114,12 @@
                         </div>
                     </div>
                 </div>
-                {% include 'blog/sidebar.html' %}
+                {% include 'main/sidebar.html' %}
             </div>
         </div>
     </section>
 {% endblock section %}
 
 {% block footer %}
-    {% include 'footer.html' %}
+    {% include 'main/footer.html' %}
 {% endblock footer %}

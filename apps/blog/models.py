@@ -94,7 +94,7 @@ class Posts(models.Model):
         """
         Генерация случайноuj slug, если уже есть статья с нужным названием
         """
-        
+         
         if not self.slug:
             self.slug = slugify(self.title)
             while Posts.objects.filter(slug=self.slug).exists():

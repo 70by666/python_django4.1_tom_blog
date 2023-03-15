@@ -1,106 +1,111 @@
-{% extends 'base.html' %}
+{% extends 'main/base.html' %}
 
 {% load static %}
     
 {% load humanize %}
 
 {% block css %}
-    <link rel="stylesheet" href="{% static 'css/post.css' %}?123">
+    <link rel="stylesheet" href="{% static 'css/post.css' %}?32">
 {% endblock css %}
 
 {% block section %}
     <section>
-        <div class="row">
-            <div class="col-lg-1"></div>
-            <div class="col-lg-6 my-5">
-                <div class="card">
-                    <div class="card__header">
-                        <img src="{{ object.image.url }}"
-                            alt="card__image" class="card__image" style="width: 100%;">
-                    </div>
-                    <div class="card__body">
-                        <span class="tag tag-blue">{{ object.category }}</span>
-                        <h4>{{ object.title }}</h4>
-                        <p>{{ object.full_description }}</p>
-                        <small>{{ object.created|naturaltime }}</small>
-                    </div>
-                    <div class="card__footer">
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <div class="user">
-                                    <img src="
-                                    {% if object.author.image %} 
-                                        {{ object.author.image.url }} 
-                                    {% else %} 
-                                        {% static 'img/profile.png' %}
-                                    {% endif %}" 
-                                    alt="user__image"
-                                    class="img-thumbnail" width="100">
-                                    <div class="user__info">
-                                        <h5>{{ object.author.username }}</h5>
-                                        <small>Заходил на сайт {{ object.author.last_login|naturaltime }}</small>
+        <div class="container_cont">
+            <div class="row">
+                <div class="col-lg-1"></div>
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card__header">
+                            <img src="{{ object.image.url }}"
+                                alt="card__image" class="card__image" style="width: 100%;">
+                        </div>
+                        <div class="card__body">
+                            <span class="tag tag-blue">{{ object.category }}</span>
+                            <h4>{{ object.title }}</h4>
+                            <p>{{ object.full_description }}</p>
+                            <small>{{ object.created|naturaltime }}</small>
+                        </div>
+                        <div class="card__footer">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="user">
+                                        <img src="
+                                        {% if object.author.image %}
+                                            {{ object.author.image.url }}
+                                        {% else %}
+                                            {% static 'img/profile.png' %}
+                                        {% endif %}"
+                                        alt="user__image"
+                                        class="img-thumbnail" width="100">
+                                        <div class="user__info">
+                                            <h5>{{ object.author.username }}</h5>
+                                            <small>Заходил на сайт {{ object.author.last_login|naturaltime }}</small>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-6">
-                            </div>
-                            <div class="col-lg-2">
-                                10 &#128172;
-                                123 &#128077;
+                                <div class="col-lg-6">
+                                </div>
+                                <div class="col-lg-2">
+                                    10 &#128172;
+                                    123 &#128077;
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-5 my-5">
-                <div class="d-flex justify-content-between align-items-center">
-                    <h4 class="text-right">Комментарии</h4>
-                </div>
-                <div class="d-flex flex-column comment-section">
-                    <div class="comments bg-commets">
-                        <div class=" p-2">
-                            <div class="d-flex flex-row user-info">
-                                <img class="rounded-circle" src="
-                                {% if pass %} 
-                                    {{ pass }} 
-                                {% else %} 
+                <div class="col-lg-5">
+                    <div class="container_comm">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h4 class="text-right">Комментарии</h4>
+                        </div>
+                        <div>
+                            <div class="d-flex flex-row align-items-start">
+                                <img class="img-thumbnail me-2" src="
+                                {% if user.image %}
+                                    {{ user.image.url }}
+                                {% else %}
                                     {% static 'img/profile.png' %}
-                                {% endif %}" 
-                                width="40">
-                                <div class="d-flex flex-column justify-content-start ml-2"><span
-                                        class="d-block font-weight-bold name">Имя</span><span
-                                        class="date text-black-50">Комментарий отправлен</span></div>
-                            </div>
-                            <div class="mt-2">
-                                <p class="comment-text">Lorem ipsum dolor sit amet, consectetur adipiscing
-                                    elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
-                                    ut aliquip ex ea commodo consequat.</p>
-                            </div>
+                                {% endif %}"
+                                width="100">
+                                <textarea
+                                    class="form-control ml-1 shadow-none textarea bg-form"></textarea></div>
+                            <div class="my-2 mb-3 text-right"><button class="btn btn-primary btn-sm shadow-none"
+                                    type="button">Написать</button></div>
                         </div>
-                        <div class="">
-                            <div class="d-flex flex-row fs-12">
-                                <div class="like p-2 cursor"><i class="fa fa-thumbs-o-up"></i><span
-                                        class="ml-1">0 &#128172;</span></div>
-                                <div class="like p-2 cursor"><i class="fa fa-commenting-o"></i><span
-                                        class="ml-1">0 &#128077;</span></div>
+                        <div class="d-flex flex-column comment-section">
+                            <div class="comments bg-commets">
+                                <div class=" p-2">
+                                    <div class="d-flex flex-row user-info">
+                                        <img class="rounded-circle" src="
+                                        {% if pass %}
+                                            {{ pass }}
+                                        {% else %}
+                                            {% static 'img/profile.png' %}
+                                        {% endif %}"
+                                        width="40">
+                                        <div class="d-flex flex-column justify-content-start ml-2"><span
+                                                class="d-block font-weight-bold name">Имя</span><span
+                                                class="date text-black-50">Комментарий отправлен</span></div>
+                                    </div>
+                                    <div class="mt-2">
+                                        <p class="comment-text">Lorem ipsum dolor sit amet, consectetur adipiscing
+                                            elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
+                                            ut aliquip ex ea commodo consequat.</p>
+                                    </div>
+                                </div>
+                                <div class="">
+                                    <div class="d-flex flex-row fs-12">
+                                        <div class="like p-2 cursor"><i class="fa fa-thumbs-o-up"></i><span
+                                                class="ml-1">0 &#128172;</span></div>
+                                        <div class="like p-2 cursor"><i class="fa fa-commenting-o"></i><span
+                                                class="ml-1">0 &#128077;</span></div>
+                                    </div>
+                                </div>
+                                <hr>
                             </div>
-                        </div>
-                        <hr>
                     </div>
-                    <div class="p-2">
-                        <div class="d-flex flex-row align-items-start">
-                            <img class="img-thumbnail me-2" src="
-                            {% if user.image %} 
-                                {{ user.image.url }} 
-                            {% else %} 
-                                {% static 'img/profile.png' %}
-                            {% endif %}" 
-                            width="100">
-                            <textarea
-                                class="form-control ml-1 shadow-none textarea bg-form"></textarea></div>
-                        <div class="mt-2 text-right"><button class="btn btn-primary btn-sm shadow-none"
-                                type="button">Написать</button></div>
+                        
                     </div>
                 </div>
             </div>
@@ -109,5 +114,5 @@
 {% endblock section %}
 
 {% block footer %}
-    {% include 'footer.html' %}
+    {% include 'main/footer.html' %}
 {% endblock footer %}
