@@ -87,7 +87,7 @@ class Posts(models.Model):
     )
     
     class Meta:
-        ordering = ('-fixed', '-created')
+        ordering = ('-created', )
         indexes = (models.Index(fields=('-fixed', '-created', 'status')),)
         verbose_name = 'Статья'
         verbose_name_plural = 'Статьи'

@@ -12,7 +12,7 @@ class BlogPostsAdmin(admin.ModelAdmin):
     
     list_display = ('title', 'id', 'status', 'created', 'author')
     fields = (
-        ('id', 'title', 'slug', 'category'), 
+        ('id', 'title', 'slug'), ('category', 'fixed'), 
         ('author', 'created'), ('updater', 'updated'),
         ('status', 'image', 'short_description'), 'full_description', 
     )

@@ -13,3 +13,4 @@ static/admin/
 static/django_extensions/
 static/mptt/
 log.log
+apps/users/fixtures

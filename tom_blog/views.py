@@ -15,14 +15,14 @@ class IndexView(TitleMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         queryset = super().get_queryset()
-        context['filter'] = queryset.order_by('-likes')[:3]
+        context['filter'] = queryset.filter(status=0)[:3]
         
         return context
     
     def get_queryset(self):
         queryset = super().get_queryset()
         
-        return queryset.filter(status=0)[:7]
+        return queryset.filter(status=0, fixed=True)
     
     
 class ContactView(TitleMixin, TemplateView):
