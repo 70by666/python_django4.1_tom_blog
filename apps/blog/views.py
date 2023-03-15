@@ -9,6 +9,7 @@ class BlogView(TitleMixin, ListView):
     template_name = 'blog/blog.html'
     title = 'Блог'
     category = None
+    paginate_by = 3
     
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -28,15 +29,12 @@ class BlogView(TitleMixin, ListView):
         return context
     
 
-
 class BlogDetailView(TitleMixin, DeleteView):
     model = Posts
     template_name = 'blog/post.html'
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["title"] = f'{self.object.title} {self.object.id}'
+        context["title"] = f'{self.object.title} - ID {self.object.id}'
         
         return context
-    
-    

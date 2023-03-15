@@ -1,18 +1,18 @@
-{% extends 'base.html' %}
+{% extends 'main/base.html' %}
 
 {% load static %}
 
 {% load humanize %}
 
 {% block css %}
-    <link rel="stylesheet" href="{% static 'css/blog.css' %}?12322">
+    <link rel="stylesheet" href="{% static 'css/blog.css' %}">
 {% endblock css %}
 
 {% block section %}
     <section>
         <div class="row container_cont_blog">
             <div class="col-lg-2">
-                {% include 'blog/sidebar.html' %}
+                {% include 'main/sidebar.html' %}
             </div>
             <div class="col-lg-1"></div>
             <div class="col-lg-9">
@@ -58,9 +58,6 @@
                 </div>
             </div>
         </div>
+        {% include 'main/pagination.html' %}
     </section>
 {% endblock section %}
-
-{% block footer %}
-    {% include 'footer.html' %}
-{% endblock footer %}
