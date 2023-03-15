@@ -24,7 +24,6 @@ handler404 = 'tom_blog.views.error404'
 handler500 = 'tom_blog.views.error500'
 handler403 = 'tom_blog.views.error403'
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', IndexView.as_view(), name='index'),
