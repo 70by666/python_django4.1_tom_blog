@@ -5,7 +5,7 @@
 {% load humanize %}
 
 {% block css %}
-    <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+    <link rel="stylesheet" href="{% static 'css/blog.css' %}?1">
 {% endblock css %}
 
 {% block section %}
@@ -38,15 +38,15 @@
                                     0 &#128077;
                                 </div>
                             <div class="card__footer">
+                                <img width="100"
+                                src="
+                                {% if i.author.image %} 
+                                    {{ i.author.image.url}} 
+                                {% else %} 
+                                {% static 'img/profile.png' %}
+                                {% endif %}"
+                                class="img_bord">
                                 <div class="user">
-                                    <img width="100"
-                                    src="
-                                    {% if i.author.image %} 
-                                        {{ i.author.image.url}} 
-                                    {% else %} 
-                                    {% static 'img/profile.png' %}
-                                    {% endif %}"
-                                    class="img-thumbnail">
                                     <div class="user__info">
                                         <h5>{{ i.author.username }}</h5>
                                         <small>Заходил на сайт {{ i.author.last_login|naturaltime }}</small>

@@ -14,7 +14,6 @@ class Posts(models.Model):
     """
     Модель постов для блога
     """    
-
     PUBLISHED = 0
     DRAFT = 1
     STATUSES = (
@@ -92,9 +91,8 @@ class Posts(models.Model):
     
     def save(self, *args, **kwargs):
         """
-        Генерация случайноuj slug, если уже есть статья с нужным названием
+        Генерация случайного slug, если уже есть статья с нужным названием
         """
-         
         if not self.slug:
             self.slug = slugify(self.title)
             while Posts.objects.filter(slug=self.slug).exists():
@@ -107,7 +105,6 @@ class Categories(MPTTModel):
     """
     Модель для категорий с вложенностью
     """
-    
     title = models.CharField(
         max_length=32, 
         verbose_name='Название',
@@ -137,7 +134,6 @@ class Categories(MPTTModel):
         """
         Сортировка по вложенности
         """
-
         order_insertion_by = ('title',)
    
     class Meta:

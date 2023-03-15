@@ -5,7 +5,7 @@
 {% load humanize %}
 
 {% block css %}
-    <link rel="stylesheet" href="{% static 'css/post.css' %}?322">
+    <link rel="stylesheet" href="{% static 'css/post.css' %}?1">
 {% endblock css %}
 
 {% block section %}
@@ -27,7 +27,7 @@
                         </div>
                         <div class="card__footer">
                             <div class="row">
-                                <div class="col-lg-4">
+                                <div class="col-lg-6">
                                     <div class="user">
                                         <img src="
                                         {% if object.author.image %}
@@ -36,14 +36,14 @@
                                             {% static 'img/profile.png' %}
                                         {% endif %}"
                                         alt="user__image"
-                                        class="img-thumbnail" width="100">
+                                        class="img_bord" width="100">
                                         <div class="user__info">
                                             <h5>{{ object.author.username }}</h5>
                                             <small>Заходил на сайт {{ object.author.last_login|naturaltime }}</small>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                 </div>
                                 <div class="col-lg-2">
                                     10 &#128172;
@@ -61,7 +61,7 @@
                         {% if user.is_authenticated %}
                             <div>
                                 <div class="d-flex flex-row align-items-start">
-                                    <img class="img-thumbnail me-2" src="
+                                    <img class="img_bord me-2" src="
                                     {% if user.image %}
                                         {{ user.image.url }}
                                     {% else %}

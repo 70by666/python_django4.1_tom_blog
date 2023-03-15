@@ -111,10 +111,6 @@ img {
     gap: 0.5rem;
 }
 
-.user__image {
-    border-radius: 50%;
-}
-
 .user__info>small {
     color: #666;
 }
@@ -158,4 +154,14 @@ img {
 
 .under_line {
     text-decoration: underline;
+}
+
+.img_bord {
+    margin-right: 1em;
+    box-shadow: 0 0.1rem 1rem rgba(0, 0, 0, 0.2);
+    border:
+        1px
+        solid
+        rgba(128, 128, 128, 0.7);
+    border-radius: 10%;
 }
