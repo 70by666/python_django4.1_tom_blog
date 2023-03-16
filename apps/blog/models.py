@@ -30,7 +30,7 @@ class Posts(models.Model):
     )
     short_description = models.CharField(
         verbose_name='Короткое описание', 
-        max_length=64,
+        max_length=128,
         blank=True,
     )
     full_description = models.TextField(verbose_name='Полное описание')
