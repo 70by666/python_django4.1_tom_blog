@@ -47,7 +47,8 @@ class Profile(models.Model):
     
     def save(self, *args, **kwargs) -> None:
         """
-        Генерация случайного slug
+        Автоматическая генерация slug и 
+        при необходимости генерация случайного slug
         """
         if not self.slug:
             self.slug = unique_slug(self, self.user.username)
