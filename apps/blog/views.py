@@ -1,15 +1,14 @@
 from django.shortcuts import redirect
-from django.views.generic import DeleteView, ListView, View
+from django.views.generic import DetailView, ListView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from apps.blog.models import Categories, Posts
 from common.views import TitleMixin
 
 
-class BlogView(TitleMixin, ListView):
+class BlogView(ListView):
     model = Posts
     template_name = 'blog/blog.html'
-    title = 'Блог'
     category = None
     paginate_by = 6
     
@@ -17,27 +16,26 @@ class BlogView(TitleMixin, ListView):
         queryset = super().get_queryset()
         category_slug = self.kwargs.get('slug')
         if category_slug:
-            self.category = Categories.objects.get(slug=self.kwargs['slug'])
+            self.category = Categories.objects.get(slug=category_slug)
             return queryset.filter(category_id=self.category.id)
         
-        return queryset.filter(status=0)
-    
+        return queryset
+        
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         category_slug = self.kwargs.get('slug')
-        if category_slug:
-            context["title"] = self.category.title
-            
+        context["title"] = self.category.title if category_slug else 'Блог'
+        
         return context
     
 
-class BlogDetailView(TitleMixin, DeleteView):
+class BlogDetailView(TitleMixin, DetailView):
     model = Posts
     template_name = 'blog/post.html'
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = f'{self.object.title} - ID {self.object.id}'
+        context['title'] = f'{self.object.id} {self.object.title}'
         
         return context
 

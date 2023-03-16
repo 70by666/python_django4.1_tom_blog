@@ -1,11 +1,9 @@
-from uuid import uuid4
-
 from django.contrib.auth import get_user_model
 from django.core.validators import FileExtensionValidator
 from django.db import models
-from django.urls import reverse
 from mptt.models import MPTTModel, TreeForeignKey
-from pytils.translit import slugify
+
+from common.utils import unique_slug
 
 User = get_user_model()
 
@@ -14,6 +12,18 @@ class Posts(models.Model):
     """
     Модель постов для блога
     """    
+    class PostsManager(models.Manager):
+        """
+        Свой менеджер модели
+        """
+        def all(self):
+            return (
+                self.get_queryset()
+                .select_related('author', 'category')
+                .prefetch_related('likes')
+                .filter(status=0)
+            )
+        
     PUBLISHED = 0
     DRAFT = 1
     STATUSES = (
@@ -69,10 +79,7 @@ class Posts(models.Model):
         verbose_name='Обновил',
         related_name='updated_posts',
     )
-    fixed = models.BooleanField(
-        verbose_name='Закреплено',
-        default=False
-    )
+    fixed = models.BooleanField(verbose_name='Закреплено', default=False)
     category = TreeForeignKey(
         'Categories', 
         on_delete=models.PROTECT,
@@ -86,6 +93,8 @@ class Posts(models.Model):
         related_name='likes'
     )
     
+    objects = PostsManager()
+    
     class Meta:
         ordering = ('-created', )
         indexes = (models.Index(fields=('-fixed', '-created', 'status')),)
@@ -97,12 +106,10 @@ class Posts(models.Model):
     
     def save(self, *args, **kwargs):
         """
-        Генерация случайного slug, если уже есть статья с нужным названием
+        Генерация случайного slug
         """
         if not self.slug:
-            self.slug = slugify(self.title)
-            while Posts.objects.filter(slug=self.slug).exists():
-                self.slug = f'{self.slug}-{uuid4().hex[:8]}'
+            self.slug = unique_slug(self, self.title)
                 
         return super().save(*args, **kwargs)
     
