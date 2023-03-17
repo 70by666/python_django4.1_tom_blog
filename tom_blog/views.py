@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.views.generic import ListView, TemplateView
 
 from apps.blog.models import Posts
-from common.views import TitleMixin
+from common.mixins import TitleMixin
 
 
 class IndexView(TitleMixin, ListView):

@@ -3,7 +3,7 @@ from django.views.generic import DetailView, ListView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from apps.blog.models import Categories, Posts
-from common.views import TitleMixin
+from common.mixins import TitleMixin
 
 
 class BlogView(ListView):
@@ -35,7 +35,7 @@ class BlogDetailView(TitleMixin, DetailView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = f'{self.object.id} {self.object.title}'
+        context['title'] = f'{self.object.id}-{self.object.title}'
         
         return context
 

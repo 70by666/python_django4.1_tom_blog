@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(to right, #91eae4, #86a8e7, #7f7fd5);
+}
+
+body::-webkit-scrollbar {
+    width: 10px;
+    background-color: rgb(167, 167, 167);
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: #575656;
+}
+
+.container_cont {
+    padding: 2em;
+    background-color: rgba(0, 0, 0, 0.151);
+    box-shadow: 0 0.1rem 1rem rgba(0, 0, 0, 0.1);
+    border:
+        1px
+        solid
+        rgba(128, 128, 128, 0.7);
+}
+
+.form-control {
+    background: rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0.1rem 1rem rgba(0, 0, 0, 0.1);
+}
+
+.form-control:focus {
+    background: rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0.1rem 1rem rgba(0, 0, 0, 0.1);
+}

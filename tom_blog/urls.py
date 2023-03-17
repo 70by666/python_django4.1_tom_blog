@@ -29,6 +29,7 @@ urlpatterns = [
     path('', IndexView.as_view(), name='index'),
     path('contact/', ContactView.as_view(), name='contact'),
     path('blog/', include('apps.blog.urls', namespace='blog')),
+    path('users/', include('apps.users.urls', namespace='users')),
 ]
 
 if settings.DEBUG:
