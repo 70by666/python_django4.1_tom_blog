@@ -1,0 +1,24 @@
+{% if messages or form.errors or error or form.non_field_errors %}
+<div class="container mt-5">
+    <div class="alert alert-
+    {% if messages %}
+        alert-success
+    {% else %}
+        alert-danger
+    {% endif %}
+    alert-dismissible fade show" role="alert"
+        style="margin-top: 50px;">
+        {% if messages %}
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        {% elif form.non_field_errors %}
+            {{ form.non_field_errors }}
+        {% elif form.errors %}
+            {{ form.errors }}
+        {% elif form.non_field_errors%}
+            {{ form.non_field_errors }}
+        {% endif %}
+    </div>
+</div>
+{% endif %}

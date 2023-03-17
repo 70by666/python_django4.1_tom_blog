@@ -119,3 +119,8 @@ footer {
 .but-all {
     float: right;
 }
+
+.btn:hover {
+    color: white;
+    background-color: #5756565b;
+}

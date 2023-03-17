@@ -9,18 +9,11 @@
 {% endblock css %}
 
 {% block section %}
-    {% if form.errors or error %}
-        <div class="container mt-5">
-            <div class="alert alert-danger alert-dismissible fade show" role="alert"
-                style="margin-top: 50px;">
-                {{ form.errors }} {{ error }}
-            </div>
-        </div>
-    {% endif %}
     <div class="container container_cont mt-5">
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h4 class="text-right">Редактирование профиля {{ profile }}</h4>
         </div>
+        {% include 'main/forms_errors.html' %}
         <form action="{% url 'users:profile_edit' %}" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="col-md-12">
@@ -56,8 +49,8 @@
                 {{ form.image }}
               </div>
             <div class="mt-5 text-center">
-                <button class="btn btn-primary profile-button" type="subbmit">
-                    Save Profile
+                <button class="btn btn-outline-light mb-5" type="subbmit">
+                    Сохранить профиль
                 </button>
             </div>
         </form>

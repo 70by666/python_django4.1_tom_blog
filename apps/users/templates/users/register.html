@@ -1,0 +1,76 @@
+{% extends 'main/base.html' %}
+
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/register.css' %}?2342">
+{% endblock css %}
+
+{% block section %}
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3"></div>
+                <div class="col-lg-6">
+                    <div class="container container_cont">
+                        <div class="card my-5">
+                            {% include 'main/forms_errors.html' %}
+                            <form class="card-body cardbody-color p-lg-5" action="{% url 'users:register' %}" method="POST">
+                                {% csrf_token %}
+                                <div class="text-center">
+                                    <p class="fs-2">Регистрация!</p>
+                                    <img src="{% static 'img/profile.png' %}" class="img-fluid profile-image-pic mb-3"
+                                        width="200px" alt="profile">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="labels">Имя пользователя:</label>
+                                    {{ form.username }}
+                                </div>
+                                <div class="mb-3">
+                                    <label class="labels">Почта:</label>
+                                    {{ form.email }}
+                                </div>
+                                <div class="mb-3">
+                                    <label class="labels">Имя:</label>
+                                    {{ form.first_name }}
+                                </div>
+                                <div class="mb-3">
+                                    <label class="labels">Фамилия:</label>
+                                    {{ form.last_name }}
+                                </div>
+                                <div class="mb-3">
+                                    <label class="labels">Пароль:</label>
+                                    {{ form.password1 }}
+                                    <ul class="mt-3">
+                                        <li>Пароль не должен быть похож на другую вашу информацию</li>
+                                        <li>Ваш пароль должен содержать как минимум 8 символов</li>
+                                        <li>Пароль не должен быть слишком простым и распространенным</li>
+                                        <li>Пароль не может состоять только из цифр</li>
+                                    </ul>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="labels">Повторите пароль:</label>
+                                    {{ form.password2 }}
+                                </div>
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-sm btn-color btn-outline-light px-5 mb-5 w-100">
+                                        Зарегистрироваться
+                                    </button>
+                                </div>
+                                <div id="emailHelp" class="form-text text-center mb-5 text-dark">
+                                    Уже есть аккаунт?
+                                    <a href="{% url 'users:login' %}" class="url_log_reg text-dark fw-bold"> Авторизоваться!</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3"></div>
+            </div>
+        </div>
+    </section>
+{% endblock section %}
+
+{% block footer %}
+    {% include 'main/footer.html' %}
+{% endblock footer %}

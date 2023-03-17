@@ -5,7 +5,7 @@
 {% load humanize %}
 
 {% block css %}
-    <link rel="stylesheet" href="{% static 'css/profile.css' %}?3212">
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
 {% endblock css %}
 
 {% block section %}
@@ -23,16 +23,16 @@
                     <div class="container_cont">
                         <ul class="list-group">
                             <li class="list-group-item bg-dark-1">Имя пользователя: {{ object }}</li>
-                            {% if object.get_full_name %} 
-                                <li class="list-group-item bg-dark-1">Имя и фамилия: {{ object.get_full_name }}</li> 
-                            {% endif %}
+                            <li class="list-group-item bg-dark-1">Имя и фамилия: {{ object.get_full_name }}</li> 
                             <li class="list-group-item bg-dark-1">Заходил {{ object.last_login|naturaltime }}</li>
                             <li class="list-group-item bg-dark-1">Родился {{ object.birth_day }}</li>
                             <li class="list-group-item bg-dark-1">О себе: {{ object.bio|naturaltime }}</li>
                             
                         </ul>
                         {% if request.user == object %}
-                            <a href="{% url 'users:profile_edit' %}" class="btn btn-sm btn-primary mt-2">Редактировать профиль</a>
+                            <a href="{% url 'users:profile_edit' %}" class="btn btn-sm btn-outline-light mt-2">
+                                Редактировать профиль
+                            </a>
                         {% endif %}
                     </div>
                     <div class="container_cont d-flex flex-column">
@@ -42,9 +42,9 @@
                             <textarea class="form-control shadow-none textarea bg-form"></textarea>
                         </div>
                         <div class="my-2 text-right">
-                            <button class="btn btn-primary btn-sm shadow-none" type="button">
-                                Post comment
-                            </button>
+                            <a href="#" class="btn btn-sm btn-outline-light mt-2 btn_com">
+                                Отправить
+                            </a>
                         </div>
                         <div class="comments">
                             <div>
@@ -80,7 +80,9 @@
                                     ut aliquip ex ea commodo consequat.</p>
                             </div>
                         </div>
-                        <a href="#" class="btn btn-sm btn-primary mt-2">Посмотреть все</a>
+                        <a href="#" class="btn btn-sm btn-outline-light mt-2">
+                            Посмотреть все
+                        </a>
                     </div>
                 </div>
             </div>

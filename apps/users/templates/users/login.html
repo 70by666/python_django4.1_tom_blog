@@ -14,7 +14,8 @@
             <div class="col-lg-6">
                 <div class="container container_cont">
                     <div class="card my-5">
-                        <form class="card-body cardbody-color p-lg-5" actio="{% url 'users:login' %}" method="POST">
+                        {% include 'main/forms_errors.html' %}
+                        <form class="card-body cardbody-color p-lg-5" action="{% url 'users:login' %}" method="POST">
                             {% csrf_token %}
                             <div class="text-center">
                                 <p class="fs-2">Авторизация!</p>
@@ -22,18 +23,20 @@
                                     width="200px" alt="profile">
                             </div>
                             <div class="mb-3">
+                                <label class="labels">Имя пользователя:</label>
                                 {{ form.username }}
                             </div>
                             <div class="mb-3">
+                                <label class="labels">Пароль:</label>
                                 {{ form.password }}
                             </div>
                             <div class="text-center">
-                                <button type="submit" class="btn btn-sm btn-primary px-5 mb-5 w-100">
+                                <button type="submit" class="btn btn-sm btn-color btn-outline-light px-5 mb-5 w-100">
                                     Войти
                                 </button>
                             </div>
                             <div class="form-text text-center mb-5 text-dark">Нет аккаунта? 
-                                <a href="#" class="text-dark fw-bold">
+                                <a href="{% url 'users:register' %}" class="text-dark fw-bold url_log_reg">
                                     Регистрация!
                                 </a>
                             </div>

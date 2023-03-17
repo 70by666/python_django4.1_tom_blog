@@ -3,9 +3,10 @@ from django.urls import reverse_lazy
 from django.views.generic import DetailView, UpdateView, CreateView
 from django.contrib.auth.views import LoginView
 from django.contrib.messages.views import SuccessMessageMixin
+from django.shortcuts import redirect
 
 from apps.users.models import User
-from apps.users.forms import UserUpdateForm, LoginForm
+from apps.users.forms import UserUpdateForm, LoginForm, RegisterForm
 from common.mixins import ProfileMixin, TitleMixin
 
 
@@ -43,3 +44,25 @@ class LoginView(TitleMixin, LoginView):
     
     def get_success_url(self):
         return reverse_lazy('users:profile', args=(self.request.user.slug,))
+
+
+class RegisterView(TitleMixin, SuccessMessageMixin, CreateView):
+    """
+    Представление регистрации
+    """
+    model = User
+    template_name = 'users/register.html'
+    title = 'Регистрация'
+    form_class = RegisterForm
+    success_url = reverse_lazy('users:login')
+    success_message = 'Регистрация прошла успешно!'
+    redirect_authenticated_user = True
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect(reverse_lazy(
+                'users:profile', 
+                args=(self.request.user.slug,)
+            ))
+            
+        return super().get(request, *args, **kwargs)
