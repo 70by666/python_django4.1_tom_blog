@@ -1,6 +1,6 @@
 class TitleMixin:
     """
-    Миксин для title context в представлениях
+    Миксин для заголовка страницы в представлениях
     """
     title = None
     
@@ -13,7 +13,7 @@ class TitleMixin:
 
 class ProfileMixin:
     """
-    Миксин для title context в представлениях профиля и его редактирования
+    Миксин для заголовка страницы в представлениях профиля и его редактирования
     """
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

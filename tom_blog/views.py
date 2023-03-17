@@ -14,13 +14,14 @@ class IndexView(TitleMixin, ListView):
     model = Posts
     template_name = 'index.html'
     title = 'Домашняя страница' 
+    queryset = model.objects.all()
 
     def get_context_data(self, **kwargs):
         """
         Получение последних трех постов
         """
         context = super().get_context_data(**kwargs)
-        context['filter'] = super().get_queryset()[:3]
+        context['last_posts'] = self.queryset[:3]
         
         return context
     
@@ -28,9 +29,7 @@ class IndexView(TitleMixin, ListView):
         """
         Получение закрепленных постов
         """
-        queryset = super().get_queryset()
-        
-        return queryset.filter(fixed=True)
+        return self.queryset.filter(fixed=True)
     
     
 class ContactView(TitleMixin, TemplateView):
