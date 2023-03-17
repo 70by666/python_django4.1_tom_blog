@@ -15,7 +15,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .comments {
-    height: 300px;
+    height: 400px;
     overflow-y: scroll;
 }
 
@@ -30,7 +30,7 @@ body::-webkit-scrollbar-thumb {
 
 .last-messages {
     overflow-y: scroll;
-    height: 680px;
+    height: 850px;
 }
 
 .last-messages::-webkit-scrollbar {

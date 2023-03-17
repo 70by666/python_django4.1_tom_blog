@@ -18,7 +18,7 @@ body::-webkit-scrollbar-thumb {
 
 .scrollspy-example {
     overflow-y: scroll;
-    height: 300px;
+    height: 360px;
 }
 
 .scrollspy-example::-webkit-scrollbar {

@@ -14,3 +14,4 @@ static/django_extensions/
 static/mptt/
 log.log
 apps/users/fixtures
+db_user_and_profile.sqlite3

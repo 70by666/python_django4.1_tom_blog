@@ -5,7 +5,7 @@
 {% load humanize %}
 
 {% block css %}
-    <link rel="stylesheet" href="{% static 'css/profile.css' %}?2">
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}?234">
 {% endblock css %}
 
 {% block section %}
@@ -26,36 +26,43 @@
                             {% if object.user.get_full_name %} 
                                 <li class="list-group-item bg-dark-1">Имя и фамилия: {{ object.user.get_full_name }}</li> 
                             {% endif %}
-                            <li class="list-group-item bg-dark-1">Заходил {{ object.user.last_login|naturaltime }}</li>
+                            <li class="list-group-item bg-dark-1">Заходил {{ object.last_login|naturaltime }}</li>
                             <li class="list-group-item bg-dark-1">Родился {{ object.birth_day }}</li>
                             <li class="list-group-item bg-dark-1">О себе: {{ object.bio|naturaltime }}</li>
                             
                         </ul>
-                        {% if user == object.user %}
+                        {% if request.user == object %}
                             <a href="{% url 'users:profile_edit' %}" class="btn btn-sm btn-primary mt-2">Редактировать профиль</a>
                         {% endif %}
                     </div>
-                    <div class="container_cont d-flex flex-column comment-section">
+                    <div class="container_cont d-flex flex-column">
                         <h4 class="text-right">Комментарии</h4>
-                        <div class="d-flex flex-row user-info">
-                            <img src="#" alt="user__image" class="img_bord me-2" width="100">
-                            <div class="d-flex flex-column justify-content-start"><span
-                                    class="d-block font-weight-bold name">Marry Andrews</span><span
-                                    class="date text-black-50">Shared publicly - Jan 2020</span></div>
-                        </div>
-                        <div class="mt-2">
-                            <p class="comment-text">Lorem ipsum dolor sit amet, consectetur adipiscing
-                                elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
-                                ut aliquip ex ea commodo consequat.</p>
-                        </div>
-                        <hr>
                         <div class="d-flex flex-row align-items-start">
-                            <img src="{{ user.profile.get_avatar }}" alt="user__image" class="img_bord me-2" width="100">
+                            <img src="{{ request.user.get_avatar }}" alt="user__image" class="img_bord me-2" width="100">
                             <textarea class="form-control shadow-none textarea bg-form"></textarea>
                         </div>
-                        <div class="mt-2 text-right"><button class="btn btn-primary btn-sm shadow-none"
-                                type="button">Post comment</button></div>
+                        <div class="my-2 text-right">
+                            <button class="btn btn-primary btn-sm shadow-none" type="button">
+                                Post comment
+                            </button>
+                        </div>
+                        <div class="comments">
+                            <div>
+                                <div class="d-flex flex-row user-info">
+                                    <img src="#" alt="user__image" class="img_bord me-2" width="100">
+                                    <div class="d-flex flex-column justify-content-start"><span
+                                            class="d-block font-weight-bold name">Marry Andrews</span><span
+                                            class="date text-black-50">Shared publicly - Jan 2020</span></div>
+                                </div>
+                                <div class="mt-2">
+                                    <p class="comment-text">Lorem ipsum dolor sit amet, consectetur adipiscing
+                                        elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
+                                        ut aliquip ex ea commodo consequat.</p>
+                                </div>
+                                <hr>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-5">

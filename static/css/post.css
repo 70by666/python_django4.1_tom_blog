@@ -109,7 +109,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .comments {
-    height: 690px;
+    height: 670px;
     overflow-y: scroll;
 }
 
@@ -165,4 +165,12 @@ body::-webkit-scrollbar-thumb {
 
 .like_coms_url {
     text-decoration: none;
+}
+
+.url_author {
+    color: black;
+}
+
+.url_author:hover {
+    color: blue;
 }
