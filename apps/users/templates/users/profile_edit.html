@@ -21,23 +21,23 @@
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h4 class="text-right">Редактирование профиля {{ profile }}</h4>
         </div>
-        <form action="{% url 'users:profile_edit' %}" method="POST">
+        <form action="{% url 'users:profile_edit' %}" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="col-md-12">
                 <label class="labels">Имя пользователя:</label>
-                {{ user_update_from.username }}
+                {{ form.username }}
             </div>
             <div class="row mt-2">
                 <div class="col-md-6"><label class="labels">Имя:</label>
-                    {{ user_update_from.first_name }}
+                    {{ form.first_name }}
                 </div>
                 <div class="col-md-6"><label class="labels">Фамилия:</label>
-                    {{ user_update_from.last_name }}
+                    {{ form.last_name }}
                 </div>
             </div>
             <div class="mt-2">
                 <label class="labels">Почта:</label>
-                {{ user_update_from.email }}
+                {{ form.email }}
             </div>
             <div class="mt-2">
                 <label class="labels">URL:</label>

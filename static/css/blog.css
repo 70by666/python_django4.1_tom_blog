@@ -165,3 +165,11 @@ img {
         rgba(128, 128, 128, 0.7);
     border-radius: 10%;
 }
+
+.url_author {
+    color: black;
+}
+
+.url_author:hover {
+    color: blue;
+}

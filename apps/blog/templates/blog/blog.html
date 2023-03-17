@@ -5,7 +5,7 @@
 {% load humanize %}
 
 {% block css %}
-<link rel="stylesheet" href="{% static 'css/blog.css' %}">
+<link rel="stylesheet" href="{% static 'css/blog.css' %}?3123">
 {% endblock css %}
 
 {% block section %}
@@ -40,13 +40,16 @@
                     <div class="card__footer">
                         <div class="row">
                             <div class="col-lg-5">
-                                <img width="100" src="
-                                {{ i.author.profile.get_avatar }} " class="img_bord">
+                                <a href="{% url 'users:profile' i.author.slug %}">
+                                    <img width="100" src="{{ i.author.get_avatar }}" class="img_bord">
+                                </a>
                             </div>
                             <div class="col-lg-7">
                                 <div class="user">
                                     <div class="user__info">
-                                        <h5>{{ i.author.username }}</h5>
+                                        <a class="url_author" href="{% url 'users:profile' i.author.slug %}">
+                                            <h5>{{ i.author.username }}</h5>
+                                        </a>
                                         <small>Заходил на сайт {{ i.author.last_login|naturaltime }}</small>
                                     </div>
                                 </div>

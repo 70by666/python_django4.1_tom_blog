@@ -9,16 +9,9 @@ from common.utils import unique_slug
 
 class User(AbstractUser):
     """
-    Переопределение модели пользователей, чтобы почта была уникальной
+    Переопределение модели пользователей
     """
     email = models.EmailField(('email address'), unique=True)
-
-
-class Profile(models.Model):
-    """
-    Модель для профиля пользователя
-    """
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
     slug = models.SlugField(
         verbose_name='URL', 
         max_length=150, 
@@ -39,11 +32,10 @@ class Profile(models.Model):
         null=True, 
         verbose_name='Дата рождения'
     )
-    
+
     class Meta:
-        ordering = ('user',)
-        verbose_name = 'Профиль'
-        verbose_name_plural = 'Профили'
+        verbose_name = 'Пользователь'
+        verbose_name_plural = 'Пользователи'
     
     def save(self, *args, **kwargs) -> None:
         """
@@ -51,12 +43,12 @@ class Profile(models.Model):
         при необходимости генерация случайного slug
         """
         if not self.slug:
-            self.slug = unique_slug(self, self.user.username)
+            self.slug = unique_slug(self, self.username)
         
         return super().save(*args, **kwargs)
 
     def __str__(self):
-        return self.user.username
+        return self.username
 
     @property
     def get_avatar(self):
@@ -64,14 +56,3 @@ class Profile(models.Model):
             return self.image.url
         
         return f'https://ui-avatars.com/api/?size=150&background=random&name={self.slug}'
-
-
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(user=instance)
-
-
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, created, **kwargs):
-    instance.profile.save()

@@ -4,13 +4,25 @@ from django import forms
 from django.contrib.auth.forms import UserChangeForm
 from django.forms import ValidationError
 
-from apps.users.models import User, Profile
+from apps.users.models import User
 
 
-class ProfileUpdateForm(UserChangeForm):
+class UserUpdateForm(UserChangeForm):
     """
     Форма обновления модели User
     """    
+    username = forms.CharField(widget=forms.TextInput(attrs={
+        'placeholder': 'Введите имя пользователя',
+    }))
+    first_name = forms.CharField(required=False, widget=forms.TextInput(attrs={
+        'placeholder': 'Введите имя',
+    }))
+    last_name = forms.CharField(required=False, widget=forms.TextInput(attrs={
+        'placeholder': 'Введите фамилию',
+    }))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={
+        'placeholder': 'Введите адрес электронной почты',
+    }))
     slug = forms.SlugField(widget=forms.TextInput(attrs={
         'placeholder': 'Введите ссылку на ваш профиль',
     }))
@@ -18,10 +30,10 @@ class ProfileUpdateForm(UserChangeForm):
         'placeholder': 'Введите дату рождения',
         'type': 'date',
     }))    
-    bio = forms.CharField(widget=forms.Textarea(attrs={
+    bio = forms.CharField(required=False, widget=forms.Textarea(attrs={
         'placeholder': 'Введите информацию о себе',
     }))
-    image = forms.ImageField(widget=forms.FileInput())
+    image = forms.ImageField(required=False, widget=forms.FileInput())
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -43,32 +55,6 @@ class ProfileUpdateForm(UserChangeForm):
         return data
     
     class Meta:
-        model = Profile
-        fields = ('slug', 'birth_day', 'bio', 'image')
-
-
-class UserUpdateForm(UserChangeForm):
-    username = forms.CharField(widget=forms.TextInput(attrs={
-        'placeholder': 'Введите имя пользователя',
-    }))
-    first_name = forms.CharField(widget=forms.TextInput(attrs={
-        'placeholder': 'Введите имя',
-    }))
-    last_name = forms.CharField(widget=forms.TextInput(attrs={
-        'placeholder': 'Введите фамилию',
-    }))
-    email = forms.EmailField(widget=forms.EmailInput(attrs={
-        'placeholder': 'Введите адрес электронной почты',
-    }))
-    
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for i in self.fields:
-            self.fields[i].widget.attrs.update({
-                'class': 'form-control',
-                'autocomplete': 'off',
-            })
-    
-    class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'email')
+        fields = ('username', 'first_name', 'last_name', 'email', 
+                  'slug', 'birth_day', 'bio', 'image')
