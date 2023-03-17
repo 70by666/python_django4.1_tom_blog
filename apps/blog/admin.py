@@ -9,7 +9,6 @@ class BlogPostsAdmin(admin.ModelAdmin):
     """
     Отображение модели блога в админке
     """
-    
     list_display = ('title', 'id', 'status', 'created', 'author')
     fields = (
         ('id', 'title', 'slug'), ('category', 'fixed'), 
@@ -24,7 +23,6 @@ class CategoriesAmin(DraggableMPTTAdmin):
     """
     Отображение модели категорий в админке
     """
-    
     list_display = ('tree_actions', 'indented_title', 'id', 'title', 'slug')
     list_display_links = ('title', 'slug')
     prepopulated_fields = {'slug': ('title',)}

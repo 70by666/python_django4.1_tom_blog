@@ -174,3 +174,12 @@ body::-webkit-scrollbar-thumb {
 .url_author:hover {
     color: blue;
 }
+
+.card_text {
+    text-decoration: none;
+    color: black;
+}
+
+.card_text:hover {
+    text-decoration: underline;
+}

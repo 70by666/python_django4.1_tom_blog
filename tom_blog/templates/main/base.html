@@ -46,11 +46,11 @@
                                 <a href="{% url 'users:profile' request.user.slug %}" class="nav-link">Profile</a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">Log Out</a>
+                                <a href="{% url 'users:logout' %}" class="nav-link">Log Out</a>
                             </li>
                         {% else %}
                             <li class="nav-item">
-                                <a href="#" class="nav-link">Log In</a>
+                                <a href="{% url 'users:login' %}" class="nav-link">Log In</a>
                             </li>
                             <li class="nav-item">
                                 <a href="#" class="nav-link">Register</a>

@@ -7,12 +7,18 @@ from common.mixins import TitleMixin
 
 
 class BlogView(ListView):
+    """
+    Представвление блога
+    """
     model = Posts
     template_name = 'blog/blog.html'
     category = None
     paginate_by = 6
     
     def get_queryset(self):
+        """
+        Сортировка по категориям
+        """
         queryset = super().get_queryset()
         category_slug = self.kwargs.get('slug')
         if category_slug:
@@ -30,6 +36,9 @@ class BlogView(ListView):
     
 
 class BlogDetailView(TitleMixin, DetailView):
+    """
+    Представление отдельного поста
+    """
     model = Posts
     template_name = 'blog/post.html'
     
@@ -41,6 +50,9 @@ class BlogDetailView(TitleMixin, DetailView):
 
 
 class AddlikeView(LoginRequiredMixin, View):
+    """
+    Поставить лайк
+    """
     def get(self, request, slug, *args, **kwargs):
         post = Posts.objects.get(slug=slug)
         for like in post.likes.all():

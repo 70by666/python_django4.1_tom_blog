@@ -5,7 +5,7 @@
 {% load humanize %}
 
 {% block css %}
-    <link rel="stylesheet" href="{% static 'css/profile.css' %}?234">
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}?3212">
 {% endblock css %}
 
 {% block section %}
@@ -66,25 +66,24 @@
                     </div>
                 </div>
                 <div class="col-md-5">
-                    <div class="container_cont last-messages">
+                    <div class="container_cont">
                         <h2>Мои последние сообщения.</h2>
-                        <div class="d-flex flex-row user-info">
-                            <div class="d-flex flex-column justify-content-start ml-2"><span
-                                    class="date text-black-50">Shared publicly - Jan 2020</span></div>
+                        <div class="last-messages">
+                            <div class="d-flex flex-row user-info">
+                                <div class="d-flex flex-column justify-content-start ml-2"><span
+                                        class="date text-black-50">Shared publicly - Jan 2020</span></div>
+                            </div>
+                            <div class="mt-2">
+                                <p class="comment-text">Lorem ipsum dolor sit amet, consectetur adipiscing
+                                    elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
+                                    ut aliquip ex ea commodo consequat.</p>
+                            </div>
                         </div>
-                        <div class="mt-2">
-                            <p class="comment-text">Lorem ipsum dolor sit amet, consectetur adipiscing
-                                elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
-                                ut aliquip ex ea commodo consequat.</p>
-                        </div>
+                        <a href="#" class="btn btn-sm btn-primary mt-2">Посмотреть все</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 {% endblock section %}
-
-{% block footer %}
-    {% include 'main/footer.html' %}
-{% endblock footer %}

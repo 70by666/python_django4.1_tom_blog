@@ -15,7 +15,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .comments {
-    height: 400px;
+    height: 350px;
     overflow-y: scroll;
 }
 
@@ -30,7 +30,7 @@ body::-webkit-scrollbar-thumb {
 
 .last-messages {
     overflow-y: scroll;
-    height: 850px;
+    height: 720px;
 }
 
 .last-messages::-webkit-scrollbar {
@@ -53,7 +53,9 @@ body::-webkit-scrollbar-thumb {
 }
 
 .container_cont {
-    margin: 2em;
+    margin-bottom: 2em;
+    margin-left: 2em;
+    margin-right: 2em;
     padding: 1em;
     background-color: rgba(0, 0, 0, 0.151);
     box-shadow: 0 0.1rem 1rem rgba(0, 0, 0, 0.1);

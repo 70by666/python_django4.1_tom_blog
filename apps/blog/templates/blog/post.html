@@ -5,7 +5,7 @@
 {% load humanize %}
 
 {% block css %}
-    <link rel="stylesheet" href="{% static 'css/post.css' %}?13">
+    <link rel="stylesheet" href="{% static 'css/post.css' %}">
 {% endblock css %}
 
 {% block section %}
@@ -20,7 +20,9 @@
                                 alt="card__image" class="card__image" style="width: 100%;">
                         </div>
                         <div class="card__body">
-                            <span class="tag tag-blue">{{ object.category }}</span>
+                            <a class="card_text" href="{% url 'blog:category' object.category.slug %}">
+                                <span class="tag tag-blue">{{ object.category }}</span>
+                            </a>
                             <h4>{{ object.title }}</h4>
                             <p>{{ object.full_description }}</p>
                             <small>{{ object.created|naturaltime }}</small>

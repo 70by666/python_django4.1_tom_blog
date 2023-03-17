@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(to right, #91eae4, #86a8e7, #7f7fd5);
+}
+
+body::-webkit-scrollbar {
+    width: 10px;
+    background-color: rgb(167, 167, 167);
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: #575656;
+}
+
+.cardbody-color {
+    background-color: #ebf2fa;
+}
+
+a {
+    text-decoration: none;
+}
+
+.profile-image-pic {
+    width: 20%;
+}
+
+footer {
+    margin-top: 6.1em;
+    position: relative;
+    height: 8vh;
+}
+
+.container_cont {
+    background-color: rgba(0, 0, 0, 0.151);
+    padding-left: 3em;
+    padding-right: 3em;
+    margin-top: 5em;
+    margin-bottom: 1em;
+    box-shadow: 0 0.1rem 1rem rgba(0, 0, 0, 0.1);
+    border:
+        1px
+        /* width */
+        solid
+        /* style */
+        rgba(128, 128, 128, 0.7);
+        /* color */
+}
+
+.card {
+    background-color: rgba(0, 0, 0, 0);
+    box-shadow: 0 0.1rem 1rem rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.form-control {
+    background-color: rgba(0, 0, 0, 0.151);
+}
+
+.form-control:focus {
+    background-color: rgba(0, 0, 0, 0.151);
+}

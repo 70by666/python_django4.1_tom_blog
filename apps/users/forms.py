@@ -1,13 +1,14 @@
 import datetime
 
 from django import forms
-from django.contrib.auth.forms import UserChangeForm
+from django.contrib.auth.forms import UserChangeForm, AuthenticationForm
 from django.forms import ValidationError
 
 from apps.users.models import User
+from common.mixins import InitFormMixin
 
 
-class UserUpdateForm(UserChangeForm):
+class UserUpdateForm(InitFormMixin, UserChangeForm):
     """
     Форма обновления модели User
     """    
@@ -35,14 +36,6 @@ class UserUpdateForm(UserChangeForm):
     }))
     image = forms.ImageField(required=False, widget=forms.FileInput())
     
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for i in self.fields:
-            self.fields[i].widget.attrs.update({
-                'class': 'form-control',
-                'autocomplete': 'off',
-            })
-
     def clean_birth_day(self):
         data = self.cleaned_data['birth_day']
 
@@ -58,3 +51,19 @@ class UserUpdateForm(UserChangeForm):
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 
                   'slug', 'birth_day', 'bio', 'image')
+
+
+class LoginForm(InitFormMixin, AuthenticationForm):
+    """
+    Форма для авторизации
+    """
+    username = forms.CharField(widget=forms.TextInput(attrs={
+        'placeholder': 'Введите имя пользователя',
+    }))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={
+        'placeholder': 'Введите пароль',
+    }))
+    
+    class Meta:
+        model = User
+        fields = ('username', 'password')

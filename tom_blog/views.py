@@ -8,23 +8,35 @@ from common.mixins import TitleMixin
 
 
 class IndexView(TitleMixin, ListView):
+    """
+    Представление основной страницы
+    """
     model = Posts
     template_name = 'index.html'
     title = 'Домашняя страница' 
 
     def get_context_data(self, **kwargs):
+        """
+        Получение последних трех постов
+        """
         context = super().get_context_data(**kwargs)
         context['filter'] = super().get_queryset()[:3]
         
         return context
     
     def get_queryset(self):
+        """
+        Получение закрепленных постов
+        """
         queryset = super().get_queryset()
         
         return queryset.filter(fixed=True)
     
     
 class ContactView(TitleMixin, TemplateView):
+    """
+    Представление формы обратной связи
+    """
     template_name = 'contact.html'
     title = 'Обратная связь'
 

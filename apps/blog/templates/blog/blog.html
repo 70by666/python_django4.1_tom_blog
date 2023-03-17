@@ -5,7 +5,7 @@
 {% load humanize %}
 
 {% block css %}
-<link rel="stylesheet" href="{% static 'css/blog.css' %}?3123">
+<link rel="stylesheet" href="{% static 'css/blog.css' %}">
 {% endblock css %}
 
 {% block section %}
@@ -58,9 +58,10 @@
                     </div>
                 </div>
                 {% endfor %}
+                {% include 'main/pagination.html' %}
             </div>
         </div>
+        
     </div>
-    {% include 'main/pagination.html' %}
 </section>
 {% endblock section %}
