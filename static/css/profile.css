@@ -30,7 +30,7 @@ body::-webkit-scrollbar-thumb {
 
 .last-messages {
     overflow-y: scroll;
-    height: 720px;
+    height: 730px;
 }
 
 .last-messages::-webkit-scrollbar {
