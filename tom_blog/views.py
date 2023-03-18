@@ -57,7 +57,7 @@ class ContactView(SuccessMessageMixin, TitleMixin, FormView):
         form = self.get_form()
         if form.is_valid():
             data = form.data
-            for i in settings.CHAT_IDS:
+            for i in settings.CHAT_IDS.split():
                 url = 'https://api.telegram.org/bot{}/sendMessage?chat_id={}&text={}'.format(
                     settings.BOT_TOKEN, 
                     i,

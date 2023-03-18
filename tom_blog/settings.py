@@ -28,7 +28,7 @@ env = environ.Env(
     LOGGING_LEVEL=(str),
     
     BOT_TOKEN=(str),
-    CHAT_IDS=(list),
+    CHAT_IDS=(str),
 )
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
