@@ -15,10 +15,10 @@ class UserUpdateForm(InitFormMixin, UserChangeForm):
     username = forms.CharField(widget=forms.TextInput(attrs={
         'placeholder': 'Введите имя пользователя',
     }))
-    first_name = forms.CharField(widget=forms.TextInput(attrs={
+    first_name = forms.CharField(required=False, widget=forms.TextInput(attrs={
         'placeholder': 'Введите имя',
     }))
-    last_name = forms.CharField(widget=forms.TextInput(attrs={
+    last_name = forms.CharField(required=False, widget=forms.TextInput(attrs={
         'placeholder': 'Введите фамилию',
     }))
     email = forms.EmailField(widget=forms.EmailInput(attrs={
@@ -82,10 +82,10 @@ class RegisterForm(InitFormMixin, UserCreationForm):
     email = forms.EmailField(widget=forms.EmailInput(attrs={
         'placeholder': 'Введите адрес электронной почты',
     }))    
-    first_name = forms.CharField(widget=forms.TextInput(attrs={
+    first_name = forms.CharField(required=False, widget=forms.TextInput(attrs={
         'placeholder': 'Введите имя',
     }))
-    last_name = forms.CharField(widget=forms.TextInput(attrs={
+    last_name = forms.CharField(required=False, widget=forms.TextInput(attrs={
         'placeholder': 'Введите фамилию',
     }))
     password1 = forms.CharField(widget=forms.PasswordInput(attrs={

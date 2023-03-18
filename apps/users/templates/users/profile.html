@@ -23,7 +23,8 @@
                     <div class="container_cont">
                         <ul class="list-group">
                             <li class="list-group-item bg-dark-1">Имя пользователя: {{ object }}</li>
-                            <li class="list-group-item bg-dark-1">Имя и фамилия: {{ object.get_full_name }}</li> 
+                            {% if object.first_name %}<li class="list-group-item bg-dark-1">Имя и фамилия: {{ object.first_name }}</li>{% endif %}
+                            {% if object.last_nmame %}<li class="list-group-item bg-dark-1">Фамилия: {{ object.last_nmame }}</li>{% endif %} 
                             <li class="list-group-item bg-dark-1">Заходил {{ object.last_login|naturaltime }}</li>
                             <li class="list-group-item bg-dark-1">Родился {{ object.birth_day }}</li>
                             <li class="list-group-item bg-dark-1">О себе: {{ object.bio|naturaltime }}</li>
