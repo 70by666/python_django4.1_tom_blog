@@ -12,7 +12,7 @@ from common.mixins import ProfileMixin, TitleMixin
 
 class ProfileView(ProfileMixin, LoginRequiredMixin, DetailView):
     """
-    Представление профиля
+    Контроллер профиля
     """
     template_name = 'users/profile.html'
     model = User
@@ -20,7 +20,7 @@ class ProfileView(ProfileMixin, LoginRequiredMixin, DetailView):
 
 class ProfileEditView(ProfileMixin, LoginRequiredMixin, UpdateView):
     """
-    Представление редактирования профиля
+    Контроллер редактирования прфоиля
     """
     template_name = 'users/profile_edit.html'    
     form_class = UserUpdateForm
@@ -35,7 +35,7 @@ class ProfileEditView(ProfileMixin, LoginRequiredMixin, UpdateView):
 
 class LoginView(TitleMixin, LoginView):
     """
-    Представление авторизации
+    Контроллер авторизации
     """
     template_name = 'users/login.html'
     title = 'Авторизация'
@@ -48,7 +48,7 @@ class LoginView(TitleMixin, LoginView):
 
 class RegisterView(TitleMixin, SuccessMessageMixin, CreateView):
     """
-    Представление регистрации
+    Контроллер регистрации
     """
     model = User
     template_name = 'users/register.html'

@@ -9,7 +9,7 @@ from common.mixins import TitleMixin
 
 class IndexView(TitleMixin, ListView):
     """
-    Представление основной страницы
+    Контроллер основной страницы
     """
     model = Posts
     template_name = 'index.html'
@@ -34,7 +34,7 @@ class IndexView(TitleMixin, ListView):
     
 class ContactView(TitleMixin, TemplateView):
     """
-    Представление формы обратной связи
+    Контроллер формы обратной связи
     """
     template_name = 'contact.html'
     title = 'Обратная связь'

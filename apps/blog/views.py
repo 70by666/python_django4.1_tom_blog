@@ -8,7 +8,7 @@ from common.mixins import TitleMixin
 
 class BlogView(ListView):
     """
-    Представвление блога
+    Контрллер блога, отображение всех постов
     """
     model = Posts
     template_name = 'blog/blog.html'
@@ -37,7 +37,7 @@ class BlogView(ListView):
 
 class BlogDetailView(TitleMixin, DetailView):
     """
-    Представление отдельного поста
+    Контроллер отдельного поста
     """
     model = Posts
     template_name = 'blog/post.html'

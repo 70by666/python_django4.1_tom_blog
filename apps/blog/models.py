@@ -13,10 +13,11 @@ class Posts(models.Model):
     Модель постов для блога
     """    
     class PostsManager(models.Manager):
-        """
-        Свой менеджер модели
-        """
         def all(self):
+            """
+            Переопределил метод all чтобы получать посты только со статусом
+            "опубликовано" и оптимизация запросов
+            """
             return (
                 self.get_queryset()
                 .select_related('author', 'category')
@@ -46,7 +47,6 @@ class Posts(models.Model):
     full_description = models.TextField(verbose_name='Полное описание')
     image = models.ImageField(
         verbose_name='Превью',
-        blank=True,
         upload_to='post_images/%y/%m/%d',
         validators=[FileExtensionValidator(allowed_extensions=(
             'png', 'jpg', 'jpeg', 'gif', 'webp'

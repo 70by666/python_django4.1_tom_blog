@@ -1,8 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.core.validators import FileExtensionValidator
-from django.dispatch import receiver
-from django.db.models.signals import post_save
 
 from common.utils import unique_slug
 
