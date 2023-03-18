@@ -1,6 +1,6 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.views.generic import DetailView, ListView, View
-from django.contrib.auth.mixins import LoginRequiredMixin
 
 from apps.blog.models import Categories, Posts
 from common.mixins import TitleMixin

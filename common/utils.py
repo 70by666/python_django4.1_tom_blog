@@ -1,4 +1,5 @@
 from uuid import uuid4
+
 from pytils.translit import slugify
 
 

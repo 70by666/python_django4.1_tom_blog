@@ -1,12 +1,12 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse_lazy
-from django.views.generic import DetailView, UpdateView, CreateView
 from django.contrib.auth.views import LoginView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import redirect
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, DetailView, UpdateView
 
+from apps.users.forms import LoginForm, RegisterForm, UserUpdateForm
 from apps.users.models import User
-from apps.users.forms import UserUpdateForm, LoginForm, RegisterForm
 from common.mixins import ProfileMixin, TitleMixin
 
 
