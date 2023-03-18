@@ -24,9 +24,9 @@
                         <ul class="list-group">
                             <li class="list-group-item bg-dark-1">Имя пользователя: {{ object }}</li>
                             {% if object.first_name %}<li class="list-group-item bg-dark-1">Имя и фамилия: {{ object.first_name }}</li>{% endif %}
-                            {% if object.last_nmame %}<li class="list-group-item bg-dark-1">Фамилия: {{ object.last_nmame }}</li>{% endif %} 
-                            <li class="list-group-item bg-dark-1">Заходил {{ object.last_login|naturaltime }}</li>
-                            <li class="list-group-item bg-dark-1">Родился {{ object.birth_day }}</li>
+                            {% if object.last_name %}<li class="list-group-item bg-dark-1">Фамилия: {{ object.last_nmame }}</li>{% endif %} 
+                            {% if object.last_login %}<li class="list-group-item bg-dark-1">Заходил(a) {{ object.last_login|naturaltime }}</li>{% endif %} 
+                            {% if object.birth_day %}<li class="list-group-item bg-dark-1">Родился(ась) {{ object.birth_day }}</li>{% endif %} 
                             <li class="list-group-item bg-dark-1">О себе: {{ object.bio|naturaltime }}</li>
                             
                         </ul>
