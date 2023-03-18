@@ -26,6 +26,9 @@ env = environ.Env(
     DATABASE_PORT=(str),
     
     LOGGING_LEVEL=(str),
+    
+    BOT_TOKEN=(str),
+    CHAT_IDS=(list),
 )
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -209,3 +212,8 @@ if not DEBUG:
             }
         }
     }
+
+# telegram
+
+BOT_TOKEN = env('BOT_TOKEN')
+CHAT_IDS = env('CHAT_IDS')

@@ -10,25 +10,29 @@
     <section>
         <div class="wrapper centered">
             <article class="letter">
-                <div class="side">
-                    <h1>Contact us</h1>
-                    <p>
-                        <textarea placeholder="Your message"></textarea>
-                    </p>
-                </div>
-                <div class="side">
-                    <p>
-                        <input type="text" placeholder="Your name">
-                    </p>
-                    <p>
-                        <input type="email" placeholder="Your email">
-                    </p>
-                    <p>
-                        <a href="#" class="btn btn-outline-secondary mt-2">
-                            Отправить
-                        </a>
-                    </p>
-                </div>
+                {% include 'main/forms_errors.html' %}
+                <form action="{% url 'contact' %}" method="post">
+                    <div class="side">
+                        <h1>Contact us</h1>
+                        <p>
+                            {{ form.message }}
+                        </p>
+                    </div>
+                    <div class="side">
+                        <p>
+                            {{ form.name }}
+                        </p>
+                        <p>
+                            {{ form.email }}
+                        </p>
+                        <p>
+                            {% csrf_token %} 
+                            <button type="submit" class="btn btn-outline-secondary mt-2">
+                                Отправить
+                            </button>
+                        </p>
+                    </div>
+                </form>
             </article>
             <div class="envelope front"></div>
             <div class="envelope back"></div>

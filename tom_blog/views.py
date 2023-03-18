@@ -1,10 +1,16 @@
+from django.urls import reverse_lazy
+import requests
 from http import HTTPStatus
 
-from django.shortcuts import render
-from django.views.generic import ListView, TemplateView
+from django.shortcuts import redirect, render
+from django.views.generic import ListView, TemplateView, FormView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.messages.views import SuccessMessageMixin
+from django.conf import settings
 
 from apps.blog.models import Posts
 from common.mixins import TitleMixin
+from tom_blog.forms import SendMessageForm
 
 
 class IndexView(TitleMixin, ListView):
@@ -32,12 +38,34 @@ class IndexView(TitleMixin, ListView):
         return self.queryset.filter(fixed=True)
     
     
-class ContactView(TitleMixin, TemplateView):
+class ContactView(SuccessMessageMixin, TitleMixin, FormView):
     """
     Контроллер формы обратной связи
     """
     template_name = 'contact.html'
     title = 'Обратная связь'
+    form_class = SendMessageForm
+    success_url = reverse_lazy('contact')
+    success_message = 'Сообщение отправлено!'
+    
+    def post(self, request, *args, **kwargs):
+        """
+        Отправка сообщений на указанные ИД телеграм чатов
+        Можно было бы прописать логику при методе save в моделе, но не хотел
+        создать модель
+        """
+        form = self.get_form()
+        if form.is_valid():
+            data = form.data
+            for i in settings.CHAT_IDS:
+                url = 'https://api.telegram.org/bot{}/sendMessage?chat_id={}&text={}'.format(
+                    settings.BOT_TOKEN, 
+                    i,
+                    f'{data["name"]}\n{data["email"]}\n{data["message"]}',
+                )
+                requests.post(url)
+        
+        return super().post(self, request, *args, **kwargs)
 
 
 def error403(request, exception):
