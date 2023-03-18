@@ -23,17 +23,19 @@
                     <div class="container_cont">
                         <ul class="list-group">
                             {% include 'main/forms_errors.html' %}
-                            {% if not object.first_name or not object.last_name or not object.last_login or not object.birth_day or not object.bio %}
-                                <div class="container">
-                                    <div class="alert alert-info alert-dismissible fade show" role="alert">
-                                        Профиль заполнен не полностью!
-                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            {% if request.user == object %}
+                                {% if not object.first_name or not object.last_name or not object.last_login or not object.birth_day or not object.bio %}
+                                    <div class="container">
+                                        <div class="alert alert-info alert-dismissible fade show" role="alert">
+                                            Профиль заполнен не полностью!
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        </div>
                                     </div>
-                                </div>
+                                {% endif %}
                             {% endif %}
                             <li class="list-group-item bg-dark-1">Имя пользователя: {{ object }}</li>
                             {% if object.first_name %}<li class="list-group-item bg-dark-1">Имя и фамилия: {{ object.first_name }}</li>{% endif %}
-                            {% if object.last_name %}<li class="list-group-item bg-dark-1">Фамилия: {{ object.last_nmame }}</li>{% endif %} 
+                            {% if object.last_name %}<li class="list-group-item bg-dark-1">Фамилия: {{ object.last_name }}</li>{% endif %} 
                             {% if object.last_login %}<li class="list-group-item bg-dark-1">Заходил(a) {{ object.last_login|naturaltime }}</li>{% endif %} 
                             {% if object.birth_day %}<li class="list-group-item bg-dark-1">Родился(ась) {{ object.birth_day }}</li>{% endif %}
                             {% if object.bio %}<li class="list-group-item bg-dark-1">О себе: {{ object.bio|naturaltime }}</li>{% endif %}
