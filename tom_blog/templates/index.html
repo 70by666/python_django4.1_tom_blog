@@ -66,8 +66,31 @@
                     <h2 class="fw-bold">ПОСЛЕДНИЕ ПУБЛИКАЦИИ</h2>
                     <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div class="card-carousel text-bg-dark">
+                                    {% if first.image %}
+                                        <img src="{{ first.image.url }}"
+                                            class="card-img" alt="...">
+                                    {% endif %}
+                                    <div class="card-img-overlay p-2">
+                                        <a class="post_url" href="{% url 'blog:post' first.slug %}">
+                                            <p class="card-title">{{ first.title }}</p>
+                                        </a>
+                                        <p class="card-text-car">
+                                            {{ first.short_description }}
+                                        </p>
+                                        <p class="card-text-info">
+                                            <small>
+                                                Опубликовано {{ first.created|naturaltime }} |
+                                                by {{ first.author.username }} |
+                                                _ &#128172; | {{ first.likes.all.count }} &#128147;
+                                            </small>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
                             {% for i in last_posts %}
-                                <div class="carousel-item active">
+                                <div class="carousel-item">
                                     <div class="card-carousel text-bg-dark">
                                         {% if i.image %}
                                             <img src="{{ i.image.url }}"

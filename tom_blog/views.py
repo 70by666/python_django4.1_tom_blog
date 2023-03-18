@@ -27,7 +27,8 @@ class IndexView(TitleMixin, ListView):
         Получение последних трех постов
         """
         context = super().get_context_data(**kwargs)
-        context['last_posts'] = self.queryset[:3]
+        context['last_posts'] = self.queryset[1:3]
+        context['first'] = self.queryset[:3].first()
         
         return context
     
