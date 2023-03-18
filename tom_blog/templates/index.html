@@ -15,54 +15,6 @@
             </div>
             <div class="col-lg-7">
                 <div class="container_cont">
-                    <h2 class="fw-bold">ЗАКРЕПЛЕННЫЕ ПОСТЫ</h2>
-                    <div class="row">
-                        <div class="col-4">
-                            <div id="list-example" class="list-group">
-                                <div data-bs-spy="scroll" data-bs-target="#list-example" data-bs-smooth-scroll="true"
-                                    class="scrollspy-example" tabindex="0">
-                                    {% for i in object_list %}
-                                        <a class="list-group-item bg-dark-1" href="#list-item-{{ i.created }}">
-                                            {{ i.title }}
-                                        </a>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-8">
-                            <div data-bs-spy="scroll" data-bs-target="#list-example" data-bs-smooth-scroll="true"
-                                class="scrollspy-example" tabindex="0">
-                                {% for i in object_list %}
-                                <hr id="list-item-{{ i.created }}">
-                                {% if i.image %}
-                                    <a href="{% url 'blog:post' i.slug %}">
-                                        <img class="img-recent"
-                                            src="{{ i.image.url }}"
-                                            class="card-img-top" alt="...">
-                                    </a>
-                                {% endif %}
-                                <p class="card-text fs-5">{{ i.short_description }}</p>
-                                <p class="card-text">Опубликовано {{ i.created|naturaltime }} |
-                                    by {{ i.author.username }} |
-                                    _ &#128172; | {{ i.likes.all.count }} &#128147;</p>
-                                {% endfor %}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-9"></div>
-                            <div class="col-lg-3">
-                                <a href="{% url 'blog:index' %}">
-                                    <div class="but-all">
-                                        <a href="#" class="btn btn-sm btn-outline-light mt-2">
-                                            Посмотреть все
-                                        </a>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="container_cont">
                     <h2 class="fw-bold">ПОСЛЕДНИЕ ПУБЛИКАЦИИ</h2>
                     <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner">
@@ -125,6 +77,54 @@
                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                             <span class="visually-hidden">Next</span>
                         </button>
+                    </div>
+                </div>
+                <div class="container_cont">
+                    <h2 class="fw-bold">ЗАКРЕПЛЕННЫЕ ПОСТЫ</h2>
+                    <div class="row">
+                        <div class="col-4">
+                            <div id="list-example" class="list-group">
+                                <div data-bs-spy="scroll" data-bs-target="#list-example" data-bs-smooth-scroll="true"
+                                    class="scrollspy-example" tabindex="0">
+                                    {% for i in object_list %}
+                                        <a class="list-group-item bg-dark-1" href="#list-item-{{ i.created }}">
+                                            {{ i.title }}
+                                        </a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-8">
+                            <div data-bs-spy="scroll" data-bs-target="#list-example" data-bs-smooth-scroll="true"
+                                class="scrollspy-example" tabindex="0">
+                                {% for i in object_list %}
+                                <hr id="list-item-{{ i.created }}">
+                                {% if i.image %}
+                                    <a href="{% url 'blog:post' i.slug %}">
+                                        <img class="img-recent"
+                                            src="{{ i.image.url }}"
+                                            class="card-img-top" alt="...">
+                                    </a>
+                                {% endif %}
+                                <p class="card-text fs-5">{{ i.short_description }}</p>
+                                <p class="card-text">Опубликовано {{ i.created|naturaltime }} |
+                                    by {{ i.author.username }} |
+                                    _ &#128172; | {{ i.likes.all.count }} &#128147;</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-9"></div>
+                            <div class="col-lg-3">
+                                <a href="{% url 'blog:index' %}">
+                                    <div class="but-all">
+                                        <a href="#" class="btn btn-sm btn-outline-light mt-2">
+                                            Посмотреть все
+                                        </a>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -5,21 +5,17 @@
 {% load humanize %}
 
 {% block css %}
-    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}?123123">
 {% endblock css %}
 
 {% block section %}
     <section>
         <div class="my-5">
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-4">
                     <div class="container_cont d-flex flex-column align-items-center text-center">
-                        <img src="{{ object.get_avatar }}" alt="user__image" class="img_bord" width="200">
-                        <h3>{{ object }}</h3>
-                        <span class="text-black-50">{{ object.user.email }}</span>
+                        <img src="{{ object.get_avatar }}" alt="user__image" class="img_bord" width="300">
                     </div>
-                </div>
-                <div class="col-md-5">
                     <div class="container_cont">
                         <ul class="list-group">
                             {% include 'main/forms_errors.html' %}
@@ -34,6 +30,7 @@
                                 {% endif %}
                             {% endif %}
                             <li class="list-group-item bg-dark-1">Имя пользователя: {{ object }}</li>
+                            <li class="list-group-item bg-dark-1">Почта: {{ object.email }}</li>
                             {% if object.first_name %}<li class="list-group-item bg-dark-1">Имя и фамилия: {{ object.first_name }}</li>{% endif %}
                             {% if object.last_name %}<li class="list-group-item bg-dark-1">Фамилия: {{ object.last_name }}</li>{% endif %} 
                             {% if object.last_login %}<li class="list-group-item bg-dark-1">Заходил(a) {{ object.last_login|naturaltime }}</li>{% endif %} 
@@ -47,8 +44,10 @@
                             </a>
                         {% endif %}
                     </div>
+                </div>
+                <div class="col-md-4">
                     <div class="container_cont d-flex flex-column">
-                        <h4 class="text-right">Комментарии</h4>
+                        <h4 class="text-right">Сообщения профиля</h4>
                         <div class="d-flex flex-row align-items-start">
                             <img src="{{ request.user.get_avatar }}" alt="user__image" class="img_bord me-2" width="100">
                             <textarea class="form-control shadow-none textarea bg-form"></textarea>
@@ -77,7 +76,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-4">
                     <div class="container_cont">
                         <h2>Мои последние сообщения.</h2>
                         <div class="last-messages">
