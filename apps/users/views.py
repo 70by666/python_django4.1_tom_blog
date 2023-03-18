@@ -18,13 +18,14 @@ class ProfileView(ProfileMixin, LoginRequiredMixin, DetailView):
     model = User
 
 
-class ProfileEditView(ProfileMixin, LoginRequiredMixin, UpdateView):
+class ProfileEditView(SuccessMessageMixin, ProfileMixin, LoginRequiredMixin, UpdateView):
     """
     Контроллер редактирования прфоиля
     """
     template_name = 'users/profile_edit.html'    
     form_class = UserUpdateForm
     model = User
+    success_message = 'Профиль изменен!'
 
     def get_object(self, queryset=None):
         return self.request.user

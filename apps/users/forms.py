@@ -39,11 +39,12 @@ class UserUpdateForm(InitFormMixin, UserChangeForm):
     def clean_birth_day(self):
         data = self.cleaned_data['birth_day']
 
-        if data > datetime.date.today():
-            raise ValidationError('Вы не могли родиться в будущем')
+        if data:
+            if data > datetime.date.today():
+                raise ValidationError('Вы не могли родиться в будущем')
 
-        if data < datetime.date.today() - datetime.timedelta(weeks=8000):
-            raise ValidationError('Вам больше 150 лет?')
+            if data < datetime.date.today() - datetime.timedelta(weeks=8000):
+                raise ValidationError('Вам больше 150 лет?')
         
         return data
     
