@@ -27,14 +27,34 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
+                            <a class="nav-link active" aria-current="page" href="{% url 'index' %}">
+                                Домашняя страница
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{% url 'blog:index' %}">Blog</a>
+                            <a class="nav-link active" aria-current="page" href="{% url 'blog:index' %}">
+                                Блог
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{% url 'contact' %}">Contact us</a>
+                            <a class="nav-link active" aria-current="page" href="{% url 'contact' %}">
+                                Связаться с нами
+                            </a>
                         </li>
+                        {% if user.is_staff %}
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="{% url 'blog:new' %}">
+                                    Добавить статью
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% if user.is_superuser %}
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="{% url 'admin:index' %}">
+                                    Админка
+                                </a>
+                            </li>
+                        {% endif %}
                     </ul>
                     {% comment %} <form class="d-flex me-3" role="search">
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -43,17 +63,25 @@
                     <ul class="navbar-nav me-3">
                         {% if user.is_authenticated %}
                             <li class="nav-item">
-                                <a href="{% url 'users:profile' request.user.slug %}" class="nav-link">Profile</a>
+                                <a href="{% url 'users:profile' request.user.slug %}" class="nav-link">
+                                    Профиль
+                                </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{% url 'users:logout' %}" class="nav-link">Log Out</a>
+                                <a href="{% url 'users:logout' %}" class="nav-link">
+                                    Выйти
+                                </a>
                             </li>
                         {% else %}
                             <li class="nav-item">
-                                <a href="{% url 'users:login' %}" class="nav-link">Log In</a>
+                                <a href="{% url 'users:login' %}" class="nav-link">
+                                    Войти
+                                </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{% url 'users:register' %}" class="nav-link">Register</a>
+                                <a href="{% url 'users:register' %}" class="nav-link">
+                                    Зарегистрироваться
+                                </a>
                             </li>
                         {% endif %}
                     </ul>

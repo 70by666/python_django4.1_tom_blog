@@ -33,3 +33,23 @@ class InitFormMixin:
                 'class': 'form-control',
                 'autocomplete': 'off',
             })
+
+
+class InitCreateUpdateForm:
+    """
+    Миксин для создания и обновления профиля
+    """
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs.update(
+            {"placeholder": 'Введите имя пользователя'}
+        )
+        self.fields['first_name'].widget.attrs.update(
+            {"placeholder": 'Введите имя'}
+        )
+        self.fields['last_name'].widget.attrs.update(
+            {"placeholder": 'Введите фамилию'}
+        )
+        self.fields["email"].widget.attrs.update(
+            {"placeholder": 'Введите адрес электронной почты'}
+        )

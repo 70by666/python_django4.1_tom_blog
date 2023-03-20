@@ -1,7 +1,10 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
-from django.views.generic import DetailView, ListView, View
+from django.urls import reverse_lazy
+from django.views.generic import DetailView, ListView, View, CreateView
+from django.contrib.messages.views import SuccessMessageMixin
 
+from apps.blog.forms import NewPostForm
 from apps.blog.models import Categories, Posts
 from common.mixins import TitleMixin
 
@@ -63,3 +66,19 @@ class AddlikeView(LoginRequiredMixin, View):
         post.likes.add(request.user)
         
         return redirect(request.META['HTTP_REFERER'])
+
+
+class CreateBlogPost(SuccessMessageMixin, LoginRequiredMixin, TitleMixin, CreateView):
+    title = 'Добавить статью'
+    template_name = 'blog/new.html'
+    form_class = NewPostForm
+    model = Posts
+    success_message = 'Статья добавлена'
+    
+    def get_success_url(self):
+        return reverse_lazy('blog:index')
+    
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        form.save()
+        return super().form_valid(form)

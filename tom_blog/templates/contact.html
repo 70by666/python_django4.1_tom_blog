@@ -12,6 +12,7 @@
             <article class="letter">
                 {% include 'main/forms_errors.html' %}
                 <form action="{% url 'contact' %}" method="post">
+                    {% csrf_token %} 
                     <div class="side">
                         <h1>Contact us</h1>
                         <p>
@@ -26,7 +27,6 @@
                             {{ form.email }}
                         </p>
                         <p>
-                            {% csrf_token %} 
                             <button type="submit" class="btn btn-outline-secondary mt-2">
                                 Отправить
                             </button>

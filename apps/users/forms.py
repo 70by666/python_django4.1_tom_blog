@@ -1,41 +1,28 @@
 import datetime
 
-from django import forms
 from django.contrib.auth.forms import (AuthenticationForm, UserChangeForm,
                                        UserCreationForm)
 from django.forms import ValidationError
 
 from apps.users.models import User
-from common.mixins import InitFormMixin
+from common.mixins import InitFormMixin, InitCreateUpdateForm
 
 
-class UserUpdateForm(InitFormMixin, UserChangeForm):
+class UserUpdateForm(InitCreateUpdateForm, InitFormMixin, UserChangeForm):
     """
     Форма обновления модели User
     """    
-    username = forms.CharField(widget=forms.TextInput(attrs={
-        'placeholder': 'Введите имя пользователя',
-    }))
-    first_name = forms.CharField(required=False, widget=forms.TextInput(attrs={
-        'placeholder': 'Введите имя',
-    }))
-    last_name = forms.CharField(required=False, widget=forms.TextInput(attrs={
-        'placeholder': 'Введите фамилию',
-    }))
-    email = forms.EmailField(widget=forms.EmailInput(attrs={
-        'placeholder': 'Введите адрес электронной почты',
-    }))
-    slug = forms.SlugField(widget=forms.TextInput(attrs={
-        'placeholder': 'Введите ссылку на ваш профиль',
-    }))
-    birth_day = forms.DateField(required=False, widget=forms.TextInput(attrs={
-        'placeholder': 'Введите дату рождения',
-        'type': 'date',
-    }))    
-    bio = forms.CharField(required=False, widget=forms.Textarea(attrs={
-        'placeholder': 'Введите информацию о себе',
-    }))
-    image = forms.ImageField(required=False, widget=forms.FileInput())
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["slug"].widget.attrs.update(
+            {"placeholder": 'Введите ссылку на ваш профиль'}
+        )
+        self.fields['birth_day'].widget.attrs.update(
+            {"placeholder": 'Введите дату рождения'}
+        )
+        self.fields['bio'].widget.attrs.update(
+            {"placeholder": 'Введите информацию о себе'}
+        )
     
     def clean_birth_day(self):
         data = self.cleaned_data['birth_day']
@@ -53,7 +40,7 @@ class UserUpdateForm(InitFormMixin, UserChangeForm):
         model = User
         fields = (
             'username', 'first_name', 'last_name', 'email', 
-            'slug', 'birth_day', 'bio', 'image'
+            'slug', 'birth_day', 'bio', 'image',
         )
 
 
@@ -61,42 +48,33 @@ class LoginForm(InitFormMixin, AuthenticationForm):
     """
     Форма для авторизации
     """
-    username = forms.CharField(widget=forms.TextInput(attrs={
-        'placeholder': 'Введите имя пользователя',
-    }))
-    password = forms.CharField(widget=forms.PasswordInput(attrs={
-        'placeholder': 'Введите пароль',
-    }))
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs.update(
+            {"placeholder": 'Введите имя пользователя'}
+        )
+        self.fields['password'].widget.attrs.update(
+            {"placeholder": 'Введите пароль'}
+        )
     
     class Meta:
         model = User
         fields = ('username', 'password')
 
 
-# нужно проерить mixin на одинаковые поля
-class RegisterForm(InitFormMixin, UserCreationForm):
+class RegisterForm(InitCreateUpdateForm, InitFormMixin, UserCreationForm):
     """
     Форма для регистрации
     """
-    username = forms.CharField(widget=forms.TextInput(attrs={
-        'placeholder': 'Придумайте имя пользователя',
-    }))
-    email = forms.EmailField(widget=forms.EmailInput(attrs={
-        'placeholder': 'Введите адрес электронной почты',
-    }))    
-    first_name = forms.CharField(required=False, widget=forms.TextInput(attrs={
-        'placeholder': 'Введите имя',
-    }))
-    last_name = forms.CharField(required=False, widget=forms.TextInput(attrs={
-        'placeholder': 'Введите фамилию',
-    }))
-    password1 = forms.CharField(widget=forms.PasswordInput(attrs={
-        'placeholder': 'Придумайте пароль',
-    }))
-    password2 = forms.CharField(widget=forms.PasswordInput(attrs={
-        'placeholder': 'Для подтверждения пароля введите его еще раз',
-    }))
-    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['password1'].widget.attrs.update(
+            {"placeholder": 'Придумайте пароль'}
+        )
+        self.fields['password2'].widget.attrs.update(
+            {"placeholder": 'Повторите пароль'}
+        )
+        
     class Meta:
         model = User
         fields = (

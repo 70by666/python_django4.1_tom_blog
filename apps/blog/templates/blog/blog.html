@@ -9,58 +9,59 @@
 {% endblock css %}
 
 {% block section %}
-<section>
-    <div class="row container_cont_blog">
-        <div class="col-lg-2">
-            {% include 'main/sidebar.html' %}
-        </div>
-        <div class="col-lg-1"></div>
-        <div class="col-lg-9">
-            <div class="container_grid">
-                {% for i in object_list %}
-                <div class="card">
-                    <div class="card__header">
-                        {% if i.image %}
-                        <a href="{% url 'blog:post' i.slug %}">
-                            <img src="{{ i.image.url }}" alt="card__image" class="card__image" width="600">
-                        </a>
-                        {% endif %}
-                    </div>
-                    <div class="card__body">
-                        <a class="card_text" href="{% url 'blog:category' i.category.slug %}"><span
-                                class="tag tag-blue">{{ i.category }}</span></a>
-                        <a class="title_text fs-4" href="{% url 'blog:post' i.slug %}">
-                            {{ i.title }}
-                        </a>
-                        <p>{{ i.short_description }}</p>
-                        <small>Опубликовано {{ i.created|naturaltime }}</small>
-                        _ &#128172;
-                        {{ i.likes.all.count }}&#128147;
-                    </div>
-                    <div class="card__footer">
-                        <div class="row">
-                            <div class="col-lg-5">
-                                <a href="{% url 'users:profile' i.author.slug %}">
-                                    <img width="100" src="{{ i.author.get_avatar }}" class="img_bord">
-                                </a>
-                            </div>
-                            <div class="col-lg-7">
-                                <div class="user">
-                                    <div class="user__info">
-                                        <a class="url_author" href="{% url 'users:profile' i.author.slug %}">
-                                            <h5>{{ i.author.username }}</h5>
-                                        </a>
-                                        <small>Заходил на сайт {{ i.author.last_login|naturaltime }}</small>
+    <section>
+        <div class="row container_cont_blog">
+            <div class="col-lg-2">
+                {% include 'main/sidebar.html' %}
+            </div>
+            <div class="col-lg-1"></div>
+            <div class="col-lg-9">
+                <div class="container_grid">
+                    {% include 'main/forms_errors.html' %}
+                    {% for i in object_list %}
+                    <div class="card">
+                        <div class="card__header">
+                            {% if i.image %}
+                            <a href="{% url 'blog:post' i.slug %}">
+                                <img src="{{ i.image.url }}" alt="card__image" class="card__image" width="600">
+                            </a>
+                            {% endif %}
+                        </div>
+                        <div class="card__body">
+                            <a class="card_text" href="{% url 'blog:category' i.category.slug %}"><span
+                                    class="tag tag-blue">{{ i.category }}</span></a>
+                            <a class="title_text fs-4" href="{% url 'blog:post' i.slug %}">
+                                {{ i.title }}
+                            </a>
+                            <p>{{ i.short_description }}</p>
+                            <small>Опубликовано {{ i.created|naturaltime }}</small>
+                            _ &#128172;
+                            {{ i.likes.all.count }}&#128147;
+                        </div>
+                        <div class="card__footer">
+                            <div class="row">
+                                <div class="col-lg-5">
+                                    <a href="{% url 'users:profile' i.author.slug %}">
+                                        <img width="100" src="{{ i.author.get_avatar }}" class="img_bord">
+                                    </a>
+                                </div>
+                                <div class="col-lg-7">
+                                    <div class="user">
+                                        <div class="user__info">
+                                            <a class="url_author" href="{% url 'users:profile' i.author.slug %}">
+                                                <h5>{{ i.author.username }}</h5>
+                                            </a>
+                                            <small>Заходил на сайт {{ i.author.last_login|naturaltime }}</small>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    {% endfor %}
+                    <div class="container">{% include 'main/pagination.html' %}</div>
                 </div>
-                {% endfor %}
-                <div class="container">{% include 'main/pagination.html' %}</div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 {% endblock section %}

@@ -16,9 +16,13 @@
         {% include 'main/forms_errors.html' %}
         <form action="{% url 'users:profile_edit' %}" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-            <div class="col-md-12">
-                <label class="labels">Имя пользователя:</label>
-                {{ form.username }}
+            <div class="row mt-2">
+                <div class="col-md-6"><label class="labels">Имя пользователя:</label>
+                    {{ form.username }}
+                </div>
+                <div class="col-md-6"><label class="labels">URL:</label>
+                    {{ form.slug }}
+                </div>
             </div>
             <div class="row mt-2">
                 <div class="col-md-6"><label class="labels">Имя:</label>
@@ -28,17 +32,13 @@
                     {{ form.last_name }}
                 </div>
             </div>
-            <div class="mt-2">
-                <label class="labels">Почта:</label>
-                {{ form.email }}
-            </div>
-            <div class="mt-2">
-                <label class="labels">URL:</label>
-                {{ form.slug }}
-            </div>
-            <div class="mt-2">
-                <label class="labels">Дата рождения:</label>
-                {{ form.birth_day }}
+            <div class="row mt-2">
+                <div class="col-md-6"><label class="labels">Почта:</label>
+                    {{ form.email }}
+                </div>
+                <div class="col-md-6"><label class="labels">Дата рождения:</label>
+                    {{ form.birth_day }}
+                </div>
             </div>
             <div class="mt-2">
                 <label class="labels">О себе</label>

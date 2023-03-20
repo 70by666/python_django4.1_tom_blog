@@ -48,24 +48,22 @@ class ContactView(SuccessMessageMixin, TitleMixin, FormView):
     success_url = reverse_lazy('contact')
     success_message = 'Сообщение отправлено!'
     
-    def post(self, request, *args, **kwargs):
+    def form_valid(self, form):
         """
         Отправка сообщений на указанные ИД телеграм чатов
-        Можно было бы прописать логику при методе save в моделе, но не хотел
-        создать модель
+        Можно было бы прописать логику при вызове метода save в моделе, 
+        но не хотел создавать модель
         """
-        form = self.get_form()
-        if form.is_valid():
-            data = form.data
-            for i in settings.CHAT_IDS.split():
-                url = 'https://api.telegram.org/bot{}/sendMessage?chat_id={}&text={}'.format(
-                    settings.BOT_TOKEN, 
-                    i,
-                    f'{data["name"]}\n{data["email"]}\n{data["message"]}',
-                )
-                requests.post(url)
-        
-        return super().post(self, request, *args, **kwargs)
+        data = form.data
+        for i in settings.CHAT_IDS.split():
+            url = 'https://api.telegram.org/bot{}/sendMessage?chat_id={}&text={}'.format(
+                settings.BOT_TOKEN, 
+                i,
+                f'{data["name"]}\n{data["email"]}\n{data["message"]}',
+            )
+            requests.post(url)
+            
+        return super().form_valid(form)
 
 
 def error403(request, exception):
