@@ -3,10 +3,11 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, ListView, View, CreateView, UpdateView, DeleteView
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib import messages
 
 from apps.blog.forms import EditPostForm, NewPostForm
 from apps.blog.models import Categories, Posts
-from common.mixins import PostsTitleMixin, TitleMixin
+from common.mixins import PostsTitleMixin, TitleMixin, EditDeletePostRequiredMixin
 
 
 class BlogView(ListView):
@@ -76,8 +77,16 @@ class CreateBlogPost(SuccessMessageMixin, LoginRequiredMixin, TitleMixin, Create
         form.save()
         return super().form_valid(form)
 
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_redactor:
+            messages.info(request, 'Вы не редактор')
+            return redirect('blog:index')
+        
+        return super().dispatch(request, *args, **kwargs)
+    
 
-class EditPostView(SuccessMessageMixin, LoginRequiredMixin, PostsTitleMixin, UpdateView):
+class EditPostView(EditDeletePostRequiredMixin, SuccessMessageMixin, 
+                   LoginRequiredMixin, PostsTitleMixin, UpdateView):
     model = Posts
     form_class = EditPostForm
     success_message = 'Статья изменена'
@@ -87,7 +96,8 @@ class EditPostView(SuccessMessageMixin, LoginRequiredMixin, PostsTitleMixin, Upd
         return reverse_lazy('blog:post', args=(self.object.slug,))
 
 
-class DeletePostView(SuccessMessageMixin, LoginRequiredMixin, PostsTitleMixin, DeleteView):
+class DeletePostView(EditDeletePostRequiredMixin, SuccessMessageMixin, 
+                     LoginRequiredMixin, PostsTitleMixin, DeleteView):
     model = Posts
     success_message = 'Статья удалена'
     template_name = 'blog/delete.html'

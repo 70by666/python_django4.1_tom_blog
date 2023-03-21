@@ -59,11 +59,11 @@ class RegisterView(TitleMixin, SuccessMessageMixin, CreateView):
     success_message = 'Регистрация прошла успешно!'
     redirect_authenticated_user = True
 
-    def get(self, request, *args, **kwargs):
+    def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             return redirect(reverse_lazy(
                 'users:profile', 
                 args=(self.request.user.slug,)
             ))
             
-        return super().get(request, *args, **kwargs)
+        return super().dispatch(request, *args, **kwargs)
