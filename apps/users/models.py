@@ -30,6 +30,10 @@ class User(AbstractUser):
         null=True, 
         verbose_name='Дата рождения'
     )
+    is_redactor = models.BooleanField(
+        verbose_name='Статус редактор', 
+        default=False
+    )
 
     class Meta:
         verbose_name = 'Пользователь'

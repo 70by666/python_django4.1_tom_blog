@@ -28,11 +28,16 @@
                             {% endif %}
                         </div>
                         <div class="card__body">
-                            <a class="card_text" href="{% url 'blog:category' i.category.slug %}"><span
-                                    class="tag tag-blue">{{ i.category }}</span></a>
-                            <a class="title_text fs-4" href="{% url 'blog:post' i.slug %}">
-                                {{ i.title }}
-                            </a>
+                            <span class="tag tag-blue">
+                                <a class="card_text" href="{% url 'blog:category' i.category.slug %}">
+                                    {{ i.category }}
+                                </a>
+                            </span>
+                            <h4>
+                                <a class="title_text fs-4" href="{% url 'blog:post' i.slug %}">
+                                    {{ i.title }}
+                                </a>
+                            </h4>
                             <p>{{ i.short_description }}</p>
                             <small>Опубликовано {{ i.created|naturaltime }}</small>
                             _ &#128172;
@@ -48,9 +53,11 @@
                                 <div class="col-lg-7">
                                     <div class="user">
                                         <div class="user__info">
-                                            <a class="url_author" href="{% url 'users:profile' i.author.slug %}">
-                                                <h5>{{ i.author.username }}</h5>
-                                            </a>
+                                            <h5>
+                                                <a class="url_author" href="{% url 'users:profile' i.author.slug %}">
+                                                    {{ i.author.username }}
+                                                </a>
+                                            </h5>
                                             <small>Заходил на сайт {{ i.author.last_login|naturaltime }}</small>
                                         </div>
                                     </div>

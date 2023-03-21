@@ -1,0 +1,26 @@
+{% extends 'main/base.html' %}
+
+{% load static %}
+
+{% load humanize %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/new.css' %}?1542243">
+{% endblock css %}
+
+{% block section %}
+    <section>
+        <div class="container container_cont">
+            {% include 'main/forms_errors.html' %}
+            <form action="{% url 'blog:edit' object.slug %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="mt-5 text-center">
+                    <button class="btn btn-outline-light mb-5" type="subbmit">
+                        Изменить статью
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+{% endblock section %}

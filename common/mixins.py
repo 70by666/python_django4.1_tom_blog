@@ -11,7 +11,7 @@ class TitleMixin:
         return context
 
 
-class ProfileMixin:
+class ProfileTitleMixin:
     """
     Миксин для заголовка страницы в представлениях профиля и его редактирования
     """
@@ -22,7 +22,7 @@ class ProfileMixin:
         return context
 
 
-class InitFormMixin:
+class StyleFormMixin:
     """
     Миксин для применения стилей к input в формах
     """
@@ -35,7 +35,7 @@ class InitFormMixin:
             })
 
 
-class InitCreateUpdateForm:
+class PlaceholderCreateUpdateForm:
     """
     Миксин для создания и обновления профиля
     """
@@ -53,3 +53,11 @@ class InitCreateUpdateForm:
         self.fields["email"].widget.attrs.update(
             {"placeholder": 'Введите адрес электронной почты'}
         )
+
+
+class PostsTitleMixin:
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = f'{self.object.id}-{self.object.title}'
+        
+        return context

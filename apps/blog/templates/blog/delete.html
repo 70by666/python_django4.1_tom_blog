@@ -1,0 +1,33 @@
+{% extends 'main/base.html' %}
+
+{% load static %}
+
+{% load humanize %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/new.css' %}?1542243">
+{% endblock css %}
+
+{% block section %}
+    <section>
+        <div class="container container_cont">
+            <form action="{% url 'blog:delete' object.slug %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mt-5 text-center">
+                    <div class="alert alert-warning" role="alert">
+                        <div class="container">Вы уверены, что хотите удалить статью?
+
+                    </div>                      
+                    <div class="container mt-3">
+                        <button class="btn btn-outline-primary" type="subbmit">
+                            Удалить статью
+                        </button>
+                        <a href="{% url 'blog:post' object.slug %}" class="btn btn-outline-primary">
+                            Отменить удаление
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+{% endblock section %}

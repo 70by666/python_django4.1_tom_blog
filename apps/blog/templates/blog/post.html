@@ -12,6 +12,7 @@
     <section>
         <div class="container_cont">
             <div class="row">
+                {% include 'main/forms_errors.html' %}
                 <div class="col-lg-1"></div>
                 <div class="col-lg-6">
                     <div class="card">
@@ -20,9 +21,11 @@
                                 alt="card__image" class="card__image" style="width: 100%;">
                         </div>
                         <div class="card__body">
-                            <a class="card_text" href="{% url 'blog:category' object.category.slug %}">
-                                <span class="tag tag-blue">{{ object.category }}</span>
-                            </a>
+                            <span class="tag tag-blue">
+                                <a class="card_text" href="{% url 'blog:category' object.category.slug %}">
+                                    {{ object.category }}
+                                </a>
+                            </span>
                             <h4>{{ object.title }}</h4>
                             <p>{{ object.full_description }}</p>
                             <small>{{ object.created|naturaltime }}</small>
@@ -37,20 +40,28 @@
                                             class="img_bord" width="100">
                                         </a>
                                         <div class="user__info">
-                                            <a href="{% url 'users:profile' object.author.slug %}" class="url_author">
-                                                <h5>{{ object.author.username }}</h5>
-                                            </a>
+                                            <h5>
+                                                <a href="{% url 'users:profile' object.author.slug %}" class="url_author">
+                                                    {{ object.author.username }}
+                                                </a>
+                                            </h5>
                                             <small>Заходил на сайт {{ object.author.last_login|naturaltime }}</small>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                 </div>
-                                <div class="col-lg-2 fs-4">
-                                    <a class="like_coms_url" href="#" type="submit">_ &#128172;</a>
-                                    <a class="like_coms_url" href="{% url 'blog:addlike' object.slug %}" type="submit">
+                                <div class="col-lg-2">
+                                    <a class="like_coms_url fs-4" href="#" type="submit">_ &#128172;</a>
+                                    <a class="like_coms_url fs-4" href="{% url 'blog:addlike' object.slug %}" type="submit">
                                         {{ object.likes.all.count }} &#128147;
                                     </a>
+                                    {% if user.is_staff or user.id == object.author.id %}
+                                    <small>
+                                        <a class="url_author" href="{% url 'blog:edit' object.slug %}">Изменить&#128394;</a> 
+                                        <a class="url_author" href="{% url 'blog:delete' object.slug %}">Удалить&#128465;</a>
+                                    </small>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>

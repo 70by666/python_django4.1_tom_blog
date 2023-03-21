@@ -41,7 +41,7 @@
                                 Связаться с нами
                             </a>
                         </li>
-                        {% if user.is_staff %}
+                        {% if user.is_redactor %}
                             <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="{% url 'blog:new' %}">
                                     Добавить статью

@@ -16,23 +16,3 @@ class SendMessageForm(forms.Form):
         'placeholder': 'Ваше сообщение',
         'autocomplete': 'off',
     }))
-
-
-# class SendMessageForm(InitFormMixin, forms.Form):
-#     def __init__(self, *args, **kwargs):
-#         super().__init__(*args, **kwargs)
-#         self.fields['name'].widget.attrs.update({
-#             'class': 'form_control',
-#             "placeholder": 'Введите имя',
-#         })
-#         self.fields['email'].widget.attrs.update({
-#             'class': 'form_control',
-#             "placeholder": 'Почта, чтобы получить наш ответ'
-#         })
-#         self.fields['message'].widget.attrs.update({
-#             'class': 'form_control',
-#             "placeholder": 'Ваше сообщение'
-#         })
-    
-#     class Meta:
-#         fields = ('name', 'email', 'message')

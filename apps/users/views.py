@@ -7,10 +7,10 @@ from django.views.generic import CreateView, DetailView, UpdateView
 
 from apps.users.forms import LoginForm, RegisterForm, UserUpdateForm
 from apps.users.models import User
-from common.mixins import ProfileMixin, TitleMixin
+from common.mixins import ProfileTitleMixin, TitleMixin
 
 
-class ProfileView(ProfileMixin, LoginRequiredMixin, DetailView):
+class ProfileView(ProfileTitleMixin, LoginRequiredMixin, DetailView):
     """
     Контроллер профиля
     """
@@ -18,7 +18,7 @@ class ProfileView(ProfileMixin, LoginRequiredMixin, DetailView):
     model = User
 
 
-class ProfileEditView(SuccessMessageMixin, ProfileMixin, LoginRequiredMixin, UpdateView):
+class ProfileEditView(SuccessMessageMixin, ProfileTitleMixin, LoginRequiredMixin, UpdateView):
     """
     Контроллер редактирования прфоиля
     """

@@ -1,12 +1,12 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.views.generic import DetailView, ListView, View, CreateView
+from django.views.generic import DetailView, ListView, View, CreateView, UpdateView, DeleteView
 from django.contrib.messages.views import SuccessMessageMixin
 
-from apps.blog.forms import NewPostForm
+from apps.blog.forms import EditPostForm, NewPostForm
 from apps.blog.models import Categories, Posts
-from common.mixins import TitleMixin
+from common.mixins import PostsTitleMixin, TitleMixin
 
 
 class BlogView(ListView):
@@ -15,7 +15,6 @@ class BlogView(ListView):
     """
     model = Posts
     template_name = 'blog/blog.html'
-    category = None
     paginate_by = 6
     
     def get_queryset(self):
@@ -38,18 +37,12 @@ class BlogView(ListView):
         return context
     
 
-class BlogDetailView(TitleMixin, DetailView):
+class BlogDetailView(PostsTitleMixin, DetailView):
     """
     Контроллер отдельного поста
     """
     model = Posts
     template_name = 'blog/post.html'
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = f'{self.object.id}-{self.object.title}'
-        
-        return context
 
 
 class AddlikeView(LoginRequiredMixin, View):
@@ -82,3 +75,22 @@ class CreateBlogPost(SuccessMessageMixin, LoginRequiredMixin, TitleMixin, Create
         form.instance.author = self.request.user
         form.save()
         return super().form_valid(form)
+
+
+class EditPostView(SuccessMessageMixin, LoginRequiredMixin, PostsTitleMixin, UpdateView):
+    model = Posts
+    form_class = EditPostForm
+    success_message = 'Статья изменена'
+    template_name = 'blog/edit.html'
+
+    def get_success_url(self):
+        return reverse_lazy('blog:post', args=(self.object.slug,))
+
+
+class DeletePostView(SuccessMessageMixin, LoginRequiredMixin, PostsTitleMixin, DeleteView):
+    model = Posts
+    success_message = 'Статья удалена'
+    template_name = 'blog/delete.html'
+
+    def get_success_url(self):
+        return reverse_lazy('blog:index')

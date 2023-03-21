@@ -5,10 +5,10 @@ from django.contrib.auth.forms import (AuthenticationForm, UserChangeForm,
 from django.forms import ValidationError
 
 from apps.users.models import User
-from common.mixins import InitFormMixin, InitCreateUpdateForm
+from common.mixins import StyleFormMixin, PlaceholderCreateUpdateForm
 
 
-class UserUpdateForm(InitCreateUpdateForm, InitFormMixin, UserChangeForm):
+class UserUpdateForm(PlaceholderCreateUpdateForm, StyleFormMixin, UserChangeForm):
     """
     Форма обновления модели User
     """    
@@ -44,7 +44,7 @@ class UserUpdateForm(InitCreateUpdateForm, InitFormMixin, UserChangeForm):
         )
 
 
-class LoginForm(InitFormMixin, AuthenticationForm):
+class LoginForm(StyleFormMixin, AuthenticationForm):
     """
     Форма для авторизации
     """
@@ -62,7 +62,7 @@ class LoginForm(InitFormMixin, AuthenticationForm):
         fields = ('username', 'password')
 
 
-class RegisterForm(InitCreateUpdateForm, InitFormMixin, UserCreationForm):
+class RegisterForm(PlaceholderCreateUpdateForm, StyleFormMixin, UserCreationForm):
     """
     Форма для регистрации
     """
