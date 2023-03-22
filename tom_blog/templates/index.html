@@ -4,6 +4,8 @@
 
 {% load humanize %}
 
+{% load cache %}
+
 {% block css %}
     <link rel="stylesheet" href="{% static 'css/index.css' %}?12341434">
 {% endblock css %}
@@ -17,56 +19,58 @@
                 <div class="container_cont cont_left">
                     <h2 class="fw-bold">ПОСЛЕДНИЕ ПУБЛИКАЦИИ</h2>
                     <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <div class="card-carousel text-bg-dark">
-                                    <img src="{{ first.image.url }}"
-                                        class="card-img" alt="...">
-                                    <div class="card-img-overlay p-2">
-                                        <a class="post_url" href="{% url 'blog:post' first.slug %}">
-                                            <p class="card-title">{{ first.title }}</p>
-                                        </a>
-                                        <a class="post_url" href="{% url 'blog:post' first.slug %}">
-                                            <p class="card-text-car">
-                                                {{ first.short_description }}
-                                            </p>
-                                        </a>
-                                        <p class="card-text-info">
-                                            <small>
-                                                Опубликовано {{ first.created|naturaltime }} |
-                                                by {{ first.author.username }} |
-                                                _ &#128172; | {{ first.likes.all.count }} &#128147;
-                                            </small>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            {% for i in last_posts %}
-                                <div class="carousel-item">
+                        {% cache 150 carousel %}
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
                                     <div class="card-carousel text-bg-dark">
-                                        <img src="{{ i.image.url }}"
+                                        <img src="{{ first.image.url }}"
                                             class="card-img" alt="...">
                                         <div class="card-img-overlay p-2">
-                                            <a class="post_url" href="{% url 'blog:post' i.slug %}">
-                                                <p class="card-title">{{ i.title }}</p>
+                                            <a class="post_url" href="{% url 'blog:post' first.slug %}">
+                                                <p class="card-title">{{ first.title }}</p>
                                             </a>
-                                            <a class="post_url" href="{% url 'blog:post' i.slug %}">
+                                            <a class="post_url" href="{% url 'blog:post' first.slug %}">
                                                 <p class="card-text-car">
-                                                    {{ i.short_description }}
+                                                    {{ first.short_description }}
                                                 </p>
                                             </a>
                                             <p class="card-text-info">
                                                 <small>
-                                                    Опубликовано {{ i.created|naturaltime }} |
-                                                    by {{ i.author.username }} |
-                                                    _ &#128172; | {{ i.likes.all.count }} &#128147;
+                                                    Опубликовано {{ first.created|naturaltime }} |
+                                                    by {{ first.author.username }} |
+                                                    _ &#128172; | {{ first.likes.all.count }} &#128147;
                                                 </small>
                                             </p>
                                         </div>
                                     </div>
                                 </div>
-                            {% endfor %}
-                        </div>
+                                {% for i in last_posts %}
+                                    <div class="carousel-item">
+                                        <div class="card-carousel text-bg-dark">
+                                            <img src="{{ i.image.url }}"
+                                                class="card-img" alt="...">
+                                            <div class="card-img-overlay p-2">
+                                                <a class="post_url" href="{% url 'blog:post' i.slug %}">
+                                                    <p class="card-title">{{ i.title }}</p>
+                                                </a>
+                                                <a class="post_url" href="{% url 'blog:post' i.slug %}">
+                                                    <p class="card-text-car">
+                                                        {{ i.short_description }}
+                                                    </p>
+                                                </a>
+                                                <p class="card-text-info">
+                                                    <small>
+                                                        Опубликовано {{ i.created|naturaltime }} |
+                                                        by {{ i.author.username }} |
+                                                        _ &#128172; | {{ i.likes.all.count }} &#128147;
+                                                    </small>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endcache %}
                         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying"
                             data-bs-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -81,51 +85,53 @@
                 </div>
                 <div class="container_cont cont_left">
                     <h2 class="fw-bold">ЗАКРЕПЛЕННЫЕ ПОСТЫ</h2>
-                    <div class="row">
-                        <div class="col-4">
-                            <div id="list-example" class="list-group">
+                    {% cache 150 fixed %}
+                        <div class="row">
+                            <div class="col-4">
+                                <div id="list-example" class="list-group">
+                                    <div data-bs-spy="scroll" data-bs-target="#list-example" data-bs-smooth-scroll="true"
+                                        class="scrollspy-example" tabindex="0">
+                                        {% for i in object_list %}
+                                            <a class="list-group-item bg-dark-1" href="#list-item-{{ i.created }}">
+                                                {{ i.title }}
+                                            </a>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-8">
                                 <div data-bs-spy="scroll" data-bs-target="#list-example" data-bs-smooth-scroll="true"
                                     class="scrollspy-example" tabindex="0">
                                     {% for i in object_list %}
-                                        <a class="list-group-item bg-dark-1" href="#list-item-{{ i.created }}">
-                                            {{ i.title }}
+                                    <hr id="list-item-{{ i.created }}">
+                                    {% if i.image %}
+                                        <a href="{% url 'blog:post' i.slug %}">
+                                            <img class="img-recent"
+                                                src="{{ i.image.url }}"
+                                                class="card-img-top" alt="...">
                                         </a>
+                                    {% endif %}
+                                    <p class="card-text fs-5">{{ i.short_description }}</p>
+                                    <p class="card-text">Опубликовано {{ i.created|naturaltime }} |
+                                        by {{ i.author.username }} |
+                                        _ &#128172; | {{ i.likes.all.count }} &#128147;</p>
                                     {% endfor %}
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-8">
-                            <div data-bs-spy="scroll" data-bs-target="#list-example" data-bs-smooth-scroll="true"
-                                class="scrollspy-example" tabindex="0">
-                                {% for i in object_list %}
-                                <hr id="list-item-{{ i.created }}">
-                                {% if i.image %}
-                                    <a href="{% url 'blog:post' i.slug %}">
-                                        <img class="img-recent"
-                                            src="{{ i.image.url }}"
-                                            class="card-img-top" alt="...">
+                            <div class="row">
+                                <div class="col-lg-9"></div>
+                                <div class="col-lg-3">
+                                    <a href="{% url 'blog:index' %}">
+                                        <div class="but-all">
+                                            <a href="#" class="btn btn-sm btn-outline-light mt-2">
+                                                Посмотреть все
+                                            </a>
+                                        </div>
                                     </a>
-                                {% endif %}
-                                <p class="card-text fs-5">{{ i.short_description }}</p>
-                                <p class="card-text">Опубликовано {{ i.created|naturaltime }} |
-                                    by {{ i.author.username }} |
-                                    _ &#128172; | {{ i.likes.all.count }} &#128147;</p>
-                                {% endfor %}
+                                </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-lg-9"></div>
-                            <div class="col-lg-3">
-                                <a href="{% url 'blog:index' %}">
-                                    <div class="but-all">
-                                        <a href="#" class="btn btn-sm btn-outline-light mt-2">
-                                            Посмотреть все
-                                        </a>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+                    {% endcache %}
                 </div>
             </div>
             <div class="col-lg-2">

@@ -37,6 +37,10 @@ env = environ.Env(
     EMAIL_HOST_USER=(str),
     EMAIL_HOST_PASSWORD=(str),
     EMAIL_ADMIN=(str),
+    
+    REDIS_HOST=(str),
+    REDIS_PORT=(str),
+    REDIS_PASSWORD=(str),
 )
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -57,7 +61,7 @@ DEBUG = env('DEBUG')
 ALLOWED_HOSTS = ['*']
 
 INTERNAL_IPS = [
-    "127.0.0.1",
+    '127.0.0.1',
     'localhost',
 ]
 
@@ -91,7 +95,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'tom_blog.urls'
@@ -114,6 +118,18 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'tom_blog.wsgi.application'
 
+REDIS_HOST = env("REDIS_HOST")
+REDIS_PORT = env("REDIS_PORT")
+REDIS_PASSWORD = env("REDIS_PASSWORD")
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': f'redis://:{REDIS_PASSWORD}@{REDIS_HOST}:{REDIS_PORT}/1',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
+}
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases

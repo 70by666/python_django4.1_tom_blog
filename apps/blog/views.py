@@ -4,6 +4,7 @@ from django.urls import reverse_lazy
 from django.views.generic import DetailView, ListView, View, CreateView, UpdateView, DeleteView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
+from django.core.cache import cache
 
 from apps.blog.forms import EditPostForm, NewPostForm
 from apps.blog.models import Categories, Posts
@@ -22,7 +23,11 @@ class BlogView(ListView):
         """
         Сортировка по категориям
         """
-        queryset = super().get_queryset()
+        queryset = cache.get('queryset')
+        if not queryset:
+            queryset = super().get_queryset()
+            cache.set('queryset', queryset, 150)
+            
         category_slug = self.kwargs.get('slug')
         if category_slug:
             self.category = Categories.objects.get(slug=category_slug)
