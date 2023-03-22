@@ -29,6 +29,14 @@ env = environ.Env(
     
     BOT_TOKEN=(str),
     CHAT_IDS=(str),
+    
+    EMAIL_BACKEND=(str),
+    EMAIL_HOST=(str),
+    EMAIL_PORT=(str),
+    EMAIL_USE_TLS=(bool),
+    EMAIL_HOST_USER=(str),
+    EMAIL_HOST_PASSWORD=(str),
+    EMAIL_ADMIN=(str),
 )
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -217,3 +225,18 @@ if not DEBUG:
 
 BOT_TOKEN = env('BOT_TOKEN')
 CHAT_IDS = env('CHAT_IDS')
+
+# email
+EMAIL_BACKEND = env('EMAIL_BACKEND')
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_PORT = env('EMAIL_PORT')
+
+EMAIL_USE_TLS = env('EMAIL_USE_TLS')
+
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+
+EMAIL_SERVER = EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+EMAIL_ADMIN = env('EMAIL_ADMIN').split(' ')
