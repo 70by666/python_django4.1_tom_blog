@@ -4,10 +4,11 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, UpdateView
+from django.contrib.auth.views import PasswordChangeView
 
-from apps.users.forms import LoginForm, RegisterForm, UserUpdateForm
+from apps.users.forms import LoginForm, RegisterForm, UserUpdateForm, ChangePasswordForm
 from apps.users.models import User
-from common.mixins import ProfileTitleMixin, TitleMixin
+from common.mixins import ProfileTitleMixin, TitleMixin, ObjectSuccessProfileMixin
 
 
 class ProfileView(ProfileTitleMixin, LoginRequiredMixin, DetailView):
@@ -18,7 +19,8 @@ class ProfileView(ProfileTitleMixin, LoginRequiredMixin, DetailView):
     model = User
 
 
-class ProfileEditView(SuccessMessageMixin, ProfileTitleMixin, LoginRequiredMixin, UpdateView):
+class ProfileEditView(ObjectSuccessProfileMixin, SuccessMessageMixin, 
+                      ProfileTitleMixin, LoginRequiredMixin, UpdateView):
     """
     Контроллер редактирования прфоиля
     """
@@ -26,12 +28,6 @@ class ProfileEditView(SuccessMessageMixin, ProfileTitleMixin, LoginRequiredMixin
     form_class = UserUpdateForm
     model = User
     success_message = 'Профиль изменен!'
-
-    def get_object(self, queryset=None):
-        return self.request.user
-
-    def get_success_url(self):
-        return reverse_lazy('users:profile', args=(self.object.slug,))
 
 
 class LoginView(TitleMixin, LoginView):
@@ -67,3 +63,13 @@ class RegisterView(TitleMixin, SuccessMessageMixin, CreateView):
             ))
             
         return super().dispatch(request, *args, **kwargs)
+
+
+class ChangePasswordView(ObjectSuccessProfileMixin, ProfileTitleMixin, 
+                         SuccessMessageMixin, PasswordChangeView):
+    """
+    Контроллер для изменения пароля
+    """
+    template_name = 'users/changepassword.html'
+    title = 'Изменение пароля'
+    form_class = ChangePasswordForm

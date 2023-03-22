@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import AccessMixin
 from django.contrib import messages
 from django.shortcuts import redirect
+from django.urls import reverse_lazy
 
 
 class TitleMixin:
@@ -19,10 +20,11 @@ class TitleMixin:
 class ProfileTitleMixin:
     """
     Миксин для заголовка страницы в представлениях профиля и его редактирования
+    и изменении пароля
     """
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = f'{self.object.id} - {self.object.username}'
+        context['title'] = f'{self.request.user.id} - {self.request.user.username}'
         
         return context
 
@@ -42,7 +44,7 @@ class StyleFormMixin:
 
 class PlaceholderCreateUpdateForm:
     """
-    Миксин для создания и обновления профиля
+    Миксин для создания и обновления профиля, установка placeholder
     """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -61,6 +63,10 @@ class PlaceholderCreateUpdateForm:
 
 
 class PostsTitleMixin:
+    """
+    Миксин для заголовка страницы при просмотре поста или 
+    редактировании/удалении поста 
+    """
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = f'{self.object.id}-{self.object.title}'
@@ -69,6 +75,11 @@ class PostsTitleMixin:
 
 
 class EditDeletePostRequiredMixin(AccessMixin):
+    """
+    Миксин для проверки порльзователя на то, является ли он 
+    стаффом(администрастором) или автором статьи, чтобы удалить ее или 
+    отредактировать
+    """
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_staff or request.user == self.get_object().author:
             return super().dispatch(request, *args, **kwargs)
@@ -79,3 +90,16 @@ class EditDeletePostRequiredMixin(AccessMixin):
         )
         
         return redirect('blog:index')
+
+
+class ObjectSuccessProfileMixin:
+    """
+    Миксин для редактирования профиля и изменения пароля, 
+    возвращает текущего пользователя и выполняет метод для перенаправления 
+    после формы
+    """
+    def get_object(self, queryset=None):
+        return self.request.user
+
+    def get_success_url(self):
+        return reverse_lazy('users:profile', args=(self.request.user.slug,))
