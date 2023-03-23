@@ -52,8 +52,10 @@ class ProfileEditView(ObjectSuccessProfileMixin, SuccessMessageMixin,
                 'Если письмо не пришло, проверьте папку спам.'
             )
             send_email_verify.delay(self.request.user.id, new_email)
-            
-        return super().form_valid(form)
+        
+        super().form_valid(form)
+        
+        return redirect('users:login')
 
 
 class LoginView(TitleMixin, LoginView):
