@@ -42,7 +42,7 @@ class ProfileView(ProfileTitleMixin, LoginRequiredMixin, DetailView):
                 .prefetch_related('likes')
                 .filter(author=self.object, status=0)[:6]
             )
-            cache.set(f'last_posts {self.kwargs["slug"]}', context["last_posts"], 150)
+            cache.set(f'last_posts {self.kwargs["slug"]}', context["last_posts"], 60)
                         
         return context
     
@@ -63,7 +63,7 @@ class ProfileAllPostsView(LoginRequiredMixin, ProfileTitleMixin, ListView):
         if not queryset:
             user = User.objects.get(slug=self.kwargs['slug'])
             queryset = super().get_queryset().filter(author=user)
-            cache.set(f'queryset {self.kwargs["slug"]}', queryset, 150)
+            cache.set(f'queryset {self.kwargs["slug"]}', queryset, 60)
         
         return queryset
 

@@ -20,7 +20,7 @@
                 <div class="container_cont cont_left">
                     <h2 class="fw-bold">ПОСЛЕДНИЕ ПУБЛИКАЦИИ</h2>
                     <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
-                        {% cache 150 carousel %}
+                        {% cache 60 carousel %}
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
                                     <div class="card-carousel text-bg-dark">
@@ -86,7 +86,7 @@
                 </div>
                 <div class="container_cont cont_left">
                     <h2 class="fw-bold">ЗАКРЕПЛЕННЫЕ ПОСТЫ</h2>
-                    {% cache 150 fixed %}
+                    {% cache 60 fixed %}
                         <div class="row">
                             <div class="col-4">
                                 <div id="list-example" class="list-group">

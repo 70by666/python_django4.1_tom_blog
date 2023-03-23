@@ -28,7 +28,7 @@ class BlogView(ListView):
         queryset = cache.get('queryset')
         if not queryset:
             queryset = super().get_queryset()
-            cache.set('queryset', queryset, 150)
+            cache.set('queryset', queryset, 60)
             
         category_slug = self.kwargs.get('slug')
         if category_slug:
