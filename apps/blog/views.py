@@ -13,7 +13,7 @@ from common.mixins import (EditDeletePostRequiredMixin, PostsTitleMixin,
                            TitleMixin)
 
 
-class BlogView(LoginRequiredMixin, ListView):
+class BlogView(ListView):
     """
     Контроллер блога, отображение всех постов
     """
