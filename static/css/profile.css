@@ -79,3 +79,15 @@ body::-webkit-scrollbar-thumb {
 .btn:hover {
     background-color: #5756565b;
 }
+
+.container_last_messages {
+    padding: 1em;
+    margin-bottom: 1em;
+    margin-right: 1em;
+    background: rgba(0, 0, 0, 0.1);
+    border:
+        1px
+        solid
+        rgba(128, 128, 128, 0.7);
+
+}

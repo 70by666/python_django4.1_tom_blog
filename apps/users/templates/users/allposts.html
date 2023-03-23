@@ -5,17 +5,14 @@
 {% load humanize %}
 
 {% block css %}
-<link rel="stylesheet" href="{% static 'css/blog.css' %}">
+    <link rel="stylesheet" href="{% static 'css/blog.css' %}">
 {% endblock css %}
 
 {% block section %}
     <section>
         <div class="row container_cont_blog">
-            <div class="col-lg-2">
-                {% include 'main/sidebar.html' %}
-            </div>
-            <div class="col-lg-1"></div>
-            <div class="col-lg-9">
+            <div class="col-lg-2"></div>
+            <div class="col-lg-10">
                 <div class="container_grid">
                     {% include 'main/forms_errors.html' %}
                     {% for i in object_list %}
@@ -43,27 +40,6 @@
                             _ &#128172;
                             {{ i.likes.all.count }}&#128147;
                         </div>
-                        <div class="card__footer">
-                            <div class="row">
-                                <div class="col-lg-5">
-                                    <a href="{% url 'users:profile' i.author.slug %}">
-                                        <img width="100" src="{{ i.author.get_avatar }}" class="img_bord">
-                                    </a>
-                                </div>
-                                <div class="col-lg-7">
-                                    <div class="user">
-                                        <div class="user__info">
-                                            <h5>
-                                                <a class="url_author" href="{% url 'users:profile' i.author.slug %}">
-                                                    {{ i.author.username }}
-                                                </a>
-                                            </h5>
-                                            <small>Заходил на сайт {{ i.author.last_login|naturaltime }}</small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                     {% endfor %}
                     <div class="container">
@@ -74,7 +50,7 @@
                                         <a class="page-link bg-transparent" 
                                         href="
                                         {% if page_obj.has_previous %} 
-                                                {% url 'blog:paginator' page_obj.previous_page_number %}
+                                                {% url 'users:paginator_profile' page_obj.previous_page_number %}
                                         {% else %}
                                                 #
                                         {% endif %}"
@@ -90,14 +66,14 @@
                                         {% else %}
                                             under_line
                                         {% endif %}">
-                                            <a class="page-link bg-transparent" href="{% url 'blog:paginator' page %}">{{ page }}</a>
+                                            <a class="page-link bg-transparent" href="{% url 'users:paginator_profile' page %}">{{ page }}</a>
                                         </li>
                                     {% endfor %}
                                     <li class="page-item {% if not page_obj.has_next %} disabled {% else %} under_line {% endif %}">
                                         <a class="page-link bg-transparent" 
                                         href="
                                         {% if page_obj.has_next %} 
-                                                {% url 'blog:paginator' page_obj.next_page_number %} 
+                                                {% url 'users:paginator_profile' page_obj.next_page_number %} 
                                         {% else %} 
                                                 # 
                                         {% endif %}">

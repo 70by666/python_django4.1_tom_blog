@@ -4,6 +4,8 @@
 
 {% load humanize %}
 
+{% load cache %}
+
 {% block css %}
     <link rel="stylesheet" href="{% static 'css/profile.css' %}">
 {% endblock css %}
@@ -82,20 +84,22 @@
                 </div>
                 <div class="col-md-4">
                     <div class="container_cont">
-                        <h2>Мои последние сообщения.</h2>
-                        <div class="last-messages">
-                            <div class="d-flex flex-row user-info">
-                                <div class="d-flex flex-column justify-content-start ml-2"><span
-                                        class="date text-black-50">Shared publicly - Jan 2020</span></div>
+                        <h2>Мои последние статьи.</h2>
+                            <div class="last-messages">
+                                {% cache 10 last_posts %}
+                                    {% for i in last_posts %}
+                                        <div class="container_last_messages">
+                                            <h5>{{ i.title }}</h2>
+                                            <p class="mt-3">{{ i.short_description }}</p>
+                                            <small>
+                                                Опубликовано {{ i.created|naturaltime }} |
+                                                _ &#128172; | {{ i.likes.all.count }} &#128147;
+                                            </small>
+                                        </div>
+                                    {% endfor %}
+                                {% endcache %}
                             </div>
-                            <div class="mt-2">
-                                <p class="comment-text">Lorem ipsum dolor sit amet, consectetur adipiscing
-                                    elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
-                                    ut aliquip ex ea commodo consequat.</p>
-                            </div>
-                        </div>
-                        <a href="#" class="btn btn-sm btn-outline-light mt-2">
+                        <a href="{% url 'users:allposts' object.slug %}" class="btn btn-sm btn-outline-light mt-2">
                             Посмотреть все
                         </a>
                     </div>

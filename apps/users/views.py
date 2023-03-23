@@ -1,17 +1,14 @@
-import uuid
-from datetime import timedelta
-
-from celery import shared_task
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, PasswordChangeView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.utils.timezone import now
 from django.views.generic import (CreateView, DetailView, TemplateView,
-                                  UpdateView)
+                                  UpdateView, ListView)
+from django.core.cache import cache
 
+from apps.blog.models import Posts
 from apps.users.forms import (ChangePasswordForm, LoginForm, RegisterForm,
                               UserUpdateForm)
 from apps.users.models import EmailVerification, User
@@ -32,6 +29,40 @@ class ProfileView(ProfileTitleMixin, LoginRequiredMixin, DetailView):
     """
     template_name = 'users/profile.html'
     model = User
+    
+    def get_context_data(self, **kwargs):
+        """
+        Вывод последних 6 постов определенного автора
+        """
+        context = super().get_context_data(**kwargs)
+        context["last_posts"] = (
+            Posts.objects.select_related('author', 'category')
+            .prefetch_related('likes')
+            .filter(author=self.object, status=0)[:6]
+        )
+            
+        return context
+    
+    
+class ProfileAllPostsView(LoginRequiredMixin, ProfileTitleMixin, ListView):
+    """
+    Контроллер для просмотра всех постов определенного автора
+    """
+    model = Posts
+    template_name = 'users/allposts.html'
+    paginate_by = 6
+    
+    def get_queryset(self):
+        """
+        Возвращает queryset для определенного автора и кэширование
+        """
+        queryset = cache.get(f'queryset {self.kwargs["slug"]}')
+        if not queryset:
+            user = User.objects.get(slug=self.kwargs['slug'])
+            queryset = super().get_queryset().filter(author=user)
+            cache.set(f'queryset {self.kwargs["slug"]}', queryset, 10)
+        
+        return queryset
 
 
 class ProfileEditView(ObjectSuccessProfileMixin, SuccessMessageMixin, 
