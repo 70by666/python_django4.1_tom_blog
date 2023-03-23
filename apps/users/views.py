@@ -32,7 +32,7 @@ class ProfileView(ProfileTitleMixin, LoginRequiredMixin, DetailView):
     
     def get_context_data(self, **kwargs):
         """
-        Вывод последних 6 постов определенного автора
+        Вывод последних 6 постов определенного автора и кэширование
         """
         context = super().get_context_data(**kwargs)
         context["last_posts"] = cache.get(f'last_posts {self.kwargs["slug"]}')

@@ -15,7 +15,7 @@ from common.mixins import (EditDeletePostRequiredMixin, PostsTitleMixin,
 
 class BlogView(ListView):
     """
-    Контрллер блога, отображение всех постов
+    Контроллер блога, отображение всех постов
     """
     model = Posts
     template_name = 'blog/blog.html'
@@ -23,7 +23,7 @@ class BlogView(ListView):
     
     def get_queryset(self):
         """
-        Сортировка по категориям
+        Сортировка по категориям и кэширование
         """
         queryset = cache.get('queryset')
         if not queryset:
@@ -39,6 +39,9 @@ class BlogView(ListView):
         return queryset
         
     def get_context_data(self, **kwargs):
+        """
+        Заголовок страницы в зависимости от категории
+        """
         context = super().get_context_data(**kwargs)
         category_slug = self.kwargs.get('slug')
         context["title"] = self.category.title if category_slug else 'Блог'
@@ -71,6 +74,9 @@ class AddlikeView(LoginRequiredMixin, View):
 
 
 class CreateBlogPost(SuccessMessageMixin, LoginRequiredMixin, TitleMixin, CreateView):
+    """
+    Контроллер чтобы написать новую статью
+    """
     title = 'Добавить статью'
     template_name = 'blog/new.html'
     form_class = NewPostForm
@@ -81,11 +87,17 @@ class CreateBlogPost(SuccessMessageMixin, LoginRequiredMixin, TitleMixin, Create
         return reverse_lazy('blog:index')
     
     def form_valid(self, form):
+        """
+        Запись в модель автора статьи при ее создании
+        """
         form.instance.author = self.request.user
         form.save()
         return super().form_valid(form)
 
     def dispatch(self, request, *args, **kwargs):
+        """
+        Проверка на редактора
+        """
         if not request.user.is_redactor:
             messages.info(request, 'Вы не редактор')
             return redirect('blog:index')
@@ -95,6 +107,9 @@ class CreateBlogPost(SuccessMessageMixin, LoginRequiredMixin, TitleMixin, Create
 
 class EditPostView(EditDeletePostRequiredMixin, SuccessMessageMixin, 
                    LoginRequiredMixin, PostsTitleMixin, UpdateView):
+    """
+    Контроллер для редактирования постов
+    """
     model = Posts
     form_class = EditPostForm
     success_message = 'Статья изменена'
@@ -106,6 +121,9 @@ class EditPostView(EditDeletePostRequiredMixin, SuccessMessageMixin,
 
 class DeletePostView(EditDeletePostRequiredMixin, SuccessMessageMixin, 
                      LoginRequiredMixin, PostsTitleMixin, DeleteView):
+    """
+    Контроллер для удаления постов
+    """
     model = Posts
     success_message = 'Статья удалена'
     template_name = 'blog/delete.html'
