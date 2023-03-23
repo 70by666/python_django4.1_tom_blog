@@ -1,14 +1,16 @@
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.messages.views import SuccessMessageMixin
+from django.core.cache import cache
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.views.generic import DetailView, ListView, View, CreateView, UpdateView, DeleteView
-from django.contrib.messages.views import SuccessMessageMixin
-from django.contrib import messages
-from django.core.cache import cache
+from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
+                                  UpdateView, View)
 
 from apps.blog.forms import EditPostForm, NewPostForm
 from apps.blog.models import Categories, Posts
-from common.mixins import PostsTitleMixin, TitleMixin, EditDeletePostRequiredMixin
+from common.mixins import (EditDeletePostRequiredMixin, PostsTitleMixin,
+                           TitleMixin)
 
 
 class BlogView(ListView):

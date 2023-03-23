@@ -2,7 +2,6 @@ import uuid
 from datetime import timedelta
 
 from celery import shared_task
-
 from django.utils.timezone import now
 
 from apps.users.models import EmailVerification, User
@@ -10,6 +9,9 @@ from apps.users.models import EmailVerification, User
 
 @shared_task
 def send_email_verify(user_id, new_email=None):
+    """
+    Отложенная задача, отправка письма через celery, заполнение модели
+    """
     user = User.objects.get(id=user_id)
     user.is_active = False
     user.save()

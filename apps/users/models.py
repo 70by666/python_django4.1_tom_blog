@@ -1,10 +1,10 @@
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
+from django.core.mail import send_mail
 from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.urls import reverse
 from django.utils.timezone import now
-from django.core.mail import send_mail
 
 from common.utils import unique_slug
 
@@ -65,25 +65,39 @@ class User(AbstractUser):
 
 
 class EmailVerification(models.Model):
+    """
+    Модель для подтверждения почты
+    """
     code = models.UUIDField(unique=True)
     user = models.ForeignKey(to=User, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
     expiration = models.DateTimeField()
+    is_valid = models.BooleanField(default=True)
 
     def __str__(self):
         return f'EmailVerification object for {self.user.email}'
 
     def send_verification_email(self, new_email=None):
+        """
+        Отправка письма
+        """
         if not new_email:
             new_email = self.user.email
         
         link = reverse('users:email', args=(new_email, self.code))
         verificationlink = settings.DOMAIN_NAME + link
         subject = f'Подтверждение почты для {self.user.username}'
-        message = f'Для подтверждения почты {new_email} '\
-                    f'перейдите по ссылке {verificationlink}'
-        send_mail(subject, message, settings.EMAIL_HOST_USER, 
-                    [new_email], fail_silently=False)
+        message = f'Для подтверждения почты {new_email} перейдите по ссылке {verificationlink}'
+        send_mail(
+            subject, 
+            message, 
+            settings.EMAIL_HOST_USER, 
+            [new_email], 
+            fail_silently=False
+        )
 
     def is_expired(self):
+        """
+        Проверка на срок действия письма
+        """
         return True if now() <= self.expiration else False 

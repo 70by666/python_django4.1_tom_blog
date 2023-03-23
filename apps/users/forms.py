@@ -1,12 +1,12 @@
 import datetime
 
-from django.contrib.auth.forms import (AuthenticationForm, UserChangeForm,
-                                       UserCreationForm)
+from django.contrib.auth.forms import (AuthenticationForm, PasswordChangeForm,
+                                       UserChangeForm, UserCreationForm)
 from django.forms import ValidationError
-from django.contrib.auth.forms import PasswordChangeForm
 
 from apps.users.models import User
-from common.mixins import StyleFormMixin, PlaceholderCreateUpdateForm
+from apps.users.tasks import send_email_verify
+from common.mixins import PlaceholderCreateUpdateForm, StyleFormMixin
 
 
 class UserUpdateForm(PlaceholderCreateUpdateForm, StyleFormMixin, UserChangeForm):
@@ -33,6 +33,9 @@ class UserUpdateForm(PlaceholderCreateUpdateForm, StyleFormMixin, UserChangeForm
         )
     
     def clean_birth_day(self):
+        """
+        Проверка даты рождения
+        """
         data = self.cleaned_data['birth_day']
 
         if data:
@@ -82,6 +85,15 @@ class RegisterForm(PlaceholderCreateUpdateForm, StyleFormMixin, UserCreationForm
             'username', 'email', 'first_name', 
             'last_name', 'password1', 'password2',
         )
+
+    def save(self, commit=True):
+        """
+        Отправка письма после регистрации
+        """
+        user = super().save(commit)
+        send_email_verify.delay(user.id)
+        
+        return user
 
 
 class ChangePasswordForm(StyleFormMixin, PasswordChangeForm):
