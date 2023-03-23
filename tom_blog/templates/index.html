@@ -7,21 +7,34 @@
 {% load cache %}
 
 {% block css %}
-    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}?1122343">
 {% endblock css %}
 
 {% block section %} 
     <section>
         {% include 'main/forms_errors.html' %}
-        <div class="container">
-            <div class="alert alert-info alert-dismissible fade show text-black fs-5 text-center mt-3" role="alert">
-                После добавления/изменения/удаления статьи, информация на сайте обновится через минуту!
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="container">
+                    <div class="alert alert-info alert-dismissible fade show text-black fs-5 text-center mt-3" role="alert">
+                        Не хочешь пропускать наши последние обновления? Подпишись на рассылку, уведомления будут приходить
+                        на почту!
+                        <a href="#" class="text_url">
+                            Подписаться
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="container">
+                    <div class="alert alert-info alert-dismissible fade show text-black fs-5 text-center mt-3" role="alert">
+                        После добавления/изменения/удаления статьи, информация на сайте обновится через минуту!
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-1">
-            </div>
-            <div class="col-lg-7">
+            <div class="col-lg-6">
                 <div class="container_cont cont_left">
                     <p class="last_posts fw text-white">ПОСЛЕДНИЕ ПУБЛИКАЦИИ</p>
                     <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
@@ -89,7 +102,9 @@
                         </button>
                     </div>
                 </div>
-                <div class="container_cont cont_left">
+            </div>
+            <div class="col-lg-6">
+                <div class="container_cont cont_right">
                     <h2 class="fw-bold">ЗАКРЕПЛЕННЫЕ ПОСТЫ</h2>
                     {% cache 60 fixed %}
                         <div class="row">
@@ -98,7 +113,7 @@
                                     <div data-bs-spy="scroll" data-bs-target="#list-example" data-bs-smooth-scroll="true"
                                         class="scrollspy-example" tabindex="0">
                                         {% for i in object_list %}
-                                            <a class="list-group-item bg-dark-1" href="#list-item-{{ i.created }}">
+                                            <a class="list-group-item fixed bg-dark-1" href="#list-item-{{ i.created }}">
                                                 {{ i.title }}
                                             </a>
                                         {% endfor %}
@@ -139,23 +154,6 @@
                         </div>
                     {% endcache %}
                 </div>
-            </div>
-            <div class="col-lg-2">
-                <div class="container_cont">
-                    <h2 class="fw-bold">Подписка</h2>
-                    <p class="fs-5">
-                        Не хочешь пропускать наши последние обновления? Подпишись на рассылку, уведомления будут приходить
-                        на почту!
-                    </p>
-                    <div>
-                        <div class=" button-sub">
-                            <a href="#" class="btn btn-sm btn-outline-light mt-2">
-                                Подписаться
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                {% include 'main/sidebar.html' %}
             </div>
         </div>
     </section>

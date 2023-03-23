@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.cache import cache
-from django.shortcuts import redirect
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView, View)
@@ -33,7 +33,8 @@ class BlogView(ListView):
         category_slug = self.kwargs.get('slug')
         if category_slug:
             self.category = Categories.objects.get(slug=category_slug)
-            return queryset.filter(category_id=self.category.id)
+            sub_categories = self.category.get_descendants(include_self=True)
+            return queryset.filter(category_id__in=sub_categories)
         
         return queryset
         

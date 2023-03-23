@@ -2,7 +2,7 @@
 
 {% load cache %}
 
-{% cache 600 sidebar %}
+{% cache 300 sidebar %}
     <div class="container_cont">
         <h2 class="fw-bold">Категории</h2>
         {% full_tree_for_model blog.Categories as categories %}
