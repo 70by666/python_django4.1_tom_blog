@@ -134,8 +134,11 @@ footer {
     float: right;
 }
 
+.btn{
+    color: black;
+}
+
 .btn:hover {
-    color: white;
     background-color: #5756565b;
 }
 
