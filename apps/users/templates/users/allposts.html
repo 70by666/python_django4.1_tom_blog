@@ -50,7 +50,7 @@
                                         <a class="page-link bg-transparent" 
                                         href="
                                         {% if page_obj.has_previous %} 
-                                                {% url 'users:paginator_profile' page_obj.previous_page_number %}
+                                                {% url 'users:paginator_profile' slug page_obj.previous_page_number %}
                                         {% else %}
                                                 #
                                         {% endif %}"
@@ -66,14 +66,14 @@
                                         {% else %}
                                             under_line
                                         {% endif %}">
-                                            <a class="page-link bg-transparent" href="{% url 'users:paginator_profile' page %}">{{ page }}</a>
+                                            <a class="page-link bg-transparent" href="{% url 'users:paginator_profile' slug page %}">{{ page }}</a>
                                         </li>
                                     {% endfor %}
                                     <li class="page-item {% if not page_obj.has_next %} disabled {% else %} under_line {% endif %}">
                                         <a class="page-link bg-transparent" 
                                         href="
                                         {% if page_obj.has_next %} 
-                                                {% url 'users:paginator_profile' page_obj.next_page_number %} 
+                                                {% url 'users:paginator_profile' slug page_obj.next_page_number %} 
                                         {% else %} 
                                                 # 
                                         {% endif %}">

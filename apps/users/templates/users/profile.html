@@ -86,7 +86,7 @@
                     <div class="container_cont">
                         <h2>Мои последние статьи.</h2>
                             <div class="last-messages">
-                                {% cache 10 last_posts %}
+                                {% cache 150 last_posts %}
                                     {% for i in last_posts %}
                                         <div class="container_last_messages">
                                             <h5>{{ i.title }}</h2>

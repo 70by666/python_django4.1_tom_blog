@@ -60,10 +60,20 @@ class ProfileAllPostsView(LoginRequiredMixin, ProfileTitleMixin, ListView):
         if not queryset:
             user = User.objects.get(slug=self.kwargs['slug'])
             queryset = super().get_queryset().filter(author=user)
-            cache.set(f'queryset {self.kwargs["slug"]}', queryset, 10)
+            cache.set(f'queryset {self.kwargs["slug"]}', queryset, 150)
         
         return queryset
 
+    def get_context_data(self, **kwargs):
+        """
+        Передать слаг пользователя, чью посты просматриваются для корректной
+        работы пагинатора
+        """
+        context = super().get_context_data(**kwargs)
+        context["slug"] = self.kwargs['slug']
+        
+        return context
+    
 
 class ProfileEditView(ObjectSuccessProfileMixin, SuccessMessageMixin, 
                       ProfileTitleMixin, LoginRequiredMixin, UpdateView):
