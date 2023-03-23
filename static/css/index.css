@@ -2,7 +2,7 @@
 
 body {
     font-family: 'Roboto', sans-serif;
-    background: linear-gradient(to right, #ffaef4, #9ef8f1)
+    background: linear-gradient(to right, #ffaef4, #9ef8f1, rgba(0, 0, 0, 0.1)), url('/static/img/kot_main.jpg');
 }
 
 body::-webkit-scrollbar {
@@ -16,7 +16,7 @@ body::-webkit-scrollbar-thumb {
 
 .scrollspy-example {
     overflow-y: scroll;
-    height: 360px;
+    height: 481px;
 }
 
 .scrollspy-example::-webkit-scrollbar {
@@ -74,7 +74,8 @@ body::-webkit-scrollbar-thumb {
 /* Sticky Footer Classes */
 
 footer {
-    height: 100%;
+    margin-top: 2em;
+    height: 13.1vh;
 }
 
 #page-content {
@@ -115,6 +116,14 @@ footer {
         /* color */
 }
 
+.cont_left {
+    margin-left: 1em;
+}
+
+.cont_right {
+    margin-right: 1em;
+}
+
 .alert {
     box-shadow: 0 0.1rem 1rem rgba(0, 0, 0, 0.1);
     border:
@@ -124,11 +133,6 @@ footer {
         /* style */
         rgba(128, 128, 128, 0.7);
         /* color */
-}
-
-.cont_left {
-    width: 80%;
-    margin-left: 5%;
 }
 
 .but-all {
@@ -152,4 +156,12 @@ footer {
         /* style */
         rgba(128, 128, 128, 0.7);
         /* color */
+}
+
+.text_url {
+    color: black;
+}
+
+.text_url:hover {
+    color: blue;
 }
