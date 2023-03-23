@@ -2,7 +2,7 @@
 
 body {
     font-family: 'Roboto', sans-serif;
-    background: linear-gradient(to right, #ffaef4, #9ef8f1, rgba(0, 0, 0, 0.144)), url('/static/img/kot_main.jpg');
+    background: linear-gradient(to right, #ffaef4, #9ef8f1)
 }
 
 body::-webkit-scrollbar {
@@ -127,7 +127,8 @@ footer {
 }
 
 .cont_left {
-    width: 89%;
+    width: 80%;
+    margin-left: 5%;
 }
 
 .but-all {
