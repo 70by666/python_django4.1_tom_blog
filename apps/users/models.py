@@ -75,7 +75,7 @@ class EmailVerification(models.Model):
     is_valid = models.BooleanField(default=True)
 
     def __str__(self):
-        return f'EmailVerification object for {self.user.email}'
+        return f'EmailVerification object for {self.user.username}'
 
     def send_verification_email(self, new_email=None):
         """
