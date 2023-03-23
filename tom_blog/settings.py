@@ -244,6 +244,7 @@ BOT_TOKEN = env('BOT_TOKEN')
 CHAT_IDS = env('CHAT_IDS')
 
 # email
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_BACKEND = env('EMAIL_BACKEND')
 EMAIL_HOST = env('EMAIL_HOST')
 EMAIL_PORT = env('EMAIL_PORT')

@@ -25,6 +25,13 @@ class UserUpdateForm(PlaceholderCreateUpdateForm, StyleFormMixin, UserChangeForm
             {"placeholder": 'Введите информацию о себе'}
         )
     
+    class Meta:
+        model = User
+        fields = (
+            'username', 'first_name', 'last_name', 'email', 
+            'slug', 'birth_day', 'bio', 'image',
+        )
+    
     def clean_birth_day(self):
         data = self.cleaned_data['birth_day']
 
@@ -36,13 +43,6 @@ class UserUpdateForm(PlaceholderCreateUpdateForm, StyleFormMixin, UserChangeForm
                 raise ValidationError('Вам больше 150 лет?')
         
         return data
-    
-    class Meta:
-        model = User
-        fields = (
-            'username', 'first_name', 'last_name', 'email', 
-            'slug', 'birth_day', 'bio', 'image',
-        )
 
 
 class LoginForm(StyleFormMixin, AuthenticationForm):
