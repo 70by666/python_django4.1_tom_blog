@@ -13,12 +13,17 @@
 {% block section %} 
     <section>
         {% include 'main/forms_errors.html' %}
+        <div class="container">
+            <div class="alert alert-info alert-dismissible fade show text-black fs-5 text-center mt-4" role="alert">
+                Статьи на сайте обновляются раз в минуту!
+            </div>
+        </div>
         <div class="row">
             <div class="col-lg-1">
             </div>
             <div class="col-lg-7">
                 <div class="container_cont cont_left">
-                    <h2 class="fw-bold">ПОСЛЕДНИЕ ПУБЛИКАЦИИ</h2>
+                    <p class="last_posts fw text-white">ПОСЛЕДНИЕ ПУБЛИКАЦИИ</p>
                     <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
                         {% cache 60 carousel %}
                             <div class="carousel-inner">

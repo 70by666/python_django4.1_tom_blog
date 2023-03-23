@@ -41,3 +41,14 @@ body::-webkit-scrollbar-thumb {
 .btn:hover {
     background-color: #5756565b;
 }
+
+.alert {
+    box-shadow: 0 0.1rem 1rem rgba(0, 0, 0, 0.1);
+    border:
+        1px
+        /* width */
+        solid
+        /* style */
+        rgba(128, 128, 128, 0.7);
+        /* color */
+}
