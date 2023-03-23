@@ -35,12 +35,15 @@ class ProfileView(ProfileTitleMixin, LoginRequiredMixin, DetailView):
         Вывод последних 6 постов определенного автора
         """
         context = super().get_context_data(**kwargs)
-        context["last_posts"] = (
-            Posts.objects.select_related('author', 'category')
-            .prefetch_related('likes')
-            .filter(author=self.object, status=0)[:6]
-        )
-            
+        context["last_posts"] = cache.get(f'last_posts {self.kwargs["slug"]}')
+        if not context["last_posts"]: 
+            context["last_posts"] = (
+                Posts.objects.select_related('author', 'category')
+                .prefetch_related('likes')
+                .filter(author=self.object, status=0)[:6]
+            )
+            cache.set(f'last_posts {self.kwargs["slug"]}', context["last_posts"], 150)
+                        
         return context
     
     
