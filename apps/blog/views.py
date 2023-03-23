@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.cache import cache
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView, View)
@@ -13,7 +13,7 @@ from common.mixins import (EditDeletePostRequiredMixin, PostsTitleMixin,
                            TitleMixin)
 
 
-class BlogView(ListView):
+class BlogView(LoginRequiredMixin, ListView):
     """
     Контроллер блога, отображение всех постов
     """
@@ -49,7 +49,7 @@ class BlogView(ListView):
         return context
     
 
-class BlogDetailView(PostsTitleMixin, DetailView):
+class BlogDetailView(LoginRequiredMixin, PostsTitleMixin, DetailView):
     """
     Контроллер отдельного поста
     """
