@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from apps.users.models import User, EmailVerification
+from apps.users.models import User, EmailVerification, Ip
 
 
 @admin.register(User)
@@ -18,3 +18,6 @@ class EmailVerificationAdmin(admin.ModelAdmin):
     Отображение модели для верификации почты в админке
     """
     readonly_fields = ('expiration',)
+
+
+admin.site.register(Ip)

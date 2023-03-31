@@ -3,6 +3,8 @@ from django.contrib.auth.mixins import AccessMixin
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 
+from apps.users.models import Ip, User
+
 
 class TitleMixin:
     """
@@ -103,3 +105,23 @@ class ObjectSuccessProfileMixin:
 
     def get_success_url(self):
         return reverse_lazy('users:profile', args=(self.request.user.slug,))
+
+
+class IpLog:
+    def get(self, request, *args, **kwargs):
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if request.user.is_authenticated:
+            user = request.user
+            
+        if x_forwarded_for:
+            ip = x_forwarded_for.split(',')[0]
+        else:
+            ip = request.META.get('REMOTE_ADDR')
+        
+        if not Ip.objects.filter(ip=ip).exists():
+            if user:
+                Ip.objects.create(user=user, ip=ip)
+            else:
+                Ip.objects.create(ip=ip)
+        
+        return super().get(request, *args, **kwargs)

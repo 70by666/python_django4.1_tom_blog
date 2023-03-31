@@ -101,3 +101,11 @@ class EmailVerification(models.Model):
         Проверка на срок действия письма
         """
         return True if now() <= self.expiration else False 
+
+
+class Ip(models.Model):
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE, default='Anonymous')
+    ip = models.CharField(max_length=100)
+    
+    def __str__(self):
+        return f'Пользователь {self.user} | {self.ip}'

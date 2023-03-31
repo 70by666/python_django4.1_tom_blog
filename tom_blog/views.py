@@ -8,11 +8,11 @@ from django.urls import reverse_lazy
 from django.views.generic import FormView, ListView
 
 from apps.blog.models import Posts
-from common.mixins import TitleMixin
+from common.mixins import TitleMixin, IpLog
 from tom_blog.forms import SendMessageForm
 
 
-class IndexView(TitleMixin, ListView):
+class IndexView(IpLog, TitleMixin, ListView):
     """
     Контроллер основной страницы
     """
