@@ -110,16 +110,17 @@ class ObjectSuccessProfileMixin:
 class IpLog:
     def get(self, request, *args, **kwargs):
         x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-        if request.user.is_authenticated:
-            user = request.user
             
         if x_forwarded_for:
             ip = x_forwarded_for.split(',')[0]
         else:
             ip = request.META.get('REMOTE_ADDR')
         
+        print('###', request.user.is_authenticated)
+        
         if not Ip.objects.filter(ip=ip).exists():
-            if user:
+            if request.user.is_authenticated:
+                user = request.user
                 Ip.objects.create(user=user, ip=ip)
             else:
                 Ip.objects.create(ip=ip)

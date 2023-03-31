@@ -104,7 +104,7 @@ class EmailVerification(models.Model):
 
 
 class Ip(models.Model):
-    user = models.ForeignKey(to=User, on_delete=models.CASCADE, default='Anonymous')
+    user = models.CharField(max_length=150, default='Anonymous')
     ip = models.CharField(max_length=100)
     
     def __str__(self):
