@@ -3,16 +3,16 @@ from http import HTTPStatus
 import requests
 from django.conf import settings
 from django.contrib.messages.views import SuccessMessageMixin
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import FormView, ListView
 
 from apps.blog.models import Posts
-from common.mixins import TitleMixin, IpLog
+from common.mixins import TitleMixin, IpMixin
 from tom_blog.forms import SendMessageForm
 
 
-class IndexView(IpLog, TitleMixin, ListView):
+class IndexView(IpMixin, TitleMixin, ListView):
     """
     Контроллер основной страницы
     """
@@ -38,7 +38,7 @@ class IndexView(IpLog, TitleMixin, ListView):
         return self.queryset.filter(fixed=True)
     
     
-class ContactView(SuccessMessageMixin, TitleMixin, FormView):
+class ContactView(IpMixin, SuccessMessageMixin, TitleMixin, FormView):
     """
     Контроллер формы обратной связи
     """
@@ -50,18 +50,19 @@ class ContactView(SuccessMessageMixin, TitleMixin, FormView):
     
     def form_valid(self, form):
         """
-        Отправка сообщений на указанные ИД телеграм чатов
-        Можно было бы прописать логику при вызове метода save в моделе, 
-        но не хотел создавать модель
+        Проверка сообщения, если оно не подходит ip банится, если подходит то 
+        отправляется через метод
         """
         data = form.data
-        for i in settings.CHAT_IDS.split():
-            url = 'https://api.telegram.org/bot{}/sendMessage?chat_id={}&text={}'.format(
-                settings.BOT_TOKEN, 
-                i,
-                f'{data["name"]}\n{data["email"]}\n{data["message"]}',
-            )
-            requests.post(url)
+        message = data["message"]
+        banword = ('mutk.pro', 'esgeni.tk')
+        for i in banword:
+            if i in message:
+                self.ban(request=self.request)
+                return redirect('index')
+
+        message = f'{data["name"]}\n{data["email"]}\n{message}'
+        self.send_telegram_message(message=message)
             
         return super().form_valid(form)
 

@@ -10,10 +10,10 @@ from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
 from apps.blog.forms import EditPostForm, NewPostForm
 from apps.blog.models import Categories, Posts
 from common.mixins import (EditDeletePostRequiredMixin, PostsTitleMixin,
-                           TitleMixin)
+                           TitleMixin, IpMixin)
 
 
-class BlogView(ListView):
+class BlogView(IpMixin, ListView):
     """
     Контроллер блога, отображение всех постов
     """
@@ -49,7 +49,7 @@ class BlogView(ListView):
         return context
     
 
-class BlogDetailView(LoginRequiredMixin, PostsTitleMixin, DetailView):
+class BlogDetailView(IpMixin, LoginRequiredMixin, PostsTitleMixin, DetailView):
     """
     Контроллер отдельного поста
     """
@@ -57,7 +57,7 @@ class BlogDetailView(LoginRequiredMixin, PostsTitleMixin, DetailView):
     template_name = 'blog/post.html'
 
 
-class AddlikeView(LoginRequiredMixin, View):
+class AddlikeView(IpMixin, LoginRequiredMixin, View):
     """
     Поставить лайк
     """
@@ -73,7 +73,8 @@ class AddlikeView(LoginRequiredMixin, View):
         return redirect(request.META['HTTP_REFERER'])
 
 
-class CreateBlogPost(SuccessMessageMixin, LoginRequiredMixin, TitleMixin, CreateView):
+class CreateBlogPost(IpMixin, SuccessMessageMixin, LoginRequiredMixin, 
+                     TitleMixin, CreateView):
     """
     Контроллер чтобы написать новую статью
     """
@@ -105,7 +106,7 @@ class CreateBlogPost(SuccessMessageMixin, LoginRequiredMixin, TitleMixin, Create
         return super().dispatch(request, *args, **kwargs)
     
 
-class EditPostView(EditDeletePostRequiredMixin, SuccessMessageMixin, 
+class EditPostView(IpMixin, EditDeletePostRequiredMixin, SuccessMessageMixin, 
                    LoginRequiredMixin, PostsTitleMixin, UpdateView):
     """
     Контроллер для редактирования постов
@@ -118,8 +119,14 @@ class EditPostView(EditDeletePostRequiredMixin, SuccessMessageMixin,
     def get_success_url(self):
         return reverse_lazy('blog:post', args=(self.object.slug,))
 
+    def form_valid(self, form):
+        form.instance.updater = self.request.user
+        form.save()
+        
+        return super().form_valid(form)
+    
 
-class DeletePostView(EditDeletePostRequiredMixin, SuccessMessageMixin, 
+class DeletePostView(IpMixin, EditDeletePostRequiredMixin, SuccessMessageMixin, 
                      LoginRequiredMixin, PostsTitleMixin, DeleteView):
     """
     Контроллер для удаления постов

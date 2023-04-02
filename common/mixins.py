@@ -1,9 +1,12 @@
+import requests
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import AccessMixin
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
+from django.utils.timezone import now
 
-from apps.users.models import Ip, User
+from apps.users.models import Ip
 
 
 class TitleMixin:
@@ -107,22 +110,63 @@ class ObjectSuccessProfileMixin:
         return reverse_lazy('users:profile', args=(self.request.user.slug,))
 
 
-class IpLog:
+class IpMixin:
+    """
+    Миксин для заполнения модели Ip
+    """
     def get(self, request, *args, **kwargs):
-        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        ip = self.get_ip(request)
+        
+        user = request.META.get('USER')
+        if not Ip.objects.filter(ip=ip).exists():
+            Ip.objects.create(user=user, ip=ip)
+        else:
+            ip = Ip.objects.get(ip=ip)
+            if ip.is_banned:
+                context = {
+                    'title': '403 Ошибка доступа.', 
+                    'message': 'бан',
+                }
+                return render(request, 'error.html', context)
             
+            ip.updated = now
+            ip.save()
+        
+        return super().get(request, *args, **kwargs)
+    
+    def ban(self, request, data=None):
+        """
+        Забанить
+        """
+        ip = self.get_ip(request)
+        self.send_telegram_message(ip=ip)
+        ip = Ip.objects.get(ip=ip)
+        ip.is_banned = True
+        ip.save()
+            
+    def send_telegram_message(self, message=None, ip=None):
+        """
+        Отправка сообщения в телеграме
+        """
+        if not message:
+            message = f'Забанен {ip}'
+            
+        for i in settings.CHAT_IDS.split():
+            url = 'https://api.telegram.org/bot{}/sendMessage?chat_id={}&text={}'.format(
+                settings.BOT_TOKEN, 
+                i,
+                message,
+            )
+            requests.post(url)
+
+    def get_ip(self, request):
+        """
+        Получить IP
+        """
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
         if x_forwarded_for:
             ip = x_forwarded_for.split(',')[0]
         else:
             ip = request.META.get('REMOTE_ADDR')
-        
-        print('###', request.user.is_authenticated)
-        
-        if not Ip.objects.filter(ip=ip).exists():
-            if request.user.is_authenticated:
-                user = request.user
-                Ip.objects.create(user=user, ip=ip)
-            else:
-                Ip.objects.create(ip=ip)
-        
-        return super().get(request, *args, **kwargs)
+            
+        return ip

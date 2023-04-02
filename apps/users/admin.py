@@ -20,4 +20,9 @@ class EmailVerificationAdmin(admin.ModelAdmin):
     readonly_fields = ('expiration',)
 
 
-admin.site.register(Ip)
+@admin.register(Ip)
+class IpAdmin(admin.ModelAdmin):
+    """
+    Отображение модели Ip в админке
+    """
+    readonly_fields = ('created', 'updated')
