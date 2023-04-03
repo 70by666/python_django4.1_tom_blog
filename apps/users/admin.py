@@ -10,6 +10,7 @@ class UserAdmin(admin.ModelAdmin):
     """
     list_display = ('username', 'id', 'email')
     list_display_links = ('username',)
+    readonly_fields = ('password',)
 
 
 @admin.register(EmailVerification)
