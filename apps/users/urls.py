@@ -3,8 +3,9 @@ from django.urls import path
 
 from apps.users.views import (ChangePasswordView, EmailVerificationFailedView,
                               EmailVerificationView, LoginView,
-                              ProfileEditView, ProfileView, RegisterView, 
-                              ProfileAllPostsView, ResetPasswordView, SetPasswordView)
+                              ProfileAllPostsView, ProfileEditView,
+                              ProfileView, RegisterView, ResetPasswordView,
+                              SetPasswordView, FailedSetPasswordView)
 
 app_name = 'users'
 
@@ -21,4 +22,5 @@ urlpatterns = [
     path('verifyfailed/', EmailVerificationFailedView.as_view(), name='email_failed'),
     path('resetpassword/', ResetPasswordView.as_view(), name='resetpassword'),
     path('setpassword/<uidb64>/<token>/', SetPasswordView.as_view(), name='setpassword'),
+    path('failedsetpassword/', FailedSetPasswordView.as_view(), name='failedsetpassword'),
 ]

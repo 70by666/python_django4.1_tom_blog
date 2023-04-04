@@ -3,12 +3,12 @@ from http import HTTPStatus
 import requests
 from django.conf import settings
 from django.contrib.messages.views import SuccessMessageMixin
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import FormView, ListView
 
 from apps.blog.models import Posts
-from common.mixins import TitleMixin, IpMixin
+from common.mixins import IpMixin, TitleMixin
 from tom_blog.forms import SendMessageForm
 
 

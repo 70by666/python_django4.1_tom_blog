@@ -170,3 +170,18 @@ class IpMixin:
             ip = request.META.get('REMOTE_ADDR')
             
         return ip
+
+
+class NoAuthRequiredMixin:
+    def dispatch(self, request, *args, **kwargs):
+        """
+        Проверка является ли пользователь авторизован, 
+        чтобы авторизованных перенаправляло
+        """
+        if request.user.is_authenticated:
+            return redirect(reverse_lazy(
+                'users:profile', 
+                args=(self.request.user.slug,)
+            ))
+            
+        return super().dispatch(request, *args, **kwargs)

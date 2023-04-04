@@ -1,8 +1,8 @@
 import datetime
 
 from django.contrib.auth.forms import (AuthenticationForm, PasswordChangeForm,
-                                       UserChangeForm, UserCreationForm, 
-                                       PasswordResetForm, SetPasswordForm)
+                                       PasswordResetForm, SetPasswordForm,
+                                       UserChangeForm, UserCreationForm)
 from django.forms import ValidationError
 
 from apps.users.models import User

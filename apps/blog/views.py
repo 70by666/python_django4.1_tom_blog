@@ -9,8 +9,8 @@ from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
 
 from apps.blog.forms import EditPostForm, NewPostForm
 from apps.blog.models import Categories, Posts
-from common.mixins import (EditDeletePostRequiredMixin, PostsTitleMixin,
-                           TitleMixin, IpMixin)
+from common.mixins import (EditDeletePostRequiredMixin, IpMixin,
+                           PostsTitleMixin, TitleMixin)
 
 
 class BlogView(IpMixin, ListView):

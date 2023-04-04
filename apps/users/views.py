@@ -1,28 +1,31 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.views import (LoginView, PasswordChangeView, 
-                                       PasswordResetView, PasswordResetConfirmView)
+from django.contrib.auth.views import (LoginView, PasswordChangeView,
+                                       PasswordResetConfirmView,
+                                       PasswordResetView)
 from django.contrib.messages.views import SuccessMessageMixin
+from django.core.cache import cache
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.views.generic import (CreateView, DetailView, TemplateView,
-                                  UpdateView, ListView)
-from django.core.cache import cache
+from django.views.generic import (CreateView, DetailView, ListView,
+                                  TemplateView, UpdateView)
 
 from apps.blog.models import Posts
 from apps.users.forms import (ChangePasswordForm, LoginForm, RegisterForm,
-                              UserUpdateForm, ResetPasswordForm, SetPasswordForm)
+                              ResetPasswordForm, SetPasswordForm,
+                              UserUpdateForm)
 from apps.users.models import EmailVerification, User
 from apps.users.tasks import send_email_verify
-from common.mixins import (ObjectSuccessProfileMixin, ProfileTitleMixin,
-                           TitleMixin, IpMixin)
+from common.mixins import (IpMixin, NoAuthRequiredMixin,
+                           ObjectSuccessProfileMixin, ProfileTitleMixin,
+                           TitleMixin)
 
 message_email = 'На ваш адрес электронной почты было отправлено письмо с '\
                 'подтверждением. Пожалуйста, проверьте свою почту '\
                 'и перейдите по ссылке, иначе вы не сможете авторизоваться. '\
                 'Если письмо не пришло, проверьте папку спам или обратитесь к '\
-                'к администрации.'
-                
+                'к администрации.'      
+
 
 class ProfileView(IpMixin, ProfileTitleMixin, LoginRequiredMixin, DetailView):
     """
@@ -120,7 +123,7 @@ class LoginView(IpMixin, TitleMixin, LoginView):
         return reverse_lazy('users:profile', args=(self.request.user.slug,))
 
 
-class RegisterView(IpMixin, TitleMixin, SuccessMessageMixin, CreateView):
+class RegisterView(NoAuthRequiredMixin, IpMixin, TitleMixin, SuccessMessageMixin, CreateView):
     """
     Контроллер регистрации
     """
@@ -131,19 +134,6 @@ class RegisterView(IpMixin, TitleMixin, SuccessMessageMixin, CreateView):
     success_url = reverse_lazy('users:login')
     success_message = 'Регистрация прошла успешно!' + message_email
     redirect_authenticated_user = True
-
-    def dispatch(self, request, *args, **kwargs):
-        """
-        Редирект авторизованного пользователя, чтобы он не мог 
-        зарегистрироваться
-        """
-        if request.user.is_authenticated:
-            return redirect(reverse_lazy(
-                'users:profile', 
-                args=(self.request.user.slug,)
-            ))
-            
-        return super().dispatch(request, *args, **kwargs)
 
 
 class ChangePasswordView(IpMixin, ObjectSuccessProfileMixin, ProfileTitleMixin, 
@@ -178,10 +168,8 @@ class EmailVerificationView(IpMixin, TitleMixin, TemplateView):
                 verify_obj.is_valid = False
                 verify_obj.save()
                 return super().get(request, *args, **kwargs)
-            else:
-                return redirect('users:email_failed')
-        else:
-            return redirect('users:email_failed')
+
+        return redirect('users:email_failed')
 
 
 class EmailVerificationFailedView(IpMixin, TitleMixin, TemplateView):
@@ -192,7 +180,7 @@ class EmailVerificationFailedView(IpMixin, TitleMixin, TemplateView):
     title = 'Электронная почта не подтверждена'
 
 
-class ResetPasswordView(IpMixin, TitleMixin, 
+class ResetPasswordView(NoAuthRequiredMixin, IpMixin, TitleMixin, 
                          SuccessMessageMixin, PasswordResetView):
     """
     Контроллер для отправки письма на почту, чтобы сбросить пароль
@@ -205,8 +193,16 @@ class ResetPasswordView(IpMixin, TitleMixin,
     success_message = 'Письмо для восстановления аккаунта отправлено!'
     success_url = reverse_lazy('users:login')
     
+    def form_valid(self, form):
+        print(type(form.data['email']), form.data['email'])
+        if not User.objects.filter(email=form.data['email']).exists():
+            form.add_error('email', 'Аккаунта с такой почтой не существует!')
+            return self.form_invalid(form) 
+        
+        return super().form_valid(form)
+    
 
-class SetPasswordView(IpMixin, TitleMixin, 
+class SetPasswordView(NoAuthRequiredMixin, IpMixin, TitleMixin, 
                          SuccessMessageMixin, PasswordResetConfirmView):
     """
     Контроллер для установки нового пароля
@@ -216,3 +212,21 @@ class SetPasswordView(IpMixin, TitleMixin,
     template_name = 'users/setpassword.html'
     success_url = reverse_lazy('users:login')
     success_message = 'Установлен новый пароль, можете авторизоваться'
+
+    def dispatch(self, request, *args, **kwargs):
+        """
+        Перенаправление, если пользователей передет после сброса пароля 
+        по ссылке для восстановления 
+        """
+        if not kwargs["token"] == self.reset_url_token:
+            return redirect('users:failedsetpassword')
+        
+        return super().dispatch(request, *args, **kwargs)
+
+
+class FailedSetPasswordView(IpMixin, TitleMixin, TemplateView):
+    """
+    Контроллер невалидного письма сброса пароля
+    """
+    title = 'Ссылка недействительна'
+    template_name = 'users/failedsetpassword.html'
