@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.views import LoginView, PasswordChangeView
+from django.contrib.auth.views import (LoginView, PasswordChangeView, 
+                                       PasswordResetView, PasswordResetConfirmView)
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
@@ -10,7 +11,7 @@ from django.core.cache import cache
 
 from apps.blog.models import Posts
 from apps.users.forms import (ChangePasswordForm, LoginForm, RegisterForm,
-                              UserUpdateForm)
+                              UserUpdateForm, ResetPasswordForm, SetPasswordForm)
 from apps.users.models import EmailVerification, User
 from apps.users.tasks import send_email_verify
 from common.mixins import (ObjectSuccessProfileMixin, ProfileTitleMixin,
@@ -189,3 +190,29 @@ class EmailVerificationFailedView(IpMixin, TitleMixin, TemplateView):
     """
     template_name = 'users/email_failed.html'
     title = 'Электронная почта не подтверждена'
+
+
+class ResetPasswordView(IpMixin, TitleMixin, 
+                         SuccessMessageMixin, PasswordResetView):
+    """
+    Контроллер для отправки письма на почту, чтобы сбросить пароль
+    """
+    title = 'Запрос на восстновление пароля'
+    form_class = ResetPasswordForm
+    template_name = 'users/resetpassword.html'
+    subject_template_name = 'users/email/resetemailtitle.txt'
+    email_template_name = 'users/email/resetemailtext.html'
+    success_message = 'Письмо для восстановления аккаунта отправлено!'
+    success_url = reverse_lazy('users:login')
+    
+
+class SetPasswordView(IpMixin, TitleMixin, 
+                         SuccessMessageMixin, PasswordResetConfirmView):
+    """
+    Контроллер для установки нового пароля
+    """
+    title = 'Установка нового пароля'
+    form_class = SetPasswordForm
+    template_name = 'users/setpassword.html'
+    success_url = reverse_lazy('users:login')
+    success_message = 'Установлен новый пароль, можете авторизоваться'

@@ -41,6 +41,8 @@ env = environ.Env(
     REDIS_HOST=(str),
     REDIS_PORT=(str),
     REDIS_PASSWORD=(str),
+    
+    SITE_ID=(int),
 )
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -77,6 +79,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+    'django.contrib.sites',
     
     'django_extensions',
     'debug_toolbar',
@@ -85,6 +88,8 @@ INSTALLED_APPS = [
     'apps.blog.apps.BlogConfig',
     'apps.users.apps.UsersConfig',
 ]
+
+SITE_ID = env('SITE_ID')
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

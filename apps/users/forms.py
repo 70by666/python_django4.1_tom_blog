@@ -1,7 +1,8 @@
 import datetime
 
 from django.contrib.auth.forms import (AuthenticationForm, PasswordChangeForm,
-                                       UserChangeForm, UserCreationForm)
+                                       UserChangeForm, UserCreationForm, 
+                                       PasswordResetForm, SetPasswordForm)
 from django.forms import ValidationError
 
 from apps.users.models import User
@@ -98,5 +99,17 @@ class RegisterForm(PlaceholderCreateUpdateForm, StyleFormMixin, UserCreationForm
 
 class ChangePasswordForm(StyleFormMixin, PasswordChangeForm):
     """
-    Форма для смены пароля, только чтобы применить стили
+    Форма для смены пароля
+    """
+
+
+class ResetPasswordForm(StyleFormMixin, PasswordResetForm):
+    """
+    Запрос восстановления пароля
+    """
+
+
+class SetPasswordForm(StyleFormMixin, SetPasswordForm):
+    """
+    Форма восстановления пароля
     """

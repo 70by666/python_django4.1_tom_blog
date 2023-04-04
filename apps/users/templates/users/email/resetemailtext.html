@@ -1,0 +1,10 @@
+{% autoescape off %}
+    Это письмо отправлено, потому что вы запросили сброс пароля на {{ site_name }}, 
+    если это сделали не вы, обратитесь к администрации сайта.
+    
+	Перейдите на следующую страницу, чтобы установить новый пароль:
+	{% block reset_link %}
+	    {{ protocol }}://{{ domain }}{% url 'users:setpassword' uidb64=uid token=token %}
+	{% endblock %}
+	Ваше имя пользователя, если вы забыли: {{ user.get_username }}
+{% endautoescape %}
