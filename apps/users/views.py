@@ -213,16 +213,6 @@ class SetPasswordView(NoAuthRequiredMixin, IpMixin, TitleMixin,
     success_url = reverse_lazy('users:login')
     success_message = 'Установлен новый пароль, можете авторизоваться'
 
-    def dispatch(self, request, *args, **kwargs):
-        """
-        Перенаправление, если пользователей передет после сброса пароля 
-        по ссылке для восстановления 
-        """
-        if not kwargs["token"] == self.reset_url_token:
-            return redirect('users:failedsetpassword')
-        
-        return super().dispatch(request, *args, **kwargs)
-
 
 class FailedSetPasswordView(IpMixin, TitleMixin, TemplateView):
     """
