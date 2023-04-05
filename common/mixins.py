@@ -175,8 +175,7 @@ class IpMixin:
 class NoAuthRequiredMixin:
     def dispatch(self, request, *args, **kwargs):
         """
-        Проверка является ли пользователь авторизован, 
-        чтобы авторизованных перенаправляло
+        Перенаправление авторизованных пользователей
         """
         if request.user.is_authenticated:
             return redirect(reverse_lazy(
