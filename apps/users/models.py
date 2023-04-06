@@ -58,6 +58,9 @@ class User(AbstractUser):
 
     @property
     def get_avatar(self):
+        """
+        Получить аватар
+        """
         if self.image:
             return self.image.url
         

@@ -16,7 +16,7 @@ class BlogPostsAdmin(admin.ModelAdmin):
 
 
 @admin.register(Categories)
-class CategoriesAmin(DraggableMPTTAdmin):
+class CategoriesAdmin(DraggableMPTTAdmin):
     list_display = ('tree_actions', 'indented_title', 'id', 'title', 'slug')
     list_display_links = ('title', 'slug')
     prepopulated_fields = {'slug': ('title',)}

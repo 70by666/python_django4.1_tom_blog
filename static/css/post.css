@@ -194,3 +194,11 @@ body::-webkit-scrollbar-thumb {
         rgba(128, 128, 128, 0.7);
         /* color */
 }
+
+.btn {
+    color: black;
+}
+
+.btn:hover {
+    background-color: #5756565b;
+}
