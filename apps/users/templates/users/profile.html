@@ -30,7 +30,7 @@
                                 {% endif %}
                             {% endif %}
                             <li class="list-group-item bg-dark-1">Имя пользователя: {{ object }}</li>
-                            <li class="list-group-item bg-dark-1">Почта: {{ object.email }}</li>
+                            {% if object == request.user %}<li class="list-group-item bg-dark-1">Почта: {{ object.email }}</li>{% endif %}
                             {% if object.first_name %}<li class="list-group-item bg-dark-1">Имя и фамилия: {{ object.first_name }}</li>{% endif %}
                             {% if object.last_name %}<li class="list-group-item bg-dark-1">Фамилия: {{ object.last_name }}</li>{% endif %} 
                             {% if object.birth_day %}<li class="list-group-item bg-dark-1">Родился(ась) {{ object.birth_day }}</li>{% endif %}
