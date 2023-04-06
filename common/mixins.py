@@ -117,7 +117,7 @@ class IpMixin:
     def get(self, request, *args, **kwargs):
         ip = self.get_ip(request)
         
-        user = request.META.get('USER')
+        user = request.user
         if not Ip.objects.filter(ip=ip).exists():
             Ip.objects.create(user=user, ip=ip)
         else:

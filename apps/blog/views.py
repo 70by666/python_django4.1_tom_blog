@@ -44,7 +44,7 @@ class BlogView(IpMixin, ListView):
         """
         context = super().get_context_data(**kwargs)
         category_slug = self.kwargs.get('slug')
-        context["title"] = self.category.title if category_slug else 'Блог'
+        context['title'] = self.category.title if category_slug else 'Блог'
         
         return context
     
