@@ -156,3 +156,43 @@ class Categories(MPTTModel):
         
     def __str__(self):
         return self.title
+
+
+class Comments(MPTTModel):
+    """
+    Модель для древовидных комментариев
+    """
+    post = models.ForeignKey(
+        Posts, 
+        on_delete=models.CASCADE, 
+        verbose_name='Пост', 
+        related_name='comments',
+    )
+    author = models.ForeignKey(
+        User, 
+        verbose_name='Автор комментария', 
+        on_delete=models.CASCADE, 
+        related_name='comments_author',
+    )
+    text = models.TextField(verbose_name='Текст комментария')
+    created = models.DateTimeField(verbose_name='Время добавления', auto_now_add=True)
+    parent = TreeForeignKey(
+        'self', 
+        verbose_name='Родительский комментарий', 
+        null=True, 
+        blank=True, 
+        related_name='children', 
+        on_delete=models.CASCADE
+    )
+    
+    class MTTMeta:
+        order_insertion_by = ('-created',)
+
+    class Meta:
+        indexes = [models.Index(fields=['-created', 'parent'])]
+        ordering = ['-created']
+        verbose_name = 'Комментарий'
+        verbose_name_plural = 'Комментарии'
+
+    def __str__(self):
+        return f'{self.author}:{self.text}'

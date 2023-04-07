@@ -1,7 +1,7 @@
 from django.contrib import admin
 from mptt.admin import DraggableMPTTAdmin
 
-from apps.blog.models import Categories, Posts
+from apps.blog.models import Categories, Posts, Comments
 
 
 @admin.register(Posts)
@@ -24,3 +24,14 @@ class CategoriesAdmin(DraggableMPTTAdmin):
         ('Основная информация', {'fields': ('title', 'slug', 'parent')}),
         ('Описание', {'fields': ('description',)})
     )
+
+
+@admin.register(Comments)
+class CommentAdminPage(DraggableMPTTAdmin):
+    """
+    Админ-панель модели комментариев
+    """
+    list_display = ('tree_actions', 'indented_title', 'post', 'author', 'created')
+    mptt_level_indent = 2
+    list_display_links = ('post',)
+    list_filter = ('created', 'author')
