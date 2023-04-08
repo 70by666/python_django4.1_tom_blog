@@ -25,6 +25,14 @@ class Posts(models.Model):
                 .filter(status=0)
             )
         
+        def detail(self):
+            """
+            ...
+            """
+            return self.get_queryset()\
+                .select_related('author', 'category')\
+                .prefetch_related('comments', 'comments__author')
+        
     PUBLISHED = 0
     DRAFT = 1
     STATUSES = (

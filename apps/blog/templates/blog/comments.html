@@ -10,12 +10,15 @@
         <div>
             <div class="d-flex flex-row align-items-start">
                 <img class="img_bord me-2" src="{{ request.user.get_avatar }}" width="100">
-                <textarea class="form-control ml-1 shadow-none textarea bg-form"></textarea>
             </div>
             <div class="my-2 mb-3 text-right">
-                <button class="btn btn-sm btn-outline-light" type="button">
-                    Написать
-                </button>
+                <form method="post" action="{% url 'blog:commentcreate' object.slug 0 %}">
+                    {% csrf_token %}
+                    {{ form }}
+                    <button class="btn btn-sm btn-outline-light mt-3" type="submit">
+                        Написать
+                    </button>
+                 </form>
             </div>
         </div>
     {% endif %}
@@ -44,12 +47,15 @@
                             </div>
                             <div class="d-flex flex-row align-items-start">
                                 <img class="img_bord me-2" src="{{ request.user.get_avatar }}" width="100">
-                                <textarea class="form-control ml-1 shadow-none textarea bg-form"></textarea>
                             </div>
                             <div class="my-2 mb-3 text-right">
-                                <button class="btn btn-sm btn-outline-light" type="button">
-                                    Ответить
-                                </button>
+                                <form method="post" action="">
+                                    {% csrf_token %}
+                                    {{ form }}
+                                    <button class="btn btn-sm btn-outline-light mt-3" type="button">
+                                        Ответить
+                                    </button>
+                                 </form>
                             </div>
                             {% if not node.parent and not node.is_leaf_node %}
                                 <button id="1" class="btn btn-sm btn-outline-light">Показать ответы</button>

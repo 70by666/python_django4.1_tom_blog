@@ -5,7 +5,7 @@
 {% load humanize %}
 
 {% block css %}
-    <link rel="stylesheet" href="{% static 'css/post.css' %}?123">
+    <link rel="stylesheet" href="{% static 'css/post.css' %}?1233">
 {% endblock css %}
 
 {% block section %}
@@ -13,8 +13,8 @@
         <div class="container_cont">
             <div class="row">
                 {% include 'main/forms_errors.html' %}
-                <div class="col-lg-1"></div>
-                <div class="col-lg-6">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8">
                     <div class="card">
                         <div class="card__header">
                             <img src="{{ object.image.url }}"
@@ -66,9 +66,9 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-5">
                     {% include 'blog/comments.html' %}
+                </div>
+                <div class="col-lg-2">
                 </div>
             </div>
         </div>
@@ -80,10 +80,16 @@
 {% endblock footer %}
 
 {% block scripts %}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script>
+    {% comment %} <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> {% endcomment %}
+    {% comment %} <script>
     $( "#1" ).click(function() {
     $( "child" ).slideToggle( "fast" );
     });
+    </script> {% endcomment %}
+    <script src="{% static 'js/jquery-1.7.2.js' %}"></script>
+    <script>
+        $("#1").click(function () {
+          $("child").slideToggle("fast");
+        });
     </script>
 {% endblock scripts %}

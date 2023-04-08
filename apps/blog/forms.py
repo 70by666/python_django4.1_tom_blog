@@ -1,6 +1,6 @@
 from django import forms
 
-from apps.blog.models import Posts
+from apps.blog.models import Posts, Comments
 from common.mixins import StyleFormMixin
 
 
@@ -50,3 +50,20 @@ class EditPostForm(StyleFormMixin, forms.ModelForm):
             'category', 'image', 'title', 
             'short_description', 'full_description', 'status', 'fixed',
         )
+
+
+class CommentCreateForm(forms.ModelForm):
+    """
+    Форма добавления комментариев
+    """
+    text = forms.CharField(
+        label='', 
+        widget=forms.Textarea(attrs={
+            'cols': 30, 'rows': 3, 'placeholder': 'Комментарий', 
+            'class': 'form-control bg-form',
+        }),
+    )
+
+    class Meta:
+        model = Comments
+        fields = ('text',)

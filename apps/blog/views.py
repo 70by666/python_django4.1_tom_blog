@@ -7,8 +7,8 @@ from django.urls import reverse_lazy
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView, View)
 
-from apps.blog.forms import EditPostForm, NewPostForm
-from apps.blog.models import Categories, Posts
+from apps.blog.forms import EditPostForm, NewPostForm, CommentCreateForm
+from apps.blog.models import Categories, Posts, Comments
 from common.mixins import (EditDeletePostRequiredMixin, IpMixin,
                            PostsTitleMixin, TitleMixin)
 
@@ -55,6 +55,13 @@ class BlogDetailView(IpMixin, LoginRequiredMixin, PostsTitleMixin, DetailView):
     """
     model = Posts
     template_name = 'blog/post.html'
+    queryset = Posts.objects.detail()
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = CommentCreateForm
+        
+        return context
 
 
 class AddlikeView(IpMixin, LoginRequiredMixin, View):
@@ -137,3 +144,22 @@ class DeletePostView(IpMixin, EditDeletePostRequiredMixin, SuccessMessageMixin,
 
     def get_success_url(self):
         return reverse_lazy('blog:index')
+
+
+class CommentCreateView(SuccessMessageMixin, IpMixin, LoginRequiredMixin, CreateView):
+    model = Comments
+    form_class = CommentCreateForm
+    success_message = 'Комментарий добавлен'
+    
+    def get_success_url(self):
+        return reverse_lazy('blog:post', args=(self.kwargs['slug'],))
+
+    def form_valid(self, form):
+        post = Posts.objects.get(slug=self.kwargs['slug'])
+        form.instance.post = post
+        form.instance.author = self.request.user
+        if not self.kwargs['parent'] == int(0):
+            parent = Comments.objects.get(parent=self.kwargs['parent'])
+            form.instance.parent = parent
+    
+        return super().form_valid(form)
