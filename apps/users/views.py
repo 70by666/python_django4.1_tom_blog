@@ -233,6 +233,9 @@ class FailedSetPasswordView(IpMixin, TitleMixin, TemplateView):
 
 
 class ProfileCommentCreateView(SuccessMessageMixin, IpMixin, LoginRequiredMixin, CreateView):
+    """
+    Контроллер для написания комментария под профилем
+    """
     model = ProfileComments
     form_class = ProfileCommentCreateForm
     success_message = 'Комментарий добавлен'

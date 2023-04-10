@@ -124,6 +124,9 @@ class Ip(models.Model):
 
 
 class ProfileComments(models.Model):    
+    """
+    Модель комментариев под профилем
+    """    
     user = models.ForeignKey(
         User, 
         on_delete=models.CASCADE, 

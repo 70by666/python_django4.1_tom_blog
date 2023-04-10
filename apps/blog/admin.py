@@ -28,9 +28,6 @@ class CategoriesAdmin(DraggableMPTTAdmin):
 
 @admin.register(Comments)
 class CommentAdminPage(DraggableMPTTAdmin):
-    """
-    Админ-панель модели комментариев
-    """
     list_display = ('tree_actions', 'indented_title', 'post', 'author', 'created')
     mptt_level_indent = 2
     list_display_links = ('post',)

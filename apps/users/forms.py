@@ -160,7 +160,7 @@ class SetPasswordForm(StyleFormMixin, SetPasswordForm):
 
 class ProfileCommentCreateForm(forms.ModelForm):
     """
-    Форма добавления комментариев
+    Форма добавления комментариев под профилем
     """
     text = forms.CharField(
         label='', 

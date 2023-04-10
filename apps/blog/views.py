@@ -6,6 +6,7 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView, View)
+from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
 
 from apps.blog.forms import CommentCreateForm, EditPostForm, NewPostForm
 from apps.blog.models import Categories, Comments, Posts
@@ -55,7 +56,7 @@ class BlogDetailView(IpMixin, LoginRequiredMixin, PostsTitleMixin, DetailView):
     """
     model = Posts
     template_name = 'blog/post.html'
-    queryset = Posts.objects.detail()
+    queryset = model.objects.detail()
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -146,7 +147,11 @@ class DeletePostView(IpMixin, EditDeletePostRequiredMixin, SuccessMessageMixin,
         return reverse_lazy('blog:index')
 
 
-class CommentCreateView(SuccessMessageMixin, IpMixin, LoginRequiredMixin, CreateView):
+class CommentCreateView(SuccessMessageMixin, IpMixin, 
+                        LoginRequiredMixin, CreateView):
+    """
+    Контроллер для написания нового комментария под постом
+    """
     model = Comments
     form_class = CommentCreateForm
     success_message = 'Комментарий добавлен'
@@ -162,5 +167,40 @@ class CommentCreateView(SuccessMessageMixin, IpMixin, LoginRequiredMixin, Create
             print(self.kwargs['parent'])
             parent = Comments.objects.get(id=self.kwargs['parent'])
             form.instance.parent = parent
-    
+            
+        form.save()
+        
         return super().form_valid(form)
+
+
+class PostsSearchResultView(ListView):
+    """
+    Контроллер поиска постов
+    """
+    model = Posts
+    allow_empty = True
+    template_name = 'blog/blog.html'
+    
+    def get_queryset(self):
+        query = self.request.GET.get('do')
+        search_vector = (
+            SearchVector('full_description', weight='B') +
+            SearchVector('title', weight='A')
+        )
+        search_query = SearchQuery(query)
+        
+        return (
+            self.model.objects
+            .annotate(rank=SearchRank(search_vector, search_query))
+            .filter(rank__gte=0.3)
+            .order_by('-rank')
+            .select_related('author', 'category')
+            .prefetch_related('likes')
+            .filter(status=0)
+        )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = f'Результаты поиска: {self.request.GET.get("do")}'
+        
+        return context
