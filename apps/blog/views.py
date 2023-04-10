@@ -33,6 +33,7 @@ class BlogView(IpMixin, ListView):
             
         category_slug = self.kwargs.get('slug')
         if category_slug:
+            self.paginate_by = None
             self.category = Categories.objects.get(slug=category_slug)
             sub_categories = self.category.get_descendants(include_self=True)
             return queryset.filter(category_id__in=sub_categories)
@@ -195,7 +196,7 @@ class PostsSearchResultView(ListView):
             .filter(rank__gte=0.3)
             .order_by('-rank')
             .select_related('author', 'category')
-            .prefetch_related('likes')
+            .prefetch_related('likes', 'comments', 'comments__author')
             .filter(status=0)
         )
 

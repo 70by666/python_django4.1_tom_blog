@@ -40,8 +40,8 @@
                             </h4>
                             <p>{{ i.short_description }}</p>
                             <small>Опубликовано {{ i.created|naturaltime }}</small>
-                            _ &#128172;
-                            {{ i.likes.all.count }}&#128147;
+                            {{ i.comments.count  }} &#128172;
+                            {{ i.likes.count }}&#128147;
                         </div>
                         <div class="card__footer">
                             <div class="row">

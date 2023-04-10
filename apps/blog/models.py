@@ -21,7 +21,7 @@ class Posts(models.Model):
             return (
                 self.get_queryset()
                 .select_related('author', 'category')
-                .prefetch_related('likes')
+                .prefetch_related('likes', 'comments', 'comments__author')
                 .filter(status=0)
             )
         
@@ -32,7 +32,7 @@ class Posts(models.Model):
             return (
                 self.get_queryset()
                 .select_related('author', 'category')
-                .prefetch_related('comments', 'comments__author')
+                .prefetch_related('comments', 'comments__author', 'likes')
             )
         
     PUBLISHED = 0

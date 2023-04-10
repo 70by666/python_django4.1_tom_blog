@@ -57,7 +57,7 @@
                                                 <small>
                                                     Опубликовано {{ first.created|naturaltime }} |
                                                     by {{ first.author.username }} |
-                                                    _ &#128172; | {{ first.likes.all.count }} &#128147;
+                                                    {{ first.comments.count }} &#128172; | {{ first.likes.all.count }} &#128147;
                                                 </small>
                                             </p>
                                         </div>
@@ -81,7 +81,7 @@
                                                     <small>
                                                         Опубликовано {{ i.created|naturaltime }} |
                                                         by {{ i.author.username }} |
-                                                        _ &#128172; | {{ i.likes.all.count }} &#128147;
+                                                        {{ i.comments.count }} &#128172; | {{ i.likes.all.count }} &#128147;
                                                     </small>
                                                 </p>
                                             </div>
@@ -135,7 +135,7 @@
                                     <p class="card-text fs-5">{{ i.short_description }}</p>
                                     <p class="card-text">Опубликовано {{ i.created|naturaltime }} |
                                         by {{ i.author.username }} |
-                                        _ &#128172; | {{ i.likes.all.count }} &#128147;</p>
+                                        {{ i.comments.count }} &#128172; | {{ i.likes.count }} &#128147;</p>
                                     {% endfor %}
                                 </div>
                             </div>
