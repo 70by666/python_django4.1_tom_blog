@@ -57,7 +57,7 @@
                                                 <small>
                                                     Опубликовано {{ first.created|naturaltime }} |
                                                     by {{ first.author.username }} |
-                                                    {{ first.comments.count }} &#128172; | {{ first.likes.all.count }} &#128147;
+                                                    {{ first.comments.count }} &#128172; | {{ first.likes.count }} &#128147; {{ first.views.count }} &#128064;
                                                 </small>
                                             </p>
                                         </div>
@@ -81,7 +81,7 @@
                                                     <small>
                                                         Опубликовано {{ i.created|naturaltime }} |
                                                         by {{ i.author.username }} |
-                                                        {{ i.comments.count }} &#128172; | {{ i.likes.all.count }} &#128147; | {{ i.views.count }} &#128064;
+                                                        {{ i.comments.count }} &#128172; | {{ i.likes.count }} &#128147; | {{ i.views.count }} &#128064;
                                                     </small>
                                                 </p>
                                             </div>
