@@ -2,13 +2,14 @@ import datetime
 
 from captcha.fields import ReCaptchaField
 from captcha.widgets import ReCaptchaV2Checkbox
+from django import forms
 from django.conf import settings
 from django.contrib.auth.forms import (AuthenticationForm, PasswordChangeForm,
                                        PasswordResetForm, SetPasswordForm,
                                        UserChangeForm, UserCreationForm)
 from django.forms import ValidationError
 
-from apps.users.models import User
+from apps.users.models import User, ProfileComments
 from apps.users.tasks import send_email_verify
 from common.mixins import PlaceholderCreateUpdateForm, StyleFormMixin
 
@@ -155,3 +156,20 @@ class SetPasswordForm(StyleFormMixin, SetPasswordForm):
         private_key=settings.RECAPTCHA_PRIVATE_KEY, 
         label='ReCAPTCHA'
     )
+
+
+class ProfileCommentCreateForm(forms.ModelForm):
+    """
+    Форма добавления комментариев
+    """
+    text = forms.CharField(
+        label='', 
+        widget=forms.Textarea(attrs={
+            'cols': 30, 'rows': 3, 'placeholder': 'Комментарий', 
+            'class': 'form-control shadow-none textarea bg-form',
+        }),
+    )
+
+    class Meta:
+        model = ProfileComments
+        fields = ('text',)

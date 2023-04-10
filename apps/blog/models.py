@@ -29,9 +29,11 @@ class Posts(models.Model):
             """
             Оптимизация запросов
             """
-            return self.get_queryset()\
-                .select_related('author', 'category')\
+            return (
+                self.get_queryset()
+                .select_related('author', 'category')
                 .prefetch_related('comments', 'comments__author')
+            )
         
     PUBLISHED = 0
     DRAFT = 1
@@ -183,7 +185,10 @@ class Comments(MPTTModel):
         related_name='comments_author',
     )
     text = models.TextField(verbose_name='Текст комментария')
-    created = models.DateTimeField(verbose_name='Время добавления', auto_now_add=True)
+    created = models.DateTimeField(
+        verbose_name='Время добавления', 
+        auto_now_add=True
+    )
     parent = TreeForeignKey(
         'self', 
         verbose_name='Родительский комментарий', 

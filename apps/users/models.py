@@ -13,6 +13,7 @@ class User(AbstractUser):
     """
     Переопределение модели пользователей
     """
+            
     email = models.EmailField(('email address'), unique=True)
     slug = models.SlugField(
         verbose_name='URL', 
@@ -120,3 +121,32 @@ class Ip(models.Model):
     
     def __str__(self):
         return f'Пользователь {self.user} | {self.ip}'
+
+
+class ProfileComments(models.Model):    
+    user = models.ForeignKey(
+        User, 
+        on_delete=models.CASCADE, 
+        verbose_name='Пользователь', 
+        related_name='comments_profile',
+    )
+    author = models.ForeignKey(
+        User, 
+        verbose_name='Автор комментария', 
+        on_delete=models.CASCADE, 
+        related_name='comments_author_profile',
+    )
+    text = models.TextField(verbose_name='Текст комментария')
+    created = models.DateTimeField(
+        verbose_name='Время добавления', 
+        auto_now_add=True
+    )
+
+    class Meta:
+        indexes = [models.Index(fields=['-created'])]
+        ordering = ['-created']
+        verbose_name = 'Комментарий'
+        verbose_name_plural = 'Комментарии'
+
+    def __str__(self):
+        return f'{self.author}:{self.text}'

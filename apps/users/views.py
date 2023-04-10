@@ -13,8 +13,8 @@ from django.views.generic import (CreateView, DetailView, ListView,
 from apps.blog.models import Posts
 from apps.users.forms import (ChangePasswordForm, LoginForm, RegisterForm,
                               ResetPasswordForm, SetPasswordForm,
-                              UserUpdateForm)
-from apps.users.models import EmailVerification, User
+                              UserUpdateForm, ProfileCommentCreateForm)
+from apps.users.models import EmailVerification, User, ProfileComments
 from apps.users.tasks import send_email_verify
 from common.mixins import (IpMixin, NoAuthRequiredMixin,
                            ObjectSuccessProfileMixin, ProfileTitleMixin,
@@ -39,6 +39,12 @@ class ProfileView(IpMixin, ProfileTitleMixin, LoginRequiredMixin, DetailView):
         Вывод последних 6 постов определенного автора и кэширование
         """
         context = super().get_context_data(**kwargs)
+        context['form'] = ProfileCommentCreateForm
+        context['comms'] = (
+            ProfileComments.objects
+            .select_related('user', 'author')
+            .filter(user=self.object)
+        )
         context["last_posts"] = cache.get(f'last_posts {self.kwargs["slug"]}')
         if not context["last_posts"]: 
             context["last_posts"] = (
@@ -46,7 +52,11 @@ class ProfileView(IpMixin, ProfileTitleMixin, LoginRequiredMixin, DetailView):
                 .prefetch_related('likes')
                 .filter(author=self.object, status=0)[:6]
             )
-            cache.set(f'last_posts {self.kwargs["slug"]}', context["last_posts"], 60)
+            cache.set(
+                f'last_posts {self.kwargs["slug"]}', 
+                context["last_posts"], 
+                60
+            )
                         
         return context
     
@@ -220,3 +230,19 @@ class FailedSetPasswordView(IpMixin, TitleMixin, TemplateView):
     """
     title = 'Ссылка недействительна'
     template_name = 'users/failedsetpassword.html'
+
+
+class ProfileCommentCreateView(SuccessMessageMixin, IpMixin, LoginRequiredMixin, CreateView):
+    model = ProfileComments
+    form_class = ProfileCommentCreateForm
+    success_message = 'Комментарий добавлен'
+    
+    def get_success_url(self):
+        return reverse_lazy('users:profile', args=(self.kwargs['slug'],))
+
+    def form_valid(self, form):
+        user = User.objects.get(slug=self.kwargs['slug'])
+        form.instance.user = user
+        form.instance.author = self.request.user
+    
+        return super().form_valid(form)
