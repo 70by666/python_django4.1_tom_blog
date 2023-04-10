@@ -63,6 +63,7 @@
                                     <a class="like_coms_url fs-4" href="{% url 'blog:addlike' object.slug %}" type="submit">
                                         {{ object.likes.count }} &#128147;
                                     </a>
+                                    <span class="like_coms_url fs-4">{{ object.views.count }} &#128064;</span>
                                     {% if user.is_staff or user.id == object.author.id %}
                                     <small>
                                         <p>

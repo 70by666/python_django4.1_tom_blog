@@ -11,8 +11,10 @@ from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
 
 from apps.blog.forms import CommentCreateForm, EditPostForm, NewPostForm
 from apps.blog.models import Categories, Comments, Posts
+from apps.users.models import Ip
 from services.mixins import (EditDeletePostRequiredMixin, PostsTitleMixin,
                              TitleMixin)
+from services.utils import get_ip
 
 
 class BlogView(ListView):
@@ -68,6 +70,18 @@ class BlogDetailView(LoginRequiredMixin, PostsTitleMixin, DetailView):
         context['form'] = CommentCreateForm
         
         return context
+
+    def get(self, request, *args, **kwargs):
+        ip = Ip.objects.get(ip=get_ip(request))
+        post = (
+            self.model.objects
+            .prefetch_related('views', 'likes')
+            .filter(slug=self.kwargs['slug'])
+            .first()
+        )
+        post.views.add(ip)
+       
+        return super().get(request, *args, **kwargs)
 
 
 class AddlikeView(LoginRequiredMixin, View):

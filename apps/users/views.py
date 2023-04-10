@@ -49,7 +49,7 @@ class ProfileView(ProfileTitleMixin, LoginRequiredMixin, DetailView):
         if not context["last_posts"]: 
             context["last_posts"] = (
                 Posts.objects.select_related('author', 'category')
-                .prefetch_related('likes')
+                .prefetch_related('likes', 'views')
                 .filter(author=self.object, status=0)[:6]
             )
             cache.set(

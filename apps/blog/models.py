@@ -4,9 +4,8 @@ from django.db import models
 from django.urls import reverse
 from mptt.models import MPTTModel, TreeForeignKey
 
+from apps.users.models import Ip, User
 from services.utils import unique_slug
-
-User = get_user_model()
 
 
 class Posts(models.Model):
@@ -22,7 +21,7 @@ class Posts(models.Model):
             return (
                 self.get_queryset()
                 .select_related('author', 'category')
-                .prefetch_related('likes', 'comments', 'comments__author')
+                .prefetch_related('likes', 'comments', 'comments__author', 'views')
                 .filter(status=0)
             )
         
@@ -33,7 +32,8 @@ class Posts(models.Model):
             return (
                 self.get_queryset()
                 .select_related('author', 'category')
-                .prefetch_related('comments', 'comments__author', 'likes')
+                .prefetch_related('comments', 'comments__author', 'likes', 'views')
+                .filter(status=0)
             )
         
     PUBLISHED = 0
@@ -102,6 +102,12 @@ class Posts(models.Model):
         blank=True, 
         default=0, 
         related_name='likes'
+    )
+    views = models.ManyToManyField(
+        to=Ip, 
+        blank=True, 
+        default=0, 
+        related_name='views'
     )
     
     objects = PostsManager()

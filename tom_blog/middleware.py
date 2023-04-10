@@ -41,5 +41,6 @@ class IpMiddleware(MiddlewareMixin):
                 }
                 return render(request, 'error.html', context)
             
+            ip.user = request.user.username
             ip.updated = now
             ip.save()

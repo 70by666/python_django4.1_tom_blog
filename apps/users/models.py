@@ -14,8 +14,7 @@ from services.utils import unique_slug
 class User(AbstractUser):
     """
     Переопределение модели пользователей
-    """
-            
+    """  
     email = models.EmailField(('email address'), unique=True)
     slug = models.SlugField(
         verbose_name='URL', 
