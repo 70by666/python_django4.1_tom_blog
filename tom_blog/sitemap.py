@@ -28,3 +28,4 @@ class StaticSitemap(Sitemap):
     
     def location(self, item):
         return reverse(item)
+ 
