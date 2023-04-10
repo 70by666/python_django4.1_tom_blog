@@ -19,6 +19,7 @@
                         Написать
                     </button>
                  </form>
+                 <button id="1" class="11 btn btn-sm btn-outline-light mt-3">Показать ответы</button>
             </div>
         </div>
     {% endif %}
@@ -57,9 +58,6 @@
                                     </button>
                                  </form>
                             </div>
-                            {% if not node.parent and not node.is_leaf_node %}
-                                <button id="1" class="11 btn btn-sm btn-outline-light">Показать ответы</button>
-                            {% endif %}
                             <hr style="border-width: 10px;">
                         </div>
                         <child class="1">

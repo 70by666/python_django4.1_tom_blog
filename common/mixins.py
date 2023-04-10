@@ -120,7 +120,7 @@ class IpMixin:
         if not Ip.objects.filter(ip=ip).exists():
             Ip.objects.create(user=user, ip=ip)
         else:
-            ip = Ip.objects.get(ip=ip)
+            ip = Ip.objects.filter(ip=ip).first()
             if ip.is_banned:
                 context = {
                     'title': '403 Ошибка доступа.', 
