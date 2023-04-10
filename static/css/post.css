@@ -194,7 +194,3 @@ body::-webkit-scrollbar-thumb {
 .btn:hover {
     background-color: #5756565b;
 }
-
-child {
-    display: none;
-}

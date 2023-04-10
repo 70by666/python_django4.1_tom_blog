@@ -1,9 +1,11 @@
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
+from django.core.cache import cache
 from django.core.mail import send_mail
 from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.urls import reverse
+from django.utils import timezone
 from django.utils.timezone import now
 
 from common.utils import unique_slug
@@ -66,6 +68,13 @@ class User(AbstractUser):
             return self.image.url
         
         return f'https://ui-avatars.com/api/?size=150&background=random&name={self.slug}'
+
+    def is_online(self):
+        last_seen = cache.get(f'last-seen-{self.id}')
+        if last_seen is not None and timezone.now() < last_seen + timezone.timedelta(seconds=300):
+            return True
+        
+        return False
 
 
 class EmailVerification(models.Model):

@@ -58,7 +58,7 @@
                                                     {{ i.author.username }}
                                                 </a>
                                             </h5>
-                                            <small>Заходил на сайт {{ i.author.last_login|naturaltime }}</small>
+                                            <small>Заходил на сайт {{ i.author.last_login|naturaltime }} | {% if i.author.is_online %}&#128994;Онлайн{% else %}&#128308;Не в сети{% endif %}</small>
                                         </div>
                                     </div>
                                 </div>

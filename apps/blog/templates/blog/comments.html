@@ -19,7 +19,6 @@
                         Написать
                     </button>
                  </form>
-                 <button id="1" class="11 btn btn-sm btn-outline-light mt-3">Показать ответы</button>
             </div>
         </div>
     {% endif %}
@@ -32,8 +31,17 @@
                             <div class="d-flex flex-row user-info">
                                 <img class="img_bord me-2" src="{{ node.author.get_avatar }}" width="100">
                                 <div class="d-flex flex-column justify-content-start ml-2"><span
-                                        class="d-block font-weight-bold name"> {{ node.author.username }} </span><span
-                                        class="date text-black-50">Комментарий отправлен {{ node.created|naturaltime }} </span></div>
+                                        class="d-block font-weight-bold name"> {{ node.author.username }} </span><small
+                                        class="date text-black-50">Комментарий отправлен {{ node.created|naturaltime }} </small>
+                                        <small class="date text-black-50">
+                                            Заходил на сайт {{ node.author.last_login|naturaltime }} | 
+                                            {% if node.author.is_online %}
+                                                &#128994;Онлайн
+                                            {% else %}
+                                                &#128308;Не в сети
+                                            {% endif %}
+                                        </small>
+                                    </div>
                             </div>
                             <div class="mt-2">
                                 <span class="comment-text">

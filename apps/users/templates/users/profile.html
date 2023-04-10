@@ -5,7 +5,7 @@
 {% load humanize %}
 
 {% block css %}
-    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}?32">
 {% endblock css %}
 
 {% block section %}
@@ -34,7 +34,9 @@
                             {% if object.first_name %}<li class="list-group-item bg-dark-1">Имя и фамилия: {{ object.first_name }}</li>{% endif %}
                             {% if object.last_name %}<li class="list-group-item bg-dark-1">Фамилия: {{ object.last_name }}</li>{% endif %} 
                             {% if object.birth_day %}<li class="list-group-item bg-dark-1">Родился(ась) {{ object.birth_day }}</li>{% endif %}
-                            {% if object.last_login %}<li class="list-group-item bg-dark-1">Заходил(a) {{ object.last_login|naturaltime }}</li>{% endif %} 
+                            {% if object.last_login %}<li class="list-group-item bg-dark-1">
+                                Заходил(a) {{ object.last_login|naturaltime }} | {% if object.is_online %}&#128994;Онлайн{% else %}&#128308;Не в сети{% endif %}
+                            </li>{% endif %} 
                             <li class="list-group-item bg-dark-1">Дата регистрации: {{ object.date_joined }}</li>
                             {% if object.bio %}<li class="list-group-item bg-dark-1">О себе: {{ object.bio }}</li>{% endif %}
                             
@@ -68,10 +70,27 @@
                             {% for i in comms %}
                             <div>
                                 <div class="d-flex flex-row user-info">
-                                    <img src=" {{ i.author.get_avatar }} " alt="user__image" class="img_bord me-2" width="100">
-                                    <div class="d-flex flex-column justify-content-start"><span
-                                            class="d-block font-weight-bold name"> {{ i.author }} </span><span
-                                            class="date text-black-50">Комментарий отправлен {{ i.created|naturaltime }}</span></div>
+                                    <a href="{% url 'users:profile' i.author.slug %}">
+                                        <img src=" {{ i.author.get_avatar }} " alt="user__image" class="img_bord me-2" width="100">
+                                    </a>
+                                    <div class="d-flex flex-column justify-content-start">
+                                        <span class="d-block font-weight-bold name">
+                                            <a href="{% url 'users:profile' i.author.slug %}" class="text_url">
+                                            {{ i.author }}
+                                            </a>
+                                        </span>   
+                                        <small
+                                            class="date text-black-50">Комментарий отправлен {{ i.created|naturaltime }}
+                                        </small>
+                                        <small class="date text-black-50">
+                                            Заходил на сайт {{ i.author.last_login|naturaltime }} | 
+                                            {% if i.author.is_online %}
+                                                &#128994;Онлайн
+                                            {% else %}
+                                                &#128308;Не в сети
+                                            {% endif %}
+                                        </small>
+                                    </div>
                                 </div>
                                 <div class="mt-2">
                                     <p class="comment-text"> {{ i.text }} </p>

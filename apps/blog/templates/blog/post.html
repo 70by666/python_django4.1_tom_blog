@@ -45,7 +45,14 @@
                                                     {{ object.author.username }}
                                                 </a>
                                             </h5>
-                                            <small>Заходил на сайт {{ object.author.last_login|naturaltime }}</small>
+                                            <small class="date text-black-50">
+                                                Заходил на сайт {{ object.author.last_login|naturaltime }} | 
+                                                {% if object.author.is_online %}
+                                                    &#128994;Онлайн
+                                                {% else %}
+                                                    &#128308;Не в сети
+                                                {% endif %}
+                                            </small>
                                         </div>
                                     </div>
                                 </div>
@@ -80,18 +87,3 @@
 {% block footer %}
     {% include 'main/footer.html' %}
 {% endblock footer %}
-
-{% block scripts %}
-    {% comment %} <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> {% endcomment %}
-    {% comment %} <script>
-    $( "#1" ).click(function() {
-    $( "child" ).slideToggle( "fast" );
-    });
-    </script> {% endcomment %}
-    <script src="{% static 'js/jquery-1.7.2.js' %}"></script>
-    <script>
-        $(".11").click(function () {
-          $(".1").slideToggle("fast");
-        });
-    </script>
-{% endblock scripts %}

@@ -106,6 +106,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    
+    'tom_blog.middleware.ActiveUserMiddleware',
 ]
 
 ROOT_URLCONF = 'tom_blog.urls'

@@ -108,3 +108,11 @@ body::-webkit-scrollbar-thumb {
         width: 100%;
     }
 }
+
+.text_url {
+    color: black;
+}
+
+.text_url:hover {
+    color: blue;
+}
