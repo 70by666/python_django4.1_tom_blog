@@ -33,7 +33,6 @@ class BlogView(IpMixin, ListView):
             
         category_slug = self.kwargs.get('slug')
         if category_slug:
-            self.paginate_by = None
             self.category = Categories.objects.get(slug=category_slug)
             sub_categories = self.category.get_descendants(include_self=True)
             return queryset.filter(category_id__in=sub_categories)
@@ -46,8 +45,12 @@ class BlogView(IpMixin, ListView):
         """
         context = super().get_context_data(**kwargs)
         category_slug = self.kwargs.get('slug')
-        context['title'] = self.category.title if category_slug else 'Блог'
-        
+        if category_slug:
+            context['title'] = self.category.title
+            context['cat'] = self.category.title
+        else:
+            context['title'] = 'Blog'
+            
         return context
     
 
