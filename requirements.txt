@@ -10,3 +10,4 @@ psycopg2-binary==2.9.5
 pytils==0.4.1
 redis==4.5.3
 requests==2.28.2
+django-recaptcha==3.0.0

@@ -146,7 +146,7 @@ class DeletePostView(IpMixin, EditDeletePostRequiredMixin, SuccessMessageMixin,
         return reverse_lazy('blog:index')
 
 
-class CommentCreateView(SuccessMessageMixin, IpMixin, LoginRequiredMixin, CreateView):
+class CommentCreateView(LoginRequiredMixin, SuccessMessageMixin, IpMixin, LoginRequiredMixin, CreateView):
     model = Comments
     form_class = CommentCreateForm
     success_message = 'Комментарий добавлен'
