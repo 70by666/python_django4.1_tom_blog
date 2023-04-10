@@ -151,7 +151,12 @@ body::-webkit-scrollbar-thumb {
 }
 
 .like_coms_url {
+    color: black;
     text-decoration: none;
+}
+
+.like_coms_url:hover {
+    color: blue;
 }
 
 .url_author {

@@ -1,6 +1,6 @@
 from django import forms
 
-from apps.blog.models import Posts, Comments
+from apps.blog.models import Comments, Posts
 from common.mixins import StyleFormMixin
 
 

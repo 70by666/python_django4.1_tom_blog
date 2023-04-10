@@ -2,10 +2,10 @@ from django.contrib.auth.views import LogoutView
 from django.urls import path
 
 from apps.users.views import (ChangePasswordView, EmailVerificationFailedView,
-                              EmailVerificationView, LoginView,
-                              ProfileAllPostsView, ProfileEditView,
+                              EmailVerificationView, FailedSetPasswordView,
+                              LoginView, ProfileAllPostsView, ProfileEditView,
                               ProfileView, RegisterView, ResetPasswordView,
-                              SetPasswordView, FailedSetPasswordView)
+                              SetPasswordView)
 
 app_name = 'users'
 

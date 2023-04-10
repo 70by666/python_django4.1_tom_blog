@@ -27,7 +27,7 @@ class Posts(models.Model):
         
         def detail(self):
             """
-            ...
+            Оптимизация запросов
             """
             return self.get_queryset()\
                 .select_related('author', 'category')\

@@ -26,11 +26,18 @@
                         <p>
                             {{ form.email }}
                         </p>
+                        
                         <p>
                             <button type="submit" class="btn btn-outline-secondary mt-2">
                                 Отправить
                             </button>
                         </p>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-lg-2"></div>
+                        <div class="col-lg-5">
+                            {{ form.recaptcha }}
+                        </div>
                     </div>
                 </form>
             </article>

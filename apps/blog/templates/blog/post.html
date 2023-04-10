@@ -52,14 +52,16 @@
                                 <div class="col-lg-4">
                                 </div>
                                 <div class="col-lg-2">
-                                    <a class="like_coms_url fs-4" href="#" type="submit">_ &#128172;</a>
+                                    <span class="like_coms_url fs-4">{{ object.comments.count }} &#128172;</span>
                                     <a class="like_coms_url fs-4" href="{% url 'blog:addlike' object.slug %}" type="submit">
-                                        {{ object.likes.all.count }} &#128147;
+                                        {{ object.likes.count }} &#128147;
                                     </a>
                                     {% if user.is_staff or user.id == object.author.id %}
                                     <small>
-                                        <a class="url_author" href="{% url 'blog:edit' object.slug %}">Изменить&#128394;</a> 
-                                        <a class="url_author" href="{% url 'blog:delete' object.slug %}">Удалить&#128465;</a>
+                                        <p>
+                                            <a class="url_author me-3" href="{% url 'blog:edit' object.slug %}">Изменить&#128394;</a>
+                                            <a class="url_author" href="{% url 'blog:delete' object.slug %}">Удалить&#128465;</a>
+                                        </p>
                                     </small>
                                     {% endif %}
                                 </div>

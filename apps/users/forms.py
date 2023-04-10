@@ -1,5 +1,8 @@
 import datetime
 
+from captcha.fields import ReCaptchaField
+from captcha.widgets import ReCaptchaV2Checkbox
+from django.conf import settings
 from django.contrib.auth.forms import (AuthenticationForm, PasswordChangeForm,
                                        PasswordResetForm, SetPasswordForm,
                                        UserChangeForm, UserCreationForm)
@@ -14,6 +17,13 @@ class UserUpdateForm(PlaceholderCreateUpdateForm, StyleFormMixin, UserChangeForm
     """
     Форма обновления модели User
     """    
+    recaptcha = ReCaptchaField(
+        widget=ReCaptchaV2Checkbox, 
+        public_key=settings.RECAPTCHA_PUBLIC_KEY,
+        private_key=settings.RECAPTCHA_PRIVATE_KEY, 
+        label='ReCAPTCHA'
+    )
+    
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["slug"].widget.attrs.update(
@@ -53,6 +63,13 @@ class LoginForm(StyleFormMixin, AuthenticationForm):
     """
     Форма для авторизации
     """
+    recaptcha = ReCaptchaField(
+        widget=ReCaptchaV2Checkbox, 
+        public_key=settings.RECAPTCHA_PUBLIC_KEY,
+        private_key=settings.RECAPTCHA_PRIVATE_KEY, 
+        label='ReCAPTCHA'
+    )
+    
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['username'].widget.attrs.update(
@@ -71,6 +88,13 @@ class RegisterForm(PlaceholderCreateUpdateForm, StyleFormMixin, UserCreationForm
     """
     Форма для регистрации
     """
+    recaptcha = ReCaptchaField(
+        widget=ReCaptchaV2Checkbox, 
+        public_key=settings.RECAPTCHA_PUBLIC_KEY,
+        private_key=settings.RECAPTCHA_PRIVATE_KEY, 
+        label='ReCAPTCHA'
+    )
+        
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['password1'].widget.attrs.update(
@@ -101,15 +125,33 @@ class ChangePasswordForm(StyleFormMixin, PasswordChangeForm):
     """
     Форма для смены пароля
     """
+    recaptcha = ReCaptchaField(
+        widget=ReCaptchaV2Checkbox, 
+        public_key=settings.RECAPTCHA_PUBLIC_KEY,
+        private_key=settings.RECAPTCHA_PRIVATE_KEY, 
+        label='ReCAPTCHA'
+    )
 
 
 class ResetPasswordForm(StyleFormMixin, PasswordResetForm):
     """
     Запрос восстановления пароля
     """
+    recaptcha = ReCaptchaField(
+        widget=ReCaptchaV2Checkbox, 
+        public_key=settings.RECAPTCHA_PUBLIC_KEY,
+        private_key=settings.RECAPTCHA_PRIVATE_KEY, 
+        label='ReCAPTCHA'
+    )
 
 
 class SetPasswordForm(StyleFormMixin, SetPasswordForm):
     """
     Форма восстановления пароля
     """
+    recaptcha = ReCaptchaField(
+        widget=ReCaptchaV2Checkbox, 
+        public_key=settings.RECAPTCHA_PUBLIC_KEY,
+        private_key=settings.RECAPTCHA_PRIVATE_KEY, 
+        label='ReCAPTCHA'
+    )

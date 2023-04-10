@@ -7,8 +7,8 @@ from django.urls import reverse_lazy
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView, View)
 
-from apps.blog.forms import EditPostForm, NewPostForm, CommentCreateForm
-from apps.blog.models import Categories, Posts, Comments
+from apps.blog.forms import CommentCreateForm, EditPostForm, NewPostForm
+from apps.blog.models import Categories, Comments, Posts
 from common.mixins import (EditDeletePostRequiredMixin, IpMixin,
                            PostsTitleMixin, TitleMixin)
 

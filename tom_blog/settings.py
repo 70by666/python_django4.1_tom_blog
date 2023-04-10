@@ -43,6 +43,9 @@ env = environ.Env(
     REDIS_PASSWORD=(str),
     
     SITE_ID=(int),
+    
+    RECAPTCHA_PUBLIC_KEY=(str),
+    RECAPTCHA_PRIVATE_KEY=(str),
 )
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -84,6 +87,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'debug_toolbar',
     'mptt',
+    'captcha',
     
     'apps.blog.apps.BlogConfig',
     'apps.users.apps.UsersConfig',
@@ -268,3 +272,8 @@ EMAIL_ADMIN = env('EMAIL_ADMIN').split(' ')
 
 CELERY_BROKER_URL = BROKER_URL
 CELERY_RESULT_BACKEND = BROKER_URL
+
+# reCAPTCHA
+
+RECAPTCHA_PUBLIC_KEY = env('RECAPTCHA_PUBLIC_KEY')
+RECAPTCHA_PRIVATE_KEY = env('RECAPTCHA_PRIVATE_KEY')
