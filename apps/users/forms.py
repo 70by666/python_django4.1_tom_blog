@@ -9,7 +9,7 @@ from django.contrib.auth.forms import (AuthenticationForm, PasswordChangeForm,
                                        UserChangeForm, UserCreationForm)
 from django.forms import ValidationError
 
-from apps.users.models import User, ProfileComments
+from apps.users.models import ProfileComments, User
 from apps.users.tasks import send_email_verify
 from common.mixins import PlaceholderCreateUpdateForm, StyleFormMixin
 

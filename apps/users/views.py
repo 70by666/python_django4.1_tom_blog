@@ -11,10 +11,11 @@ from django.views.generic import (CreateView, DetailView, ListView,
                                   TemplateView, UpdateView)
 
 from apps.blog.models import Posts
-from apps.users.forms import (ChangePasswordForm, LoginForm, RegisterForm,
+from apps.users.forms import (ChangePasswordForm, LoginForm,
+                              ProfileCommentCreateForm, RegisterForm,
                               ResetPasswordForm, SetPasswordForm,
-                              UserUpdateForm, ProfileCommentCreateForm)
-from apps.users.models import EmailVerification, User, ProfileComments
+                              UserUpdateForm)
+from apps.users.models import EmailVerification, ProfileComments, User
 from apps.users.tasks import send_email_verify
 from common.mixins import (IpMixin, NoAuthRequiredMixin,
                            ObjectSuccessProfileMixin, ProfileTitleMixin,

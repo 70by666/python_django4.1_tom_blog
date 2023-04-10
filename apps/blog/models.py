@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.core.validators import FileExtensionValidator
 from django.db import models
+from django.urls import reverse
 from mptt.models import MPTTModel, TreeForeignKey
 
 from common.utils import unique_slug
@@ -123,6 +124,9 @@ class Posts(models.Model):
             self.slug = unique_slug(self, self.title)
                 
         return super().save(*args, **kwargs)
+    
+    def get_absolute_url(self):
+        return reverse('blog:post', kwargs={'slug': self.slug})
     
     
 class Categories(MPTTModel):

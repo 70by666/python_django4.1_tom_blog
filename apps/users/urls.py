@@ -3,9 +3,10 @@ from django.urls import path
 
 from apps.users.views import (ChangePasswordView, EmailVerificationFailedView,
                               EmailVerificationView, FailedSetPasswordView,
-                              LoginView, ProfileAllPostsView, ProfileEditView,
+                              LoginView, ProfileAllPostsView,
+                              ProfileCommentCreateView, ProfileEditView,
                               ProfileView, RegisterView, ResetPasswordView,
-                              SetPasswordView, ProfileCommentCreateView)
+                              SetPasswordView)
 
 app_name = 'users'
 

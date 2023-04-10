@@ -1,12 +1,13 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.postgres.search import (SearchQuery, SearchRank,
+                                            SearchVector)
 from django.core.cache import cache
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView, View)
-from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
 
 from apps.blog.forms import CommentCreateForm, EditPostForm, NewPostForm
 from apps.blog.models import Categories, Comments, Posts
@@ -47,7 +48,7 @@ class BlogView(IpMixin, ListView):
         category_slug = self.kwargs.get('slug')
         if category_slug:
             context['title'] = self.category.title
-            context['cat'] = self.category.title
+            context['cat'] = category_slug
         else:
             context['title'] = 'Blog'
             
