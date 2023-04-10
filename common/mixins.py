@@ -145,7 +145,7 @@ class IpMixin:
             
     def send_telegram_message(self, message=None, ip=None):
         """
-        Отправка сообщения в телеграме
+        Отправка сообщения в телеграме ###ПЕРЕПИСАТЬ###
         """
         if not message:
             message = f'Забанен {ip}'

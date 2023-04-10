@@ -116,3 +116,9 @@ body::-webkit-scrollbar-thumb {
 .text_url:hover {
     color: blue;
 }
+
+.text_url_all {
+    text-decoration: none;
+    color: black;
+}
+
