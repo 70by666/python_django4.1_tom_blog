@@ -1,7 +1,7 @@
 from django import forms
 
 from apps.blog.models import Comments, Posts
-from common.mixins import StyleFormMixin
+from services.mixins import StyleFormMixin
 
 
 class NewPostForm(StyleFormMixin, forms.ModelForm):

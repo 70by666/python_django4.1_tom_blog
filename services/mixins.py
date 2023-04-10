@@ -1,12 +1,7 @@
-import requests
-from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import AccessMixin
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.utils.timezone import now
-
-from apps.users.models import Ip
 
 
 class TitleMixin:
@@ -108,67 +103,6 @@ class ObjectSuccessProfileMixin:
 
     def get_success_url(self):
         return reverse_lazy('users:profile', args=(self.request.user.slug,))
-
-
-class IpMixin:
-    """
-    Миксин для заполнения модели Ip
-    """
-    def get(self, request, *args, **kwargs):
-        ip = self.get_ip(request)
-        user = str(request.user)
-        if not Ip.objects.filter(ip=ip).exists():
-            Ip.objects.create(user=user, ip=ip)
-        else:
-            ip = Ip.objects.filter(ip=ip).first()
-            if ip.is_banned:
-                context = {
-                    'title': '403 Ошибка доступа.', 
-                    'message': 'бан',
-                }
-                return render(request, 'error.html', context)
-            
-            ip.updated = now
-            ip.save()
-        
-        return super().get(request, *args, **kwargs)
-    
-    def ban(self, request, data=None):
-        """
-        Забанить
-        """
-        ip = self.get_ip(request)
-        self.send_telegram_message(ip=ip)
-        ip = Ip.objects.get(ip=ip)
-        ip.is_banned = True
-        ip.save()
-            
-    def send_telegram_message(self, message=None, ip=None):
-        """
-        Отправка сообщения в телеграме ###ПЕРЕПИСАТЬ###
-        """
-        if not message:
-            message = f'Забанен {ip}'
-            
-        for i in settings.CHAT_IDS.split():
-            url = 'https://api.telegram.org/bot{}/sendMessage?chat_id={}&text={}'.format(
-                settings.BOT_TOKEN, 
-                i,
-                message,
-            )
-            requests.post(url)
-
-    def get_ip(self, request):
-        """
-        Получить IP
-        """
-        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-        if x_forwarded_for:
-            ip = x_forwarded_for.split(',')[0]
-        else:
-            ip = request.META.get('REMOTE_ADDR')
-            
-        return ip
 
 
 class NoAuthRequiredMixin:

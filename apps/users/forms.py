@@ -10,8 +10,8 @@ from django.contrib.auth.forms import (AuthenticationForm, PasswordChangeForm,
 from django.forms import ValidationError
 
 from apps.users.models import ProfileComments, User
-from apps.users.tasks import send_email_verify
-from common.mixins import PlaceholderCreateUpdateForm, StyleFormMixin
+from apps.users.tasks import send_verification_email_task
+from services.mixins import PlaceholderCreateUpdateForm, StyleFormMixin
 
 
 class UserUpdateForm(PlaceholderCreateUpdateForm, StyleFormMixin, UserChangeForm):
@@ -117,7 +117,7 @@ class RegisterForm(PlaceholderCreateUpdateForm, StyleFormMixin, UserCreationForm
         Отправка письма после регистрации
         """
         user = super().save(commit)
-        send_email_verify.delay(user.id)
+        send_verification_email_task.delay(user.id)
         
         return user
 

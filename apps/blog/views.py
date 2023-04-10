@@ -11,11 +11,11 @@ from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
 
 from apps.blog.forms import CommentCreateForm, EditPostForm, NewPostForm
 from apps.blog.models import Categories, Comments, Posts
-from common.mixins import (EditDeletePostRequiredMixin, IpMixin,
-                           PostsTitleMixin, TitleMixin)
+from services.mixins import (EditDeletePostRequiredMixin, PostsTitleMixin,
+                             TitleMixin)
 
 
-class BlogView(IpMixin, ListView):
+class BlogView(ListView):
     """
     Контроллер блога, отображение всех постов
     """
@@ -55,7 +55,7 @@ class BlogView(IpMixin, ListView):
         return context
     
 
-class BlogDetailView(IpMixin, LoginRequiredMixin, PostsTitleMixin, DetailView):
+class BlogDetailView(LoginRequiredMixin, PostsTitleMixin, DetailView):
     """
     Контроллер отдельного поста
     """
@@ -70,7 +70,7 @@ class BlogDetailView(IpMixin, LoginRequiredMixin, PostsTitleMixin, DetailView):
         return context
 
 
-class AddlikeView(IpMixin, LoginRequiredMixin, View):
+class AddlikeView(LoginRequiredMixin, View):
     """
     Поставить лайк
     """
@@ -86,7 +86,7 @@ class AddlikeView(IpMixin, LoginRequiredMixin, View):
         return redirect(request.META['HTTP_REFERER'])
 
 
-class CreateBlogPost(IpMixin, SuccessMessageMixin, LoginRequiredMixin, 
+class CreateBlogPost(SuccessMessageMixin, LoginRequiredMixin, 
                      TitleMixin, CreateView):
     """
     Контроллер чтобы написать новую статью
@@ -119,7 +119,7 @@ class CreateBlogPost(IpMixin, SuccessMessageMixin, LoginRequiredMixin,
         return super().dispatch(request, *args, **kwargs)
     
 
-class EditPostView(IpMixin, EditDeletePostRequiredMixin, SuccessMessageMixin, 
+class EditPostView(EditDeletePostRequiredMixin, SuccessMessageMixin, 
                    LoginRequiredMixin, PostsTitleMixin, UpdateView):
     """
     Контроллер для редактирования постов
@@ -139,7 +139,7 @@ class EditPostView(IpMixin, EditDeletePostRequiredMixin, SuccessMessageMixin,
         return super().form_valid(form)
     
 
-class DeletePostView(IpMixin, EditDeletePostRequiredMixin, SuccessMessageMixin, 
+class DeletePostView(EditDeletePostRequiredMixin, SuccessMessageMixin, 
                      LoginRequiredMixin, PostsTitleMixin, DeleteView):
     """
     Контроллер для удаления постов
@@ -152,8 +152,7 @@ class DeletePostView(IpMixin, EditDeletePostRequiredMixin, SuccessMessageMixin,
         return reverse_lazy('blog:index')
 
 
-class CommentCreateView(SuccessMessageMixin, IpMixin, 
-                        LoginRequiredMixin, CreateView):
+class CommentCreateView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     """
     Контроллер для написания нового комментария под постом
     """

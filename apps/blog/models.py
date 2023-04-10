@@ -4,7 +4,7 @@ from django.db import models
 from django.urls import reverse
 from mptt.models import MPTTModel, TreeForeignKey
 
-from common.utils import unique_slug
+from services.utils import unique_slug
 
 User = get_user_model()
 

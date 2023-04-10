@@ -1,18 +1,18 @@
 from http import HTTPStatus
 
-import requests
-from django.conf import settings
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import FormView, ListView
 
 from apps.blog.models import Posts
-from common.mixins import IpMixin, TitleMixin
+from services.ban import ban
+from services.mixins import TitleMixin
 from tom_blog.forms import SendMessageForm
+from tom_blog.tasks import send_telegram_message_task
 
 
-class IndexView(IpMixin, TitleMixin, ListView):
+class IndexView(TitleMixin, ListView):
     """
     Контроллер основной страницы
     """
@@ -38,7 +38,7 @@ class IndexView(IpMixin, TitleMixin, ListView):
         return self.queryset.filter(fixed=True)
     
     
-class ContactView(IpMixin, SuccessMessageMixin, TitleMixin, FormView):
+class ContactView(SuccessMessageMixin, TitleMixin, FormView):
     """
     Контроллер формы обратной связи
     """
@@ -58,11 +58,11 @@ class ContactView(IpMixin, SuccessMessageMixin, TitleMixin, FormView):
         banword = ('mutk.pro', 'esgeni.tk')
         for i in banword:
             if i in message:
-                self.ban(request=self.request)
+                ban(request=self.request)
                 return redirect('index')
 
         message = f'{data["name"]}\n{data["email"]}\n{message}'
-        self.send_telegram_message(message=message)
+        send_telegram_message_task.delay(message=message)
             
         return super().form_valid(form)
 

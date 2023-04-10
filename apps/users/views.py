@@ -16,10 +16,9 @@ from apps.users.forms import (ChangePasswordForm, LoginForm,
                               ResetPasswordForm, SetPasswordForm,
                               UserUpdateForm)
 from apps.users.models import EmailVerification, ProfileComments, User
-from apps.users.tasks import send_email_verify
-from common.mixins import (IpMixin, NoAuthRequiredMixin,
-                           ObjectSuccessProfileMixin, ProfileTitleMixin,
-                           TitleMixin)
+from apps.users.tasks import send_verification_email_task
+from services.mixins import (NoAuthRequiredMixin, ObjectSuccessProfileMixin,
+                             ProfileTitleMixin, TitleMixin)
 
 message_email = 'На ваш адрес электронной почты было отправлено письмо с '\
                 'подтверждением. Пожалуйста, проверьте свою почту '\
@@ -28,7 +27,7 @@ message_email = 'На ваш адрес электронной почты был
                 'к администрации.'      
 
 
-class ProfileView(IpMixin, ProfileTitleMixin, LoginRequiredMixin, DetailView):
+class ProfileView(ProfileTitleMixin, LoginRequiredMixin, DetailView):
     """
     Контроллер профиля
     """
@@ -62,7 +61,7 @@ class ProfileView(IpMixin, ProfileTitleMixin, LoginRequiredMixin, DetailView):
         return context
     
     
-class ProfileAllPostsView(IpMixin, LoginRequiredMixin, ProfileTitleMixin, ListView):
+class ProfileAllPostsView(LoginRequiredMixin, ProfileTitleMixin, ListView):
     """
     Контроллер для просмотра всех постов определенного автора
     """
@@ -93,7 +92,7 @@ class ProfileAllPostsView(IpMixin, LoginRequiredMixin, ProfileTitleMixin, ListVi
         return context
     
 
-class ProfileEditView(IpMixin, ObjectSuccessProfileMixin, SuccessMessageMixin, 
+class ProfileEditView(ObjectSuccessProfileMixin, SuccessMessageMixin, 
                       ProfileTitleMixin, LoginRequiredMixin, UpdateView):
     """
     Контроллер редактирования прфоиля
@@ -114,14 +113,14 @@ class ProfileEditView(IpMixin, ObjectSuccessProfileMixin, SuccessMessageMixin,
                 self.request,
                 message_email,
             )
-            send_email_verify.delay(self.request.user.id, new_email)
+            send_verification_email_task.delay(self.request.user.id, new_email)
         
         super().form_valid(form)
         
         return redirect('users:login')
 
 
-class LoginView(IpMixin, TitleMixin, LoginView):
+class LoginView(TitleMixin, LoginView):
     """
     Контроллер авторизации
     """
@@ -134,7 +133,7 @@ class LoginView(IpMixin, TitleMixin, LoginView):
         return reverse_lazy('users:profile', args=(self.request.user.slug,))
 
 
-class RegisterView(NoAuthRequiredMixin, IpMixin, TitleMixin, SuccessMessageMixin, CreateView):
+class RegisterView(NoAuthRequiredMixin, TitleMixin, SuccessMessageMixin, CreateView):
     """
     Контроллер регистрации
     """
@@ -147,7 +146,7 @@ class RegisterView(NoAuthRequiredMixin, IpMixin, TitleMixin, SuccessMessageMixin
     redirect_authenticated_user = True
 
 
-class ChangePasswordView(IpMixin, ObjectSuccessProfileMixin, ProfileTitleMixin, 
+class ChangePasswordView(ObjectSuccessProfileMixin, ProfileTitleMixin, 
                          SuccessMessageMixin, PasswordChangeView):
     """
     Контроллер для изменения пароля
@@ -157,7 +156,7 @@ class ChangePasswordView(IpMixin, ObjectSuccessProfileMixin, ProfileTitleMixin,
     form_class = ChangePasswordForm
 
 
-class EmailVerificationView(IpMixin, TitleMixin, TemplateView):
+class EmailVerificationView(TitleMixin, TemplateView):
     """
     Контроллер для подтверждения почты
     """
@@ -183,7 +182,7 @@ class EmailVerificationView(IpMixin, TitleMixin, TemplateView):
         return redirect('users:email_failed')
 
 
-class EmailVerificationFailedView(IpMixin, TitleMixin, TemplateView):
+class EmailVerificationFailedView(TitleMixin, TemplateView):
     """
     Контроллер для отображения неудачного подтверждения почты
     """
@@ -191,8 +190,8 @@ class EmailVerificationFailedView(IpMixin, TitleMixin, TemplateView):
     title = 'Электронная почта не подтверждена'
 
 
-class ResetPasswordView(NoAuthRequiredMixin, IpMixin, TitleMixin, 
-                         SuccessMessageMixin, PasswordResetView):
+class ResetPasswordView(NoAuthRequiredMixin, TitleMixin, 
+                        SuccessMessageMixin, PasswordResetView):
     """
     Контроллер для отправки письма на почту, чтобы сбросить пароль
     """
@@ -213,8 +212,8 @@ class ResetPasswordView(NoAuthRequiredMixin, IpMixin, TitleMixin,
         return super().form_valid(form)
     
 
-class SetPasswordView(NoAuthRequiredMixin, IpMixin, TitleMixin, 
-                         SuccessMessageMixin, PasswordResetConfirmView):
+class SetPasswordView(NoAuthRequiredMixin, TitleMixin, 
+                      SuccessMessageMixin, PasswordResetConfirmView):
     """
     Контроллер для установки нового пароля
     """
@@ -225,7 +224,7 @@ class SetPasswordView(NoAuthRequiredMixin, IpMixin, TitleMixin,
     success_message = 'Установлен новый пароль, можете авторизоваться'
 
 
-class FailedSetPasswordView(IpMixin, TitleMixin, TemplateView):
+class FailedSetPasswordView(TitleMixin, TemplateView):
     """
     Контроллер невалидного письма сброса пароля
     """
@@ -233,7 +232,7 @@ class FailedSetPasswordView(IpMixin, TitleMixin, TemplateView):
     template_name = 'users/failedsetpassword.html'
 
 
-class ProfileCommentCreateView(SuccessMessageMixin, IpMixin, LoginRequiredMixin, CreateView):
+class ProfileCommentCreateView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     """
     Контроллер для написания комментария под профилем
     """

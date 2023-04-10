@@ -8,7 +8,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.timezone import now
 
-from common.utils import unique_slug
+from services.utils import unique_slug
 
 
 class User(AbstractUser):

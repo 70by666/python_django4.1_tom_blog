@@ -8,7 +8,7 @@ from apps.users.models import EmailVerification, User
 
 
 @shared_task
-def send_email_verify(user_id, new_email=None):
+def send_verification_email_task(user_id, new_email=None):
     """
     Отложенная задача, отправка письма через celery, заполнение модели
     """

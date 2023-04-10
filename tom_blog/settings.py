@@ -108,6 +108,7 @@ MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     
     'tom_blog.middleware.ActiveUserMiddleware',
+    'tom_blog.middleware.IpMiddleware',
 ]
 
 ROOT_URLCONF = 'tom_blog.urls'
