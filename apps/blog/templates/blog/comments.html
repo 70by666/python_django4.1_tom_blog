@@ -49,20 +49,20 @@
                                 <img class="img_bord me-2" src="{{ request.user.get_avatar }}" width="100">
                             </div>
                             <div class="my-2 mb-3 text-right">
-                                <form method="post" action="">
+                                <form method="post" action="{% url 'blog:commentcreate' object.slug node.id %}">
                                     {% csrf_token %}
                                     {{ form }}
-                                    <button class="btn btn-sm btn-outline-light mt-3" type="button">
+                                    <button class="btn btn-sm btn-outline-light mt-3" type="submit">
                                         Ответить
                                     </button>
                                  </form>
                             </div>
                             {% if not node.parent and not node.is_leaf_node %}
-                                <button id="1" class="btn btn-sm btn-outline-light">Показать ответы</button>
+                                <button id="1" class="11 btn btn-sm btn-outline-light">Показать ответы</button>
                             {% endif %}
                             <hr style="border-width: 10px;">
                         </div>
-                        <child>
+                        <child class="1">
                         {% if not node.is_leaf_node %}
                             {{ children }}
                         {% endif %}

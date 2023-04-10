@@ -158,8 +158,10 @@ class CommentCreateView(SuccessMessageMixin, IpMixin, LoginRequiredMixin, Create
         post = Posts.objects.get(slug=self.kwargs['slug'])
         form.instance.post = post
         form.instance.author = self.request.user
+        print(Comments.objects.filter(parent=self.kwargs['parent']))
         if not self.kwargs['parent'] == int(0):
-            parent = Comments.objects.get(parent=self.kwargs['parent'])
+            print(self.kwargs['parent'])
+            parent = Comments.objects.get(id=self.kwargs['parent'])
             form.instance.parent = parent
     
         return super().form_valid(form)

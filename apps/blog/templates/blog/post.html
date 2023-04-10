@@ -11,8 +11,8 @@
 {% block section %}
     <section>
         <div class="container_cont">
+            {% include 'main/forms_errors.html' %}
             <div class="row">
-                {% include 'main/forms_errors.html' %}
                 <div class="col-lg-2"></div>
                 <div class="col-lg-8">
                     <div class="card">
@@ -88,8 +88,8 @@
     </script> {% endcomment %}
     <script src="{% static 'js/jquery-1.7.2.js' %}"></script>
     <script>
-        $("#1").click(function () {
-          $("child").slideToggle("fast");
+        $(".11").click(function () {
+          $(".1").slideToggle("fast");
         });
     </script>
 {% endblock scripts %}
