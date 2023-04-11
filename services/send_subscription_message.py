@@ -1,6 +1,6 @@
 from django.conf import settings
-from django.urls import reverse
 from django.core.mail import send_mail
+from django.urls import reverse
 
 from apps.users.models import Subscription
 

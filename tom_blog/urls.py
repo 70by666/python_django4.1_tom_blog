@@ -19,7 +19,7 @@ from django.contrib import admin
 from django.contrib.sitemaps.views import sitemap
 from django.urls import include, path
 
-from tom_blog.sitemap import PostsSiteMap, StaticSitemap
+from services.sitemap import PostsSiteMap, StaticSitemap
 from tom_blog.views import ContactView, IndexView, SubscriptionView
 
 handler404 = 'tom_blog.views.error404'

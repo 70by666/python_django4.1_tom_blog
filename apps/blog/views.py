@@ -8,15 +8,14 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView, View)
-from services.utils import unique_slug
-from tom_blog.tasks import send_subscription_message_task
 
 from apps.blog.forms import CommentCreateForm, EditPostForm, NewPostForm
 from apps.blog.models import Categories, Comments, Posts
+from apps.blog.tasks import send_subscription_message_task
 from apps.users.models import Ip
 from services.mixins import (EditDeletePostRequiredMixin, PostsTitleMixin,
                              TitleMixin)
-from services.utils import get_ip
+from services.utils import get_ip, unique_slug
 
 
 class BlogView(ListView):
