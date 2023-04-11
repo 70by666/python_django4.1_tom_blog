@@ -1,11 +1,14 @@
 from http import HTTPStatus
 
+from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
-from django.views.generic import FormView, ListView
+from django.views.generic import FormView, ListView, View
 
 from apps.blog.models import Posts
+from apps.users.models import Subscription
 from services.ban import ban
 from services.mixins import TitleMixin
 from tom_blog.forms import SendMessageForm
@@ -65,6 +68,26 @@ class ContactView(SuccessMessageMixin, TitleMixin, FormView):
         send_telegram_message_task.delay(message=message)
             
         return super().form_valid(form)
+
+
+class SubscriptionView(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        subscription = Subscription.objects.filter(user=request.user)
+        if not subscription:
+            Subscription.objects.create(user=request.user)
+            messages.info(
+                request, 
+                'Вы подписались на рассылку!'
+            )
+            
+            return redirect('index')
+        
+        messages.info(
+            request, 
+            'Вы уже подписаны'
+        )
+        
+        return redirect('index') 
 
 
 def error403(request, exception):

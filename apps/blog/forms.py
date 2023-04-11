@@ -2,6 +2,8 @@ from django import forms
 
 from apps.blog.models import Comments, Posts
 from services.mixins import StyleFormMixin
+from services.utils import unique_slug
+from tom_blog.tasks import send_subscription_message_task
 
 
 class NewPostForm(StyleFormMixin, forms.ModelForm):

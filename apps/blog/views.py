@@ -8,6 +8,8 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView, View)
+from services.utils import unique_slug
+from tom_blog.tasks import send_subscription_message_task
 
 from apps.blog.forms import CommentCreateForm, EditPostForm, NewPostForm
 from apps.blog.models import Categories, Comments, Posts
@@ -72,6 +74,7 @@ class BlogDetailView(LoginRequiredMixin, PostsTitleMixin, DetailView):
         return context
 
     def get(self, request, *args, **kwargs):
+        get = super().get(request, *args, **kwargs)
         ip = Ip.objects.get(ip=get_ip(request))
         post = (
             self.model.objects
@@ -81,7 +84,7 @@ class BlogDetailView(LoginRequiredMixin, PostsTitleMixin, DetailView):
         )
         post.views.add(ip)
        
-        return super().get(request, *args, **kwargs)
+        return get
 
 
 class AddlikeView(LoginRequiredMixin, View):
@@ -116,10 +119,23 @@ class CreateBlogPost(SuccessMessageMixin, LoginRequiredMixin,
     
     def form_valid(self, form):
         """
-        Запись в модель автора статьи при ее создании
+        Запись в модель автора статьи при ее создании 
+        и отправка уведомления о новом посте
         """
+        title = form.cleaned_data.get('title')
+        short_description = form.cleaned_data.get('short_description')
+        slug = unique_slug(model=self.model, title=title)
+                
         form.instance.author = self.request.user
+        form.instance.slug = slug
         form.save()
+        
+        send_subscription_message_task.delay(
+            title=title, 
+            short_description=short_description, 
+            slug=slug,
+        )
+        
         return super().form_valid(form)
 
     def dispatch(self, request, *args, **kwargs):
@@ -182,7 +198,6 @@ class CommentCreateView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         form.instance.post = post
         form.instance.author = self.request.user
         if not self.kwargs['parent'] == int(0):
-            print(self.kwargs['parent'])
             parent = Comments.objects.get(id=self.kwargs['parent'])
             form.instance.parent = parent
             

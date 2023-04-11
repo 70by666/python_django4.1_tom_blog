@@ -20,7 +20,7 @@ from django.contrib.sitemaps.views import sitemap
 from django.urls import include, path
 
 from tom_blog.sitemap import PostsSiteMap, StaticSitemap
-from tom_blog.views import ContactView, IndexView
+from tom_blog.views import ContactView, IndexView, SubscriptionView
 
 handler404 = 'tom_blog.views.error404'
 handler500 = 'tom_blog.views.error500'
@@ -35,6 +35,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', IndexView.as_view(), name='index'),
     path('contact/', ContactView.as_view(), name='contact'),
+    path('subscription/', SubscriptionView.as_view(), name='subscription'),
     path('blog/', include('apps.blog.urls', namespace='blog')),
     path('users/', include('apps.users.urls', namespace='users')),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),

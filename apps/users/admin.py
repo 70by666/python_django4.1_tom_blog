@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-from apps.users.models import EmailVerification, Ip, ProfileComments, User
+from apps.users.models import (EmailVerification, Ip, ProfileComments,
+                               Subscription, User)
 
 
 @admin.register(User)
@@ -21,7 +22,12 @@ class IpAdmin(admin.ModelAdmin):
 
 
 @admin.register(ProfileComments)
-class CommentProfileAdminPage(admin.ModelAdmin):
+class CommentProfileAdmin(admin.ModelAdmin):
     list_display = ('user', 'author', 'created')
     list_display_links = ('user',)
     list_filter = ('created', 'author')
+
+
+@admin.register(Subscription)
+class SubscriptionAdmin(admin.ModelAdmin):
+    list_display = ('user',)

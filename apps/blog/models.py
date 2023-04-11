@@ -6,6 +6,7 @@ from mptt.models import MPTTModel, TreeForeignKey
 
 from apps.users.models import Ip, User
 from services.utils import unique_slug
+from tom_blog.tasks import send_subscription_message_task
 
 
 class Posts(models.Model):
@@ -127,8 +128,8 @@ class Posts(models.Model):
         при необходимости генерация случайного slug
         """
         if not self.slug:
-            self.slug = unique_slug(self, self.title)
-                
+            self.slug = unique_slug(instance=self, title=self.title)
+        
         return super().save(*args, **kwargs)
     
     def get_absolute_url(self):

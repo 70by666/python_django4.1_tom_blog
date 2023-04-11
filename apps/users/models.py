@@ -51,7 +51,7 @@ class User(AbstractUser):
         при необходимости генерация случайного slug
         """
         if not self.slug:
-            self.slug = unique_slug(self, self.username)
+            self.slug = unique_slug(instance=self, title=self.username)
         
         return super().save(*args, **kwargs)
 
@@ -161,3 +161,10 @@ class ProfileComments(models.Model):
 
     def __str__(self):
         return f'{self.author}:{self.text}'
+
+
+class Subscription(models.Model):
+    """
+    Модель для подписчиков на рассылку
+    """
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE)

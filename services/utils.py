@@ -5,12 +5,19 @@ from django.conf import settings
 from pytils.translit import slugify
 
 
-def unique_slug(instance, title):
+def unique_slug(title, instance=None, model=None):
     """
     Функция для генерации случайного slug
     """
-    model = instance.__class__
+    if model:
+        model = model
+    else:
+        model = instance.__class__
+        
     slug = slugify(title)
+    if not slug:
+        slug = f'{uuid4().hex[:8]}'
+
     while model.objects.filter(slug=slug).exists():
         slug = f'{slug}-{uuid4().hex[:8]}'
         

@@ -17,7 +17,9 @@ def send_verification_email_task(user_id, new_email=None):
     user.save()
     
     expiration = now() + timedelta(hours=24)
-    record = EmailVerification.objects.create(code=uuid.uuid4(), 
-                                                user=user, 
-                                                expiration=expiration)
+    record = EmailVerification.objects.create(
+        code=uuid.uuid4(), 
+        user=user, 
+        expiration=expiration,
+    )
     record.send_verification_email(new_email)
