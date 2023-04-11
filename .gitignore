@@ -1,13 +1,8 @@
 .vscode
-tom_blog/__pycache__
+__pycache__
 db.sqlite3
-apps/blog/__pycache__
-apps/blog/migrations/__pycache__
 media
 static/img
-apps/users/__pycache__
-apps/users/migrations/__pycache__
-common/__pycache__
 .env
 static/admin/
 static/django_extensions/
