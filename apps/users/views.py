@@ -27,7 +27,7 @@ message_email = 'На ваш адрес электронной почты был
                 'к администрации.'      
 
 
-class ProfileView(ProfileTitleMixin, LoginRequiredMixin, DetailView):
+class ProfileView(LoginRequiredMixin, DetailView):
     """
     Контроллер профиля
     """
@@ -39,6 +39,7 @@ class ProfileView(ProfileTitleMixin, LoginRequiredMixin, DetailView):
         Вывод последних 6 постов определенного автора и кэширование
         """
         context = super().get_context_data(**kwargs)
+        context['title'] = f'{self.object.id} - {self.object}'
         context['form'] = ProfileCommentCreateForm
         context['comms'] = (
             ProfileComments.objects
@@ -59,9 +60,9 @@ class ProfileView(ProfileTitleMixin, LoginRequiredMixin, DetailView):
             )
                         
         return context
+
     
-    
-class ProfileAllPostsView(LoginRequiredMixin, ProfileTitleMixin, ListView):
+class ProfileAllPostsView(LoginRequiredMixin, ListView):
     """
     Контроллер для просмотра всех постов определенного автора
     """
@@ -83,11 +84,14 @@ class ProfileAllPostsView(LoginRequiredMixin, ProfileTitleMixin, ListView):
 
     def get_context_data(self, **kwargs):
         """
-        Передать слаг пользователя, чью посты просматриваются для корректной
+        Передать слаг пользователя, чьи посты просматриваются для корректной
         работы пагинатора
         """
         context = super().get_context_data(**kwargs)
-        context["slug"] = self.kwargs['slug']
+        slug = self.kwargs['slug']
+        context["slug"] = slug
+        user = User.objects.get(slug=slug)
+        context['title'] = f'{user.id} - {user.username}'
         
         return context
     
