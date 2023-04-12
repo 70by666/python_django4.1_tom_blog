@@ -18,7 +18,8 @@ from apps.users.forms import (ChangePasswordForm, LoginForm,
 from apps.users.models import EmailVerification, ProfileComments, User
 from apps.users.tasks import send_verification_email_task
 from services.mixins import (NoAuthRequiredMixin, ObjectSuccessProfileMixin,
-                             ProfileTitleMixin, TitleMixin)
+                             ProfileTitleMixin, ReverseLazyProfileMixin,
+                             TitleMixin)
 
 message_email = 'На ваш адрес электронной почты было отправлено письмо с '\
                 'подтверждением. Пожалуйста, проверьте свою почту '\
@@ -96,7 +97,7 @@ class ProfileAllPostsView(LoginRequiredMixin, ListView):
         return context
     
 
-class ProfileEditView(ObjectSuccessProfileMixin, SuccessMessageMixin, 
+class ProfileEditView(ReverseLazyProfileMixin, ObjectSuccessProfileMixin, SuccessMessageMixin, 
                       ProfileTitleMixin, LoginRequiredMixin, UpdateView):
     """
     Контроллер редактирования прфоиля
@@ -124,7 +125,7 @@ class ProfileEditView(ObjectSuccessProfileMixin, SuccessMessageMixin,
         return redirect('users:login')
 
 
-class LoginView(TitleMixin, LoginView):
+class LoginView(ReverseLazyProfileMixin, TitleMixin, LoginView):
     """
     Контроллер авторизации
     """
@@ -132,9 +133,6 @@ class LoginView(TitleMixin, LoginView):
     title = 'Авторизация'
     form_class = LoginForm
     redirect_authenticated_user = True
-    
-    def get_success_url(self):
-        return reverse_lazy('users:profile', args=(self.request.user.slug,))
 
 
 class RegisterView(NoAuthRequiredMixin, TitleMixin, SuccessMessageMixin, CreateView):
@@ -150,8 +148,9 @@ class RegisterView(NoAuthRequiredMixin, TitleMixin, SuccessMessageMixin, CreateV
     redirect_authenticated_user = True
 
 
-class ChangePasswordView(ObjectSuccessProfileMixin, ProfileTitleMixin, 
-                         SuccessMessageMixin, PasswordChangeView):
+class ChangePasswordView(ReverseLazyProfileMixin, ObjectSuccessProfileMixin, 
+                         ProfileTitleMixin, SuccessMessageMixin, 
+                         PasswordChangeView):
     """
     Контроллер для изменения пароля
     """

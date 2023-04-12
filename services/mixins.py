@@ -101,6 +101,8 @@ class ObjectSuccessProfileMixin:
     def get_object(self, queryset=None):
         return self.request.user
 
+
+class ReverseLazyProfileMixin:
     def get_success_url(self):
         return reverse_lazy('users:profile', args=(self.request.user.slug,))
 
