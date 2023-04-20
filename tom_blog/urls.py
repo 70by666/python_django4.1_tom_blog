@@ -38,7 +38,7 @@ urlpatterns = [
     path('subscription/', SubscriptionView.as_view(), name='subscription'),
     path('blog/', include('apps.blog.urls', namespace='blog')),
     path('users/', include('apps.users.urls', namespace='users')),
-    path('api/v1/', include('apps.api.v1', namespace='api.v1')),
+    path('api/v1/', include('apps.api.v1.urls', namespace='api.v1')),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 ]
 
