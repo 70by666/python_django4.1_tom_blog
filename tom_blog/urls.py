@@ -18,6 +18,8 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.sitemaps.views import sitemap
 from django.urls import include, path
+from rest_framework_simplejwt.views import (TokenObtainPairView,
+                                            TokenRefreshView, TokenVerifyView)
 
 from services.sitemap import PostsSiteMap, StaticSitemap
 from tom_blog.views import ContactView, IndexView, SubscriptionView
@@ -39,6 +41,10 @@ urlpatterns = [
     path('blog/', include('apps.blog.urls', namespace='blog')),
     path('users/', include('apps.users.urls', namespace='users')),
     path('api/v1/', include('apps.api.v1.urls', namespace='api.v1')),
+    path('api/v1/drf-auth/', include('rest_framework.urls')),
+    path('api/v1/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/v1/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/v1/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 ]
 
