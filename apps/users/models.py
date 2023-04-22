@@ -40,6 +40,11 @@ class User(AbstractUser):
         verbose_name='Статус редактор', 
         default=False
     )
+    tg_id = models.IntegerField(
+        blank=True, 
+        null=True, 
+        verbose_name='ИД пользователя в телеграме'
+    )
 
     class Meta:
         verbose_name = 'Пользователь'

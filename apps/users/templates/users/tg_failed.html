@@ -1,0 +1,28 @@
+{% extends 'main/base.html' %}
+
+{% load static %}
+
+{% load humanize %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/new.css' %}">
+{% endblock css %}
+
+{% block section %}
+    <section>
+        <div class="container container_cont">
+            <div class="text-center mt-3">
+                <div class="alert alert-danger" role="alert">
+                    <div class="container"> 
+                        Ссылка для привязки аккаунта Телеграм недействительна или истек срок действия, попробуйте еще раз или обратитесь к администрации сайта.
+                    </div>
+                </div>                      
+                <div class="container mt-3">
+                    <a href="{% url 'users:profile' request.user.slug %}" class="btn btn-outline-primary">
+                        Продолжить
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock section %}

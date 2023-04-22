@@ -1,3 +1,5 @@
+import requests
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import (LoginView, PasswordChangeView,
@@ -10,6 +12,7 @@ from django.urls import reverse_lazy
 from django.views.generic import (CreateView, DetailView, ListView,
                                   TemplateView, UpdateView)
 
+from apps.api.v1.models import TgAuth
 from apps.blog.models import Posts
 from apps.users.forms import (ChangePasswordForm, LoginForm,
                               ProfileCommentCreateForm, RegisterForm,
@@ -252,3 +255,41 @@ class ProfileCommentCreateView(SuccessMessageMixin, LoginRequiredMixin, CreateVi
         form.instance.author = self.request.user
     
         return super().form_valid(form)
+
+
+class TelegramView(LoginRequiredMixin, TitleMixin, TemplateView):
+    """
+    Контроллер для привязки аккаунта телеграм
+    """
+    template_name = 'users/tg_confirmed.html'
+    title = 'Телеграм привязан'
+
+    def get(self, request, *args, **kwargs):
+        """
+        Проверка валидности ссылки
+        """
+        tg_id = kwargs['tg_id']
+        code = kwargs['code']
+        tg_verify = TgAuth.objects.filter(
+            tg_id=tg_id, 
+            code=code,
+        ).order_by('-expiration')
+        if tg_verify.exists():
+            verify_obj = tg_verify.first()
+            if verify_obj.is_expired() and verify_obj.is_valid:
+                user = User.objects.get(id=request.user.id)
+                user.tg_id = tg_id
+                user.save()
+                verify_obj.is_valid = False
+                verify_obj.save()
+                return super().get(request, *args, **kwargs)
+
+        return redirect('users:tg_failed')
+
+
+class TgFailedView(LoginRequiredMixin, TitleMixin, TemplateView):
+    """
+    Контроллер для отображения неудачного подтверждения почты
+    """
+    template_name = 'users/tg_failed.html'
+    title = 'Электронная почта не подтверждена'

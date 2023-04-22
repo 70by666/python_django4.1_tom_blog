@@ -9,8 +9,8 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-from datetime import timedelta
 import os
+from datetime import timedelta
 from pathlib import Path
 
 import environ
@@ -87,6 +87,8 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
     
     'rest_framework',
+    'rest_framework.authtoken',
+    'djoser',
     
     'django_extensions',
     'debug_toolbar',
@@ -95,6 +97,7 @@ INSTALLED_APPS = [
     
     'apps.blog.apps.BlogConfig',
     'apps.users.apps.UsersConfig',
+    'apps.api.v1.apps.ApiConfig'
 ]
 
 SITE_ID = env('SITE_ID')
@@ -290,6 +293,7 @@ RECAPTCHA_PRIVATE_KEY = env('RECAPTCHA_PRIVATE_KEY')
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
@@ -301,6 +305,7 @@ REST_FRAMEWORK = {
 #         'rest_framework.renderers.JSONRenderer',
 #     ),
 #     'DEFAULT_AUTHENTICATION_CLASSES': (
+#         'rest_framework.authentication.TokenAuthentication',
 #         'rest_framework_simplejwt.authentication.JWTAuthentication',
 #     ),
 #     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',

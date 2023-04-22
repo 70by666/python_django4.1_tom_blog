@@ -6,7 +6,7 @@ from apps.users.views import (ChangePasswordView, EmailVerificationFailedView,
                               LoginView, ProfileAllPostsView,
                               ProfileCommentCreateView, ProfileEditView,
                               ProfileView, RegisterView, ResetPasswordView,
-                              SetPasswordView)
+                              SetPasswordView, TelegramView, TgFailedView)
 
 app_name = 'users'
 
@@ -25,4 +25,6 @@ urlpatterns = [
     path('resetpassword/', ResetPasswordView.as_view(), name='resetpassword'),
     path('setpassword/<uidb64>/<token>/', SetPasswordView.as_view(), name='setpassword'),
     path('failedsetpassword/', FailedSetPasswordView.as_view(), name='failedsetpassword'),
+    path('tgverify/<int:tg_id>/<uuid:code>/', TelegramView.as_view(), name='tgverify'),
+    path('tg_failed/', TgFailedView.as_view(), name='tg_failed'),   
 ]
